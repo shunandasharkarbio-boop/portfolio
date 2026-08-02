@@ -615,14 +615,14 @@ img {
 
 .widget-temp {
   position: absolute;
-  top: 11rem;
+  top: 10rem;
   left: 2rem;
   width: 130px;
 }
 
 .widget-humidity {
   position: absolute;
-  top: 17rem;
+  top: 11rem;
   left: 2rem;
   width: 130px;
 }
