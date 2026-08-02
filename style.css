@@ -609,15 +609,14 @@ img {
 .widget-lab-status {
   top: 1.5rem;
   left: 1.5rem;
-  width: 175px;
+  width: 170px;
 }
 
 .widget-temp {
-  top: 8rem;
+  top: 11rem;      /* Was 8rem */
   left: 1.5rem;
-  width: 140px;
+  width: 130px;
 }
-
 .widget-humidity {
   top: 13.5rem;
   left: 1.5rem;
