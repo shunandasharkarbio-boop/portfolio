@@ -607,19 +607,20 @@ img {
 
 /* Individual Widget Placements */
 .widget-lab-status {
-  top: 1.5rem;
-  left: 1.5rem;
+  top: 2rem;
+  left: 2rem;
   width: 170px;
 }
 
 .widget-temp {
-  top: 10rem;      /* Was 8rem */
-  left: 1.5rem;
+  top: 12rem;
+  left: 2rem;
   width: 130px;
 }
+
 .widget-humidity {
-  bottom: 10rem;
-  left: 1.5rem;
+  top: 20rem;      /* Move it lower */
+  left: 2rem;
   width: 130px;
 }
 
