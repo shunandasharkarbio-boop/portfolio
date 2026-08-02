@@ -355,3 +355,46 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
 });
+
+// Global functions for NPTEL Certificate Modal Window
+window.openCertModal = function(title, fullTitle, org, desc) {
+  const modal = document.getElementById('certModal');
+  const titleEl = document.getElementById('modalCertTitle');
+  const orgEl = document.getElementById('modalCertOrg');
+  const specEl = document.getElementById('modalCertSpec');
+  const descEl = document.getElementById('modalCertDesc');
+
+  if (modal) {
+    if (titleEl) titleEl.textContent = title;
+    if (orgEl) orgEl.textContent = `Issued by ${org}`;
+    if (specEl) specEl.textContent = `For successfully completing: ${fullTitle}`;
+    if (descEl) descEl.textContent = desc;
+
+    modal.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+};
+
+window.closeCertModal = function() {
+  const modal = document.getElementById('certModal');
+  if (modal) {
+    modal.classList.remove('active');
+    document.body.style.overflow = '';
+  }
+};
+
+// Close modal when clicking backdrop
+document.addEventListener('click', (e) => {
+  const modal = document.getElementById('certModal');
+  if (modal && e.target === modal) {
+    closeCertModal();
+  }
+});
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') {
+    closeCertModal();
+  }
+});
+

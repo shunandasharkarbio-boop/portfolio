@@ -522,14 +522,140 @@
 
         </div>
 
-        <!-- Slim Certification Ribbon -->
-        <div class="cert-ribbon-v4">
-          <div class="cr-title">My NPTEL Certifications</div>
-          <div class="cr-divider"></div>
-          <div class="cr-item">Evolutionary Biology (NPTEL)</div>
-          <div class="cr-dot">&bull;</div>
-          <div class="cr-item">Genetic Engineering (NPTEL)</div>
+        <!-- Upgraded NPTEL Certification Visual Section -->
+        <div class="nptel-cert-section mt-5 animate-on-scroll">
+          <div class="nptel-section-header text-center">
+            <span class="info-badge mb-2">
+              <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 15l-2 5l-4-2l-4 2l2-5l-4-3.5l5.5-0.5l2.5-5l2.5 5l5.5 0.5z"/>
+              </svg>
+              NPTEL CERTIFIED CREDENTIALS
+            </span>
+            <h3 class="nptel-main-heading">My <span class="glowing-accent">NPTEL Certifications</span></h3>
+            <p class="nptel-sub-desc">Official certifications issued by NPTEL &amp; IITs in Evolutionary Biology, Python &amp; Biotechnology.</p>
+          </div>
+
+          <div class="nptel-grid">
+            <!-- Certificate Card 1: Evolutionary Biology -->
+            <div class="nptel-card">
+              <div class="nptel-card-banner">
+                <div class="nptel-laurel">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  </svg>
+                </div>
+                <span class="nptel-tag tag-cyan">Verified Credential</span>
+              </div>
+              <div class="nptel-card-content">
+                <h4 class="nptel-title">Evolutionary Biology</h4>
+                <div class="nptel-org">NPTEL &bull; IIT Madras / IISc</div>
+                <p class="nptel-details">Focus on molecular evolution, phylogenetic tree analysis, population genetics, and speciation mechanisms.</p>
+                <div class="nptel-tags-row">
+                  <span class="nptel-chip">Phylogenetics</span>
+                  <span class="nptel-chip">Genetics</span>
+                </div>
+              </div>
+              <div class="nptel-card-action">
+                <button class="nptel-btn" onclick="openCertModal('Evolutionary Biology', 'NPTEL Certification in Evolutionary Biology', 'NPTEL & IISc Bangalore / IIT', 'Molecular evolution, phylogenetic trees, genetic drift, and macroevolutionary patterns.')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nptel-btn-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  View Certificate
+                </button>
+              </div>
+            </div>
+
+            <!-- Certificate Card 2: The Joy of Computing using Python -->
+            <div class="nptel-card">
+              <div class="nptel-card-banner">
+                <div class="nptel-laurel">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  </svg>
+                </div>
+                <span class="nptel-tag tag-purple">Verified Credential</span>
+              </div>
+              <div class="nptel-card-content">
+                <h4 class="nptel-title">The Joy of Computing using Python</h4>
+                <div class="nptel-org">NPTEL &bull; IIT Ropar</div>
+                <p class="nptel-details">Computational logic, data structures, scientific script automation, and problem solving for biological datasets.</p>
+                <div class="nptel-tags-row">
+                  <span class="nptel-chip">Python</span>
+                  <span class="nptel-chip">Data Structures</span>
+                </div>
+              </div>
+              <div class="nptel-card-action">
+                <button class="nptel-btn" onclick="openCertModal('The Joy of Computing using Python', 'NPTEL Certification in The Joy of Computing using Python', 'NPTEL & IIT Ropar', 'Python algorithms, computational logic, data structures, and biocomputing applications.')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nptel-btn-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  View Certificate
+                </button>
+              </div>
+            </div>
+
+            <!-- Certificate Card 3: Genetic Engineering & Biotech -->
+            <div class="nptel-card">
+              <div class="nptel-card-banner">
+                <div class="nptel-laurel">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
+                  </svg>
+                </div>
+                <span class="nptel-tag tag-green">Verified Credential</span>
+              </div>
+              <div class="nptel-card-content">
+                <h4 class="nptel-title">Genetic Engineering</h4>
+                <div class="nptel-org">NPTEL &bull; IIT Kharagpur</div>
+                <p class="nptel-details">Recombinant DNA technology, gene cloning vectors, CRISPR-Cas mechanisms, and molecular tools.</p>
+                <div class="nptel-tags-row">
+                  <span class="nptel-chip">CRISPR</span>
+                  <span class="nptel-chip">Cloning</span>
+                </div>
+              </div>
+              <div class="nptel-card-action">
+                <button class="nptel-btn" onclick="openCertModal('Genetic Engineering', 'NPTEL Certification in Genetic Engineering', 'NPTEL & IIT Kharagpur', 'Recombinant DNA technology, gene editing tools, vector construction, and bio-therapeutics.')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nptel-btn-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  View Certificate
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
+
+        <!-- Modal Overlay for Viewing NPTEL Certificates -->
+        <div id="certModal" class="cert-modal-overlay">
+          <div class="cert-modal-card">
+            <button class="cert-modal-close" onclick="closeCertModal()">&times;</button>
+            <div class="cert-badge-header">
+              <span class="cert-nptel-logo">NPTEL &bull; SWAYAM</span>
+              <span class="cert-status-badge">VERIFIED CERTIFICATE</span>
+            </div>
+            <h3 id="modalCertTitle" class="modal-cert-name">Certificate Title</h3>
+            <div id="modalCertOrg" class="modal-cert-org">Issued by NPTEL</div>
+            
+            <div class="cert-display-frame">
+              <div class="cert-graphic-bg"></div>
+              <div class="cert-hologram"></div>
+              <div class="cert-inner-content">
+                <div class="cert-award-to">THIS CERTIFICATE IS PROUDLY PRESENTED TO</div>
+                <div class="cert-candidate-name">SHUNANDA SHARKAR</div>
+                <div class="cert-for-spec" id="modalCertSpec">For successfully completing the NPTEL online course</div>
+                <div class="cert-seal">
+                  <svg viewBox="0 0 100 100" class="cert-seal-svg">
+                    <circle cx="50" cy="50" r="42" fill="none" stroke="#00f59b" stroke-width="2" stroke-dasharray="4 2"/>
+                    <circle cx="50" cy="50" r="36" fill="rgba(0,245,155,0.06)" stroke="#00d2c4" stroke-width="1.5"/>
+                    <path d="M50 20 L58 38 L78 38 L62 50 L68 70 L50 58 L32 70 L38 50 L22 38 L42 38 Z" fill="rgba(0,245,155,0.2)" stroke="#00f59b" stroke-width="1.5"/>
+                    <text x="50" y="84" font-size="7" fill="#00f59b" text-anchor="middle" font-family="monospace">OFFICIAL NPTEL</text>
+                  </svg>
+                </div>
+              </div>
+            </div>
+            
+            <p id="modalCertDesc" class="modal-cert-desc">Course details and achievements.</p>
+            
+            <div class="cert-modal-actions">
+              <button class="btn btn-primary btn-sm" onclick="closeCertModal()">Done</button>
+            </div>
+          </div>
+        </div>
+
 
       </div>
     </section>

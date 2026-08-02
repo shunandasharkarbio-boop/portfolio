@@ -2848,3 +2848,418 @@ img {
     display: none;
   }
 }
+
+/* ==========================================================================
+   NPTEL VISUAL CERTIFICATE GRID & MODAL STYLES
+   ========================================================================== */
+.nptel-cert-section {
+  margin-top: 3.5rem;
+  width: 100%;
+}
+
+.nptel-section-header {
+  margin-bottom: 2.5rem;
+}
+
+.nptel-main-heading {
+  font-family: var(--font-family-title);
+  font-size: 2rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0.5rem 0;
+}
+
+.nptel-sub-desc {
+  color: var(--color-text-secondary);
+  font-size: 0.95rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.nptel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.nptel-card {
+  background: rgba(12, 18, 15, 0.7);
+  border: 1px solid var(--color-border);
+  border-top: 2px solid var(--color-primary);
+  border-radius: 16px;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nptel-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--color-primary);
+  box-shadow: 0 15px 35px rgba(0, 245, 155, 0.15);
+}
+
+.nptel-card-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.nptel-laurel {
+  width: 2.2rem;
+  height: 2.2rem;
+  color: var(--color-primary);
+  filter: drop-shadow(0 0 6px rgba(0, 245, 155, 0.4));
+}
+
+.nptel-laurel svg {
+  width: 100%;
+  height: 100%;
+}
+
+.nptel-tag {
+  font-family: var(--font-family-mono);
+  font-size: 0.65rem;
+  padding: 0.25rem 0.6rem;
+  border-radius: 50px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.tag-cyan {
+  background: rgba(0, 210, 196, 0.1);
+  color: #00d2c4;
+  border: 1px solid rgba(0, 210, 196, 0.3);
+}
+
+.tag-purple {
+  background: rgba(168, 85, 247, 0.1);
+  color: #a855f7;
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+.tag-green {
+  background: rgba(0, 245, 155, 0.1);
+  color: #00f59b;
+  border: 1px solid rgba(0, 245, 155, 0.3);
+}
+
+.nptel-title {
+  font-family: var(--font-family-title);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 0.3rem;
+  line-height: 1.35;
+}
+
+.nptel-org {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  margin-bottom: 0.75rem;
+}
+
+.nptel-details {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.nptel-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.nptel-chip {
+  font-size: 0.7rem;
+  padding: 0.2rem 0.55rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 4px;
+  color: #e2e8f0;
+}
+
+.nptel-card-action {
+  margin-top: auto;
+}
+
+.nptel-btn {
+  width: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
+  background: rgba(0, 245, 155, 0.06);
+  border: 1px solid rgba(0, 245, 155, 0.25);
+  border-radius: 8px;
+  color: var(--color-primary);
+  font-family: var(--font-family-title);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nptel-btn:hover {
+  background: var(--color-primary);
+  color: #050807;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 15px rgba(0, 245, 155, 0.4);
+}
+
+.nptel-btn-icon {
+  width: 1rem;
+  height: 1rem;
+}
+
+/* Modal Overlay Styles */
+.cert-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(3, 6, 4, 0.85);
+  backdrop-filter: blur(12px);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  padding: 1.5rem;
+}
+
+.cert-modal-overlay.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.cert-modal-card {
+  background: #090f0c;
+  border: 1px solid var(--color-primary);
+  border-radius: 20px;
+  padding: 2rem;
+  max-width: 540px;
+  width: 100%;
+  position: relative;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 245, 155, 0.2);
+  transform: translateY(20px);
+  transition: transform 0.3s ease;
+}
+
+.cert-modal-overlay.active .cert-modal-card {
+  transform: translateY(0);
+}
+
+.cert-modal-close {
+  position: absolute;
+  top: 1.25rem;
+  right: 1.25rem;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  font-size: 1.5rem;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  line-height: 1;
+  transition: all 0.2s ease;
+}
+
+.cert-modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+  border-color: #ef4444;
+}
+
+.cert-badge-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.cert-nptel-logo {
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  color: var(--color-primary);
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.cert-status-badge {
+  font-family: var(--font-family-mono);
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  background: rgba(0, 210, 196, 0.15);
+  color: #00d2c4;
+  border-radius: 4px;
+}
+
+.modal-cert-name {
+  font-family: var(--font-family-title);
+  font-size: 1.4rem;
+  color: #fff;
+  margin-bottom: 0.2rem;
+}
+
+.modal-cert-org {
+  font-family: var(--font-family-mono);
+  font-size: 0.8rem;
+  color: var(--color-text-secondary);
+  margin-bottom: 1.25rem;
+}
+
+.cert-display-frame {
+  position: relative;
+  background: radial-gradient(circle at center, #0e1713 0%, #050907 100%);
+  border: 1px solid rgba(0, 245, 155, 0.25);
+  border-radius: 12px;
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  margin-bottom: 1.25rem;
+  overflow: hidden;
+}
+
+.cert-inner-content {
+  position: relative;
+  z-index: 2;
+}
+
+.cert-award-to {
+  font-family: var(--font-family-mono);
+  font-size: 0.65rem;
+  color: var(--color-text-secondary);
+  letter-spacing: 0.12em;
+  margin-bottom: 0.5rem;
+}
+
+.cert-candidate-name {
+  font-family: var(--font-family-title);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--color-primary);
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 10px rgba(0, 245, 155, 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.cert-for-spec {
+  font-size: 0.85rem;
+  color: #e2e8f0;
+  margin-bottom: 1rem;
+}
+
+.cert-seal {
+  width: 60px;
+  height: 60px;
+  margin: 0 auto;
+}
+
+.cert-seal-svg {
+  width: 100%;
+  height: 100%;
+}
+
+.modal-cert-desc {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin-bottom: 1.25rem;
+}
+
+.cert-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* ==========================================================================
+   ENHANCED MOBILE RESPONSIVENESS (Images, Profile Ring, Cards, Layouts)
+   ========================================================================== */
+@media (max-width: 992px) {
+  .about-grid {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  
+  .nptel-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .about-header-top-row {
+    flex-direction: column-reverse;
+    align-items: center;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .about-header-text {
+    align-items: center;
+  }
+
+  .about-profile-ring {
+    width: 110px;
+    height: 110px;
+  }
+
+  .about-profile-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .about-dashboard-card {
+    height: 480px;
+  }
+
+  .nptel-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cert-modal-card {
+    padding: 1.5rem;
+  }
+
+  .cert-candidate-name {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 2.75rem;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+  }
+
+  .about-dashboard-card {
+    height: 440px;
+  }
+
+  .widget-lab-status { width: 140px; top: 1rem; left: 1rem; }
+  .widget-temp { width: 120px; top: 6.5rem; left: 1rem; }
+  .widget-humidity { width: 120px; top: 11rem; left: 1rem; }
+  .widget-sequencing { width: 220px; bottom: 1rem; left: 1rem; }
+  .widget-molecular { display: none; }
+}
+
