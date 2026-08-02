@@ -1,404 +1,226 @@
 /* ==========================================================================
-   GENETIC ENGINEERING PORTFOLIO - CORE JS LIBRARY
+   SHUNANDA PORTFOLIO - INTERACTIVE APPLICATION LOGIC
    Features:
-   - High-performance 3D Bioluminescent DNA Helix Canvas Animation
-   - Dynamic Navigation Link Tracking & Header styling
-   - Responsive Mobile Toggle Handler
-   - Scroll-Driven Intersection Observer Fade-in Animation Engine
-   - Interactive Form Handler & Transmission Confirmation
+   - Bioluminescent DNA Helix 3D Canvas Animation
+   - Mobile Navigation Toggle
+   - Smooth Scroll Offset for Anchor Links
+   - Scroll Triggered Animations (Intersection Observer)
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
-  
-  // ==========================================
-  // 1. Fixed Header & Active Navigation Highlighting
-  // ==========================================
-  const header = document.querySelector('.main-header');
-  const navLinks = document.querySelectorAll('.nav-link');
-  const sections = document.querySelectorAll('section');
-
-  function updateHeaderState() {
-    // Add border/background on scroll
-    if (window.scrollY > 50) {
-      header.classList.add('scrolled');
-    } else {
-      header.classList.remove('scrolled');
-    }
-
-    // Scroll Spy active navigation state
-    let currentActiveId = '';
-    const scrollPos = window.scrollY + 120; // offset for nav height
-
-    sections.forEach(sec => {
-      const top = sec.offsetTop;
-      const height = sec.offsetHeight;
-      const id = sec.getAttribute('id');
-
-      if (scrollPos >= top && scrollPos < top + height) {
-        currentActiveId = id;
-      }
-    });
-
-    if (currentActiveId) {
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentActiveId}`) {
-          link.classList.add('active');
-        }
-      });
-    }
-  }
-
-  window.addEventListener('scroll', updateHeaderState);
-  updateHeaderState();
-
-  // ==========================================
-  // 2. Mobile Responsive Menu Toggle
-  // ==========================================
-  const menuToggle = document.getElementById('menu-toggle-btn');
+  // 1. Mobile Menu Toggle
+  const menuToggleBtn = document.getElementById('menu-toggle-btn');
   const navMenu = document.querySelector('.nav-menu');
+  const navLinks = document.querySelectorAll('.nav-link');
 
-  if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', () => {
-      const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
-      menuToggle.setAttribute('aria-expanded', !isExpanded);
-      menuToggle.classList.toggle('active');
+  if (menuToggleBtn && navMenu) {
+    menuToggleBtn.addEventListener('click', () => {
+      const isExpanded = menuToggleBtn.getAttribute('aria-expanded') === 'true';
+      menuToggleBtn.setAttribute('aria-expanded', !isExpanded);
       navMenu.classList.toggle('active');
+      menuToggleBtn.classList.toggle('active');
     });
 
-    // Close menu when clicking on nav link
     navLinks.forEach(link => {
       link.addEventListener('click', () => {
-        menuToggle.setAttribute('aria-expanded', 'false');
-        menuToggle.classList.remove('active');
         navMenu.classList.remove('active');
+        menuToggleBtn.classList.remove('active');
+        menuToggleBtn.setAttribute('aria-expanded', 'false');
       });
     });
   }
 
-  // ==========================================
-  // 3. Scroll Reveal Animation Engine (Intersection Observer)
-  // ==========================================
-  const animObserverOptions = {
-    threshold: 0.15,
-    rootMargin: '0px 0px -50px 0px'
-  };
-
-  const animObserver = new IntersectionObserver((entries, observer) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        
-        // If skill progress bar is inside, animate its width
-        const progressBars = entry.target.querySelectorAll('.progress-bar, .cat-skill-bar');
-        progressBars.forEach(bar => {
-          const targetWidth = bar.style.width;
-          // Set width temporarily to 0, then back to trigger CSS transition
-          bar.style.width = '0%';
-          setTimeout(() => {
-            bar.style.width = targetWidth;
-          }, 50);
-        });
-
-        // Keep observing or unobserve to avoid repeat triggers
-        observer.unobserve(entry.target);
-      }
-    });
-  }, animObserverOptions);
-
-  // Target all elements configured for scroll-animations
-  const animElements = document.querySelectorAll('.animate-on-scroll, .timeline-item');
-  animElements.forEach(el => animObserver.observe(el));
-
-
-  // ==========================================
-  // 4. 3D DNA Canvas Helix Animation Engine
-  // ==========================================
-  const canvas = document.getElementById('dnaCanvas');
-  const ctx = canvas.getContext('2d');
-  let animationFrameId;
-
-  // Track coordinates for mouse interactions
-  let mouse = { x: null, y: null, active: false };
-  const parentContainer = document.querySelector('.hero-canvas-container');
-
-  function resizeCanvas() {
-    const rect = parentContainer.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-  }
+  // 2. Scroll Animation Observer
+  const animateElements = document.querySelectorAll('.animate-on-scroll');
   
-  window.addEventListener('resize', resizeCanvas);
-  resizeCanvas();
+  if ('IntersectionObserver' in window) {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px 0px -50px 0px',
+      threshold: 0.15
+    };
 
-  // Mouse hover event setup
-  window.addEventListener('mousemove', (e) => {
-    const rect = canvas.getBoundingClientRect();
-    mouse.x = e.clientX - rect.left;
-    mouse.y = e.clientY - rect.top;
-    
-    // Check if mouse is inside the canvas bounding box
-    if (e.clientX >= rect.left && e.clientX <= rect.right &&
-        e.clientY >= rect.top && e.clientY <= rect.bottom) {
-      mouse.active = true;
-    } else {
-      mouse.active = false;
-    }
-  });
+    const scrollObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
 
-  window.addEventListener('mouseleave', () => {
-    mouse.active = false;
-  });
+    animateElements.forEach(el => scrollObserver.observe(el));
+  } else {
+    // Fallback for older browsers
+    animateElements.forEach(el => el.classList.add('is-visible'));
+  }
 
-  // DNA Configuration Parameters
-  const dnaConfig = {
-    dotsCount: 22,          // Number of base pairs
-    radius: 75,             // Helix rotation radius
-    spacing: 0.28,          // Angular phase shift per base pair
-    speed: 0.007,           // Default speed of rotation
-    currentTheta: 0,        // Running angle
-    focalLength: 320,       // 3D Perspective compression
-    waveFrequency: 0.12,    // Shape frequency
-  };
+  // 3. Bioluminescent DNA Canvas Particle & Helix Animation
+  const canvas = document.getElementById('dnaCanvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let animationFrameId;
 
-  // Node class for coordinates and custom logic
-  class BasePairNode {
-    constructor(index) {
-      this.index = index;
+    function resizeCanvas() {
+      canvas.width = canvas.parentElement.clientWidth || window.innerWidth;
+      canvas.height = canvas.parentElement.clientHeight || window.innerHeight;
     }
 
-    render(theta) {
-      const spacingY = canvas.height / (dnaConfig.dotsCount + 1);
-      const centerY = spacingY + (this.index * spacingY);
-      const centerX = canvas.width * 0.5;
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
 
-      // Phase Shift difference between node indices
-      const angleOffset = this.index * dnaConfig.spacing;
-      const angle1 = theta + angleOffset;
-      const angle2 = theta + angleOffset + Math.PI; // 180 degrees shift (double helix)
+    // Particle system for ambient bio-sparks
+    const particleCount = 40;
+    const particles = [];
 
-      // Perspective scale variables
-      const z1 = Math.cos(angle1) * dnaConfig.radius;
-      const z2 = Math.cos(angle2) * dnaConfig.radius;
+    for (let i = 0; i < particleCount; i++) {
+      particles.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        radius: Math.random() * 2 + 0.5,
+        color: Math.random() > 0.4 ? '#00f59b' : '#00d2c4',
+        alpha: Math.random() * 0.5 + 0.2,
+        speedX: (Math.random() - 0.5) * 0.4,
+        speedY: (Math.random() - 0.5) * 0.4,
+        pulseSpeed: Math.random() * 0.02 + 0.01
+      });
+    }
 
-      const scale1 = dnaConfig.focalLength / (dnaConfig.focalLength + z1);
-      const scale2 = dnaConfig.focalLength / (dnaConfig.focalLength + z2);
+    let time = 0;
 
-      // 3D projection to screen coordinates
-      let x1 = centerX + Math.sin(angle1) * dnaConfig.radius * scale1;
-      let x2 = centerX + Math.sin(angle2) * dnaConfig.radius * scale2;
-      let y1 = centerY;
-      let y2 = centerY;
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      time += 0.015;
 
-      // Mouse influence logic: push nodes away slightly if mouse is close
-      if (mouse.active) {
-        const dist1 = Math.hypot(mouse.x - x1, mouse.y - y1);
-        const dist2 = Math.hypot(mouse.x - x2, mouse.y - y2);
+      // Draw floating bioluminescent particles
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+        p.alpha += Math.sin(time * 2) * 0.005;
 
-        if (dist1 < 80) {
-          const force = (80 - dist1) * 0.15;
-          const angle = Math.atan2(y1 - mouse.y, x1 - mouse.x);
-          x1 += Math.cos(angle) * force;
-        }
-        if (dist2 < 80) {
-          const force = (80 - dist2) * 0.15;
-          const angle = Math.atan2(y2 - mouse.y, x2 - mouse.x);
-          x2 += Math.cos(angle) * force;
-        }
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0.1, Math.min(0.8, p.alpha));
+        ctx.fillStyle = p.color;
+        ctx.shadowColor = p.color;
+        ctx.shadowBlur = 10;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      });
+
+      // Draw 3D Rotating DNA Strand across background right side
+      const centerX = canvas.width * 0.75;
+      const startY = canvas.height * 0.1;
+      const endY = canvas.height * 0.9;
+      const numNodes = 28;
+      const nodeSpacing = (endY - startY) / numNodes;
+      const amplitude = Math.min(100, canvas.width * 0.12);
+
+      for (let i = 0; i < numNodes; i++) {
+        const y = startY + i * nodeSpacing;
+        const phase = time * 1.5 + (i * 0.25);
+        const x1 = centerX + Math.sin(phase) * amplitude;
+        const x2 = centerX - Math.sin(phase) * amplitude;
+        const z1 = Math.cos(phase);
+        const z2 = -Math.cos(phase);
+
+        // Calculate size based on depth (z-index simulation)
+        const r1 = Math.max(1.5, 3.5 + z1 * 1.5);
+        const r2 = Math.max(1.5, 3.5 + z2 * 1.5);
+
+        const alpha1 = Math.max(0.2, 0.5 + z1 * 0.3);
+        const alpha2 = Math.max(0.2, 0.5 + z2 * 0.3);
+
+        // Draw horizontal base pair rung connecting the two strands
+        ctx.save();
+        ctx.globalAlpha = Math.min(alpha1, alpha2) * 0.35;
+        ctx.strokeStyle = '#00d2c4';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x1, y);
+        ctx.lineTo(x2, y);
+        ctx.stroke();
+        ctx.restore();
+
+        // Draw Strand 1 Node
+        ctx.save();
+        ctx.globalAlpha = alpha1;
+        ctx.fillStyle = '#00f59b';
+        ctx.shadowColor = '#00f59b';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(x1, y, r1, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+
+        // Draw Strand 2 Node
+        ctx.save();
+        ctx.globalAlpha = alpha2;
+        ctx.fillStyle = '#00d2c4';
+        ctx.shadowColor = '#00d2c4';
+        ctx.shadowBlur = 8;
+        ctx.beginPath();
+        ctx.arc(x2, y, r2, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
       }
 
-      return {
-        pt1: { x: x1, y: y1, z: z1, scale: scale1 },
-        pt2: { x: x2, y: y2, z: z2, scale: scale2 }
-      };
+      animationFrameId = requestAnimationFrame(animate);
     }
+
+    animate();
   }
 
-  // Populate node array
-  const nodes = [];
-  for (let i = 0; i < dnaConfig.dotsCount; i++) {
-    nodes.push(new BasePairNode(i));
-  }
+  // 4. Certificate Lightbox Modal Logic
+  const certModal = document.getElementById('certModal');
+  const certModalClose = document.getElementById('certModalClose');
+  const modalCertTitle = document.getElementById('modalCertTitle');
+  const modalCertIssuer = document.getElementById('modalCertIssuer');
+  const modalCertDesc = document.getElementById('modalCertDesc');
+  const viewCertBtns = document.querySelectorAll('.btn-view-cert');
 
-  // Master Render Loop
-  function animateDNA() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (certModal && viewCertBtns.length > 0) {
+    viewCertBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const title = btn.getAttribute('data-title') || 'Certificate';
+        const issuer = btn.getAttribute('data-issuer') || 'Issuer';
+        const desc = btn.getAttribute('data-desc') || '';
 
-    // Dynamic speed variance: mouse movement adds friction/speed changes
-    let localSpeed = dnaConfig.speed;
-    if (mouse.active) {
-      localSpeed = dnaConfig.speed * 1.6;
-    }
-    dnaConfig.currentTheta += localSpeed;
+        if (modalCertTitle) modalCertTitle.textContent = title;
+        if (modalCertIssuer) modalCertIssuer.textContent = issuer;
+        if (modalCertDesc) modalCertDesc.textContent = desc;
 
-    const coordinates = nodes.map(node => node.render(dnaConfig.currentTheta));
-
-    // 1. Draw Connecting base-pair bonds (Hydrogen bonds) first (renders behind nodes)
-    coordinates.forEach((coord, idx) => {
-      // Alternate bonds coloring: represent GC (3 hydrogen bonds) and AT (2 bonds)
-      // Visualized using dotted/dashed styling
-      const { pt1, pt2 } = coord;
-      const isGC = idx % 2 === 0;
-
-      // Calculate base pair color values based on mean Z depth
-      const meanZ = (pt1.z + pt2.z) / 2;
-      const alpha = 0.08 + (0.2 * (1 - (meanZ + dnaConfig.radius) / (2 * dnaConfig.radius)));
-
-      ctx.beginPath();
-      ctx.moveTo(pt1.x, pt1.y);
-      ctx.lineTo(pt2.x, pt2.y);
-      ctx.strokeStyle = isGC ? `rgba(0, 245, 155, ${alpha})` : `rgba(0, 210, 196, ${alpha})`;
-      ctx.lineWidth = isGC ? 2 : 1;
-      if (!isGC) ctx.setLineDash([3, 4]);
-      else ctx.setLineDash([]);
-      ctx.stroke();
-    });
-    ctx.setLineDash([]); // Reset dash state
-
-    // 2. Draw Helix Nodes & Outer strands
-    // Sort nodes to draw background elements first (3D Painters Algorithm)
-    const pointsList = [];
-    coordinates.forEach((coord, index) => {
-      pointsList.push({
-        x: coord.pt1.x, y: coord.pt1.y, z: coord.pt1.z, 
-        scale: coord.pt1.scale, strand: 1, index
-      });
-      pointsList.push({
-        x: coord.pt2.x, y: coord.pt2.y, z: coord.pt2.z, 
-        scale: coord.pt2.scale, strand: 2, index
+        certModal.classList.add('active');
+        certModal.setAttribute('aria-hidden', 'false');
       });
     });
 
-    pointsList.sort((a, b) => b.z - a.z); // Far away z first
+    const closeModal = () => {
+      certModal.classList.remove('active');
+      certModal.setAttribute('aria-hidden', 'true');
+    };
 
-    // Render sorted elements
-    pointsList.forEach(pt => {
-      const baseRadius = pt.strand === 1 ? 5.5 : 4.5;
-      const dotRadius = baseRadius * pt.scale;
-      
-      // Calculate individual opacity from Z depth
-      const zPercent = (pt.z + dnaConfig.radius) / (2 * dnaConfig.radius); // 0 (closest) to 1 (furthest)
-      const alpha = 0.35 + (0.65 * (1 - zPercent));
+    if (certModalClose) {
+      certModalClose.addEventListener('click', closeModal);
+    }
 
-      ctx.beginPath();
-      ctx.arc(pt.x, pt.y, dotRadius, 0, Math.PI * 2);
-      
-      if (pt.strand === 1) {
-        // Emerald Green Node
-        ctx.fillStyle = `rgba(0, 245, 155, ${alpha})`;
-        ctx.shadowBlur = 10 * pt.scale;
-        ctx.shadowColor = 'rgba(0, 245, 155, 0.6)';
-      } else {
-        // Cyber Teal Node
-        ctx.fillStyle = `rgba(0, 210, 196, ${alpha})`;
-        ctx.shadowBlur = 8 * pt.scale;
-        ctx.shadowColor = 'rgba(0, 210, 196, 0.5)';
+    certModal.addEventListener('click', (e) => {
+      if (e.target === certModal) {
+        closeModal();
       }
-
-      ctx.fill();
-      ctx.shadowBlur = 0; // Reset shadow glow
     });
 
-    animationFrameId = requestAnimationFrame(animateDNA);
-  }
-
-  // Start Animation
-  animateDNA();
-
-  // ==========================================
-  // 5. Interactive Form Handler & Transmission
-  // ==========================================
-  const contactForm = document.getElementById('portfolio-contact-form');
-  const successAlert = document.getElementById('form-success-alert');
-
-  if (contactForm && successAlert) {
-    contactForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-
-      const btnSubmit = contactForm.querySelector('.btn-submit');
-      const originalBtnHTML = btnSubmit.innerHTML;
-
-      // Enter glowing loading state
-      btnSubmit.disabled = true;
-      btnSubmit.style.opacity = '0.7';
-      btnSubmit.innerHTML = `
-        <span>Compiling sequence...</span>
-        <svg class="btn-icon" style="animation: logo-rotate 1.5s linear infinite" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-          <circle cx="12" cy="12" r="10" stroke-dasharray="8 8"/>
-        </svg>
-      `;
-
-      // Mock sending packet over cybernetic link (simulate 1.5s delay)
-      setTimeout(() => {
-        // Restore button state
-        btnSubmit.disabled = false;
-        btnSubmit.style.opacity = '1';
-        btnSubmit.innerHTML = originalBtnHTML;
-
-        // Reset inputs
-        contactForm.reset();
-
-        // Reveal beautiful bioluminescent confirmation prompt
-        successAlert.style.display = 'flex';
-
-        // Auto-hide alert after 8 seconds
-        setTimeout(() => {
-          successAlert.style.animation = 'fade-in-up 0.4s reverse forwards';
-          setTimeout(() => {
-            successAlert.style.display = 'none';
-            successAlert.style.animation = 'fade-in-up 0.4s cubic-bezier(0.1, 0.8, 0.2, 1) forwards';
-          }, 400);
-        }, 8000);
-
-      }, 1500);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && certModal.classList.contains('active')) {
+        closeModal();
+      }
     });
   }
-
 });
-
-// Global functions for Certificate Modal Window
-// Signature: openCertModal(title, imageSrc, org, desc)
-window.openCertModal = function(title, imageSrc, org, desc) {
-  const modal = document.getElementById('certModal');
-  const titleEl = document.getElementById('modalCertTitle');
-  const orgEl = document.getElementById('modalCertOrg');
-  const imgEl = document.getElementById('modalCertImage');
-  const descEl = document.getElementById('modalCertDesc');
-
-  if (modal) {
-    if (titleEl) titleEl.textContent = title;
-    if (orgEl) orgEl.textContent = org;
-    if (imgEl) {
-      imgEl.src = imageSrc;
-      imgEl.alt = title + ' Certificate';
-    }
-    if (descEl) descEl.textContent = desc;
-
-    modal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-  }
-};
-
-window.closeCertModal = function() {
-  const modal = document.getElementById('certModal');
-  if (modal) {
-    modal.classList.remove('active');
-    document.body.style.overflow = '';
-  }
-};
-
-// Close modal when clicking backdrop
-document.addEventListener('click', (e) => {
-  const modal = document.getElementById('certModal');
-  if (modal && e.target === modal) {
-    closeCertModal();
-  }
-});
-
-// Close modal on Escape key
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') {
-    closeCertModal();
-  }
-});
-
