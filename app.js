@@ -31,19 +31,20 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 2. Scroll Animation Observer
-  const animateElements = document.querySelectorAll('.animate-on-scroll');
+  const animateElements = document.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card');
   
   if ('IntersectionObserver' in window) {
     const observerOptions = {
       root: null,
-      rootMargin: '0px 0px -50px 0px',
-      threshold: 0.15
+      rootMargin: '50px 0px 50px 0px',
+      threshold: 0.05
     };
 
     const scrollObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
+          entry.target.classList.add('visible');
           observer.unobserve(entry.target);
         }
       });
@@ -52,7 +53,10 @@ document.addEventListener('DOMContentLoaded', () => {
     animateElements.forEach(el => scrollObserver.observe(el));
   } else {
     // Fallback for older browsers
-    animateElements.forEach(el => el.classList.add('is-visible'));
+    animateElements.forEach(el => {
+      el.classList.add('is-visible');
+      el.classList.add('visible');
+    });
   }
 
   // 3. Bioluminescent DNA Canvas Particle & Helix Animation
