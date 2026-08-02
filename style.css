@@ -605,25 +605,27 @@ img {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), var(--glow-shadow-green);
 }
 
-/* Individual Widget Placements */
+/* Widget Position */
 .widget-lab-status {
+  position: absolute;
   top: 2rem;
   left: 2rem;
   width: 170px;
 }
 
 .widget-temp {
-  top: 12rem;
+  position: absolute;
+  top: 13rem;
   left: 2rem;
   width: 130px;
 }
 
 .widget-humidity {
-  top: 20rem;      /* Move it lower */
+  position: absolute;
+  top: 18rem;
   left: 2rem;
   width: 130px;
 }
-
 .widget-sequencing {
   bottom: 1.5rem;
   left: 1.5rem;
