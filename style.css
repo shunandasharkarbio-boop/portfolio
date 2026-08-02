@@ -613,12 +613,12 @@ img {
 }
 
 .widget-temp {
-  top: 18rem;      /* Was 8rem */
+  top: 15rem;      /* Was 8rem */
   left: 1.5rem;
   width: 130px;
 }
 .widget-humidity {
-  top: 20rem;
+  top: 26rem;
   left: 1.5rem;
   width: 140px;
 }
