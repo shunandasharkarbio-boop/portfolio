@@ -618,7 +618,7 @@ img {
   width: 130px;
 }
 .widget-humidity {
-  top: 40rem;
+  bottom: 10rem;
   left: 1.5rem;
   width: 130px;
 }
