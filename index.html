@@ -520,106 +520,142 @@
             </div>
           </div>
 
-        </div>
-
-        <!-- Upgraded NPTEL Certification Visual Section -->
+        <!-- Certifications Section -->
         <div class="nptel-cert-section mt-5 animate-on-scroll">
           <div class="nptel-section-header text-center">
             <span class="info-badge mb-2">
               <svg class="badge-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M12 15l-2 5l-4-2l-4 2l2-5l-4-3.5l5.5-0.5l2.5-5l2.5 5l5.5 0.5z"/>
+                <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
               </svg>
-              NPTEL CERTIFIED CREDENTIALS
+              CERTIFIED CREDENTIALS
             </span>
-            <h3 class="nptel-main-heading">My <span class="glowing-accent">NPTEL Certifications</span></h3>
-            <p class="nptel-sub-desc">Official certifications issued by NPTEL &amp; IITs in Evolutionary Biology, Python &amp; Biotechnology.</p>
+            <h3 class="nptel-main-heading">My <span class="glowing-accent">Certifications</span></h3>
+            <p class="nptel-sub-desc">Official certifications in Evolutionary Biology, Genetic Engineering &amp; Healthcare. Click any card to view the full certificate.</p>
           </div>
 
           <div class="nptel-grid">
-            <!-- Certificate Card 1: Evolutionary Biology -->
+
+            <!-- Card 1: Evolutionary Biology -->
             <div class="nptel-card">
               <div class="nptel-card-banner">
                 <div class="nptel-laurel">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
                 </div>
-                <span class="nptel-tag tag-cyan">Verified Credential</span>
+                <span class="nptel-tag tag-cyan">NPTEL</span>
+              </div>
+              <div class="nptel-cert-thumb" onclick="openCertModal('Evolutionary Biology', 'image/introduction to evolution.jpeg', 'NPTEL &amp; IISc Bangalore', 'Completed NPTEL certification on Evolutionary Biology covering molecular evolution, phylogenetic trees, population genetics, and speciation.')">
+                <img src="image/introduction to evolution.jpeg" alt="Evolutionary Biology Certificate" class="nptel-thumb-img">
+                <div class="nptel-thumb-overlay">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="thumb-eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <span>Click to View</span>
+                </div>
               </div>
               <div class="nptel-card-content">
                 <h4 class="nptel-title">Evolutionary Biology</h4>
-                <div class="nptel-org">NPTEL &bull; IIT Madras / IISc</div>
-                <p class="nptel-details">Focus on molecular evolution, phylogenetic tree analysis, population genetics, and speciation mechanisms.</p>
+                <div class="nptel-org">NPTEL &bull; IISc Bangalore</div>
                 <div class="nptel-tags-row">
                   <span class="nptel-chip">Phylogenetics</span>
                   <span class="nptel-chip">Genetics</span>
                 </div>
               </div>
               <div class="nptel-card-action">
-                <button class="nptel-btn" onclick="openCertModal('Evolutionary Biology', 'NPTEL Certification in Evolutionary Biology', 'NPTEL & IISc Bangalore / IIT', 'Molecular evolution, phylogenetic trees, genetic drift, and macroevolutionary patterns.')">
+                <button class="nptel-btn" onclick="openCertModal('Evolutionary Biology', 'image/introduction to evolution.jpeg', 'NPTEL &amp; IISc Bangalore', 'Completed NPTEL certification on Evolutionary Biology covering molecular evolution, phylogenetic trees, population genetics, and speciation.')">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nptel-btn-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                  View Certificate
+                  View Full Certificate
                 </button>
               </div>
             </div>
 
-            <!-- Certificate Card 2: The Joy of Computing using Python -->
+            <!-- Card 2: Genetic Engineering -->
             <div class="nptel-card">
               <div class="nptel-card-banner">
                 <div class="nptel-laurel">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                  </svg>
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
                 </div>
-                <span class="nptel-tag tag-purple">Verified Credential</span>
+                <span class="nptel-tag tag-green">NPTEL</span>
               </div>
-              <div class="nptel-card-content">
-                <h4 class="nptel-title">The Joy of Computing using Python</h4>
-                <div class="nptel-org">NPTEL &bull; IIT Ropar</div>
-                <p class="nptel-details">Computational logic, data structures, scientific script automation, and problem solving for biological datasets.</p>
-                <div class="nptel-tags-row">
-                  <span class="nptel-chip">Python</span>
-                  <span class="nptel-chip">Data Structures</span>
+              <div class="nptel-cert-thumb" onclick="openCertModal('Genetic Engineering', 'image/Genetic engineering.jpg', 'NPTEL &amp; IIT Kharagpur', 'Completed NPTEL certification on Genetic Engineering covering recombinant DNA, gene cloning, CRISPR-Cas mechanisms and molecular tools.')">
+                <img src="image/Genetic engineering.jpg" alt="Genetic Engineering Certificate" class="nptel-thumb-img">
+                <div class="nptel-thumb-overlay">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="thumb-eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <span>Click to View</span>
                 </div>
-              </div>
-              <div class="nptel-card-action">
-                <button class="nptel-btn" onclick="openCertModal('The Joy of Computing using Python', 'NPTEL Certification in The Joy of Computing using Python', 'NPTEL & IIT Ropar', 'Python algorithms, computational logic, data structures, and biocomputing applications.')">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nptel-btn-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                  View Certificate
-                </button>
-              </div>
-            </div>
-
-            <!-- Certificate Card 3: Genetic Engineering & Biotech -->
-            <div class="nptel-card">
-              <div class="nptel-card-banner">
-                <div class="nptel-laurel">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/>
-                  </svg>
-                </div>
-                <span class="nptel-tag tag-green">Verified Credential</span>
               </div>
               <div class="nptel-card-content">
                 <h4 class="nptel-title">Genetic Engineering</h4>
                 <div class="nptel-org">NPTEL &bull; IIT Kharagpur</div>
-                <p class="nptel-details">Recombinant DNA technology, gene cloning vectors, CRISPR-Cas mechanisms, and molecular tools.</p>
                 <div class="nptel-tags-row">
                   <span class="nptel-chip">CRISPR</span>
                   <span class="nptel-chip">Cloning</span>
                 </div>
               </div>
               <div class="nptel-card-action">
-                <button class="nptel-btn" onclick="openCertModal('Genetic Engineering', 'NPTEL Certification in Genetic Engineering', 'NPTEL & IIT Kharagpur', 'Recombinant DNA technology, gene editing tools, vector construction, and bio-therapeutics.')">
+                <button class="nptel-btn" onclick="openCertModal('Genetic Engineering', 'image/Genetic engineering.jpg', 'NPTEL &amp; IIT Kharagpur', 'Completed NPTEL certification on Genetic Engineering covering recombinant DNA, gene cloning, CRISPR-Cas mechanisms and molecular tools.')">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nptel-btn-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
-                  View Certificate
+                  View Full Certificate
                 </button>
               </div>
+            </div>
+
+            <!-- Card 3: Medicover -->
+            <div class="nptel-card">
+              <div class="nptel-card-banner">
+                <div class="nptel-laurel">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+                </div>
+                <span class="nptel-tag tag-purple">Healthcare</span>
+              </div>
+              <div class="nptel-cert-thumb" onclick="openCertModal('Medicover Certificate', 'image/medicover certificte.jpg', 'Medicover Hospitals', 'Healthcare training and internship certification from Medicover Hospitals gaining hands-on clinical exposure.')">
+                <img src="image/medicover certificte.jpg" alt="Medicover Certificate" class="nptel-thumb-img">
+                <div class="nptel-thumb-overlay">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="thumb-eye-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  <span>Click to View</span>
+                </div>
+              </div>
+              <div class="nptel-card-content">
+                <h4 class="nptel-title">Medicover Certificate</h4>
+                <div class="nptel-org">Medicover Hospitals</div>
+                <div class="nptel-tags-row">
+                  <span class="nptel-chip">Healthcare</span>
+                  <span class="nptel-chip">Training</span>
+                </div>
+              </div>
+              <div class="nptel-card-action">
+                <button class="nptel-btn" onclick="openCertModal('Medicover Certificate', 'image/medicover certificte.jpg', 'Medicover Hospitals', 'Healthcare training and internship certification from Medicover Hospitals gaining hands-on clinical exposure.')">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nptel-btn-icon"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                  View Full Certificate
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Certificate Modal — shows REAL certificate image fullscreen -->
+        <div id="certModal" class="cert-modal-overlay">
+          <div class="cert-modal-card">
+            <button class="cert-modal-close" onclick="closeCertModal()">&times;</button>
+            <div class="cert-badge-header">
+              <span id="modalCertOrg" class="cert-nptel-logo">NPTEL</span>
+              <span class="cert-status-badge">VERIFIED CERTIFICATE</span>
+            </div>
+            <h3 id="modalCertTitle" class="modal-cert-name">Certificate</h3>
+            <div class="cert-real-img-frame">
+              <img id="modalCertImage" src="" alt="Certificate" class="cert-real-img">
+            </div>
+            <p id="modalCertDesc" class="modal-cert-desc"></p>
+            <div class="cert-modal-actions">
+              <button class="btn btn-primary btn-sm" onclick="closeCertModal()">Close</button>
             </div>
           </div>
         </div>
 
-        <!-- Modal Overlay for Viewing NPTEL Certificates -->
+      </div>
+    </section>
+
+    <!-- 4. Projects & Research Section -->
+    <section class="projects-section py-large" id="projects">
+
         <div id="certModal" class="cert-modal-overlay">
           <div class="cert-modal-card">
             <button class="cert-modal-close" onclick="closeCertModal()">&times;</button>

@@ -3263,3 +3263,86 @@ img {
   .widget-molecular { display: none; }
 }
 
+/* ==========================================================================
+   CERTIFICATE THUMBNAIL & REAL IMAGE MODAL STYLES
+   ========================================================================== */
+
+/* Clickable thumbnail wrapper on the card */
+.nptel-cert-thumb {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  border: 1px solid var(--color-border);
+  background: #060d09;
+}
+
+.nptel-thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease, filter 0.35s ease;
+  filter: brightness(0.9);
+}
+
+.nptel-cert-thumb:hover .nptel-thumb-img {
+  transform: scale(1.04);
+  filter: brightness(0.55);
+}
+
+/* Hover overlay with eye icon */
+.nptel-thumb-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  background: rgba(0, 245, 155, 0.12);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  color: var(--color-primary);
+  font-family: var(--font-family-mono);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+}
+
+.nptel-cert-thumb:hover .nptel-thumb-overlay {
+  opacity: 1;
+}
+
+.thumb-eye-icon {
+  width: 1.75rem;
+  height: 1.75rem;
+  filter: drop-shadow(0 0 6px var(--color-primary));
+}
+
+/* Modal real certificate image frame */
+.cert-real-img-frame {
+  width: 100%;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 245, 155, 0.2);
+  margin-bottom: 1rem;
+  background: #060d09;
+  max-height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cert-real-img {
+  width: 100%;
+  height: auto;
+  max-height: 420px;
+  object-fit: contain;
+  display: block;
+}
+
+

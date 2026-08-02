@@ -356,18 +356,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
 });
 
-// Global functions for NPTEL Certificate Modal Window
-window.openCertModal = function(title, fullTitle, org, desc) {
+// Global functions for Certificate Modal Window
+// Signature: openCertModal(title, imageSrc, org, desc)
+window.openCertModal = function(title, imageSrc, org, desc) {
   const modal = document.getElementById('certModal');
   const titleEl = document.getElementById('modalCertTitle');
   const orgEl = document.getElementById('modalCertOrg');
-  const specEl = document.getElementById('modalCertSpec');
+  const imgEl = document.getElementById('modalCertImage');
   const descEl = document.getElementById('modalCertDesc');
 
   if (modal) {
     if (titleEl) titleEl.textContent = title;
-    if (orgEl) orgEl.textContent = `Issued by ${org}`;
-    if (specEl) specEl.textContent = `For successfully completing: ${fullTitle}`;
+    if (orgEl) orgEl.textContent = org;
+    if (imgEl) {
+      imgEl.src = imageSrc;
+      imgEl.alt = title + ' Certificate';
+    }
     if (descEl) descEl.textContent = desc;
 
     modal.classList.add('active');
