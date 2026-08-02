@@ -613,14 +613,14 @@ img {
 }
 
 .widget-temp {
-  top: 15rem;      /* Was 8rem */
+  top: 13rem;      /* Was 8rem */
   left: 1.5rem;
   width: 130px;
 }
 .widget-humidity {
-  top: 26rem;
+  top: 30rem;
   left: 1.5rem;
-  width: 140px;
+  width: 130px;
 }
 
 .widget-sequencing {
