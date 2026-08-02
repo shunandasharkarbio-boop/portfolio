@@ -187,6 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const modalCertTitle = document.getElementById('modalCertTitle');
   const modalCertIssuer = document.getElementById('modalCertIssuer');
   const modalCertDesc = document.getElementById('modalCertDesc');
+  const modalCertImage = document.getElementById('modalCertImage');
   const viewCertBtns = document.querySelectorAll('.btn-view-cert');
 
   if (certModal && viewCertBtns.length > 0) {
@@ -196,10 +197,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const title = btn.getAttribute('data-title') || 'Certificate';
         const issuer = btn.getAttribute('data-issuer') || 'Issuer';
         const desc = btn.getAttribute('data-desc') || '';
+        const img = btn.getAttribute('data-img') || '';
 
         if (modalCertTitle) modalCertTitle.textContent = title;
         if (modalCertIssuer) modalCertIssuer.textContent = issuer;
         if (modalCertDesc) modalCertDesc.textContent = desc;
+        if (modalCertImage) {
+          if (img) {
+            modalCertImage.src = img;
+            modalCertImage.style.display = 'block';
+          } else {
+            modalCertImage.style.display = 'none';
+          }
+        }
 
         certModal.classList.add('active');
         certModal.setAttribute('aria-hidden', 'false');
