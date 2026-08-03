@@ -1340,13 +1340,14 @@ img {
   border-color: var(--color-border-hover);
   box-shadow: 0 12px 30px rgba(0, 245, 155, 0.08), var(--card-shadow);
 }
-.project-link{
-    text-decoration:none;
-    color:inherit;
-    display:block;
+.project-link {
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    height: 100%;
 }
 
-.project-card {
+.project-link .project-card {
     width: 100%;
 }
 .project-card:hover::before {
