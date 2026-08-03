@@ -635,8 +635,8 @@ img {
 .widget-molecular {
   bottom: 1.5rem;
   right: 1.5rem;
-  width: 180px;
-  height: 185px;
+  width: 160px;
+  height: 160px;
   display: flex;
   flex-direction: column;
 }
