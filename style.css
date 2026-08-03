@@ -610,7 +610,7 @@ img {
   position: absolute;
   top: 2rem;
   left: 2rem;
-  width: 170px;
+  width: 150px;
 }
 
 .widget-temp {
@@ -622,14 +622,14 @@ img {
 
 .widget-humidity {
   position: absolute;
-  top: 18rem;
+  top: 24rem;
   left: 2rem;
   width: 130px;
 }
 .widget-sequencing {
   bottom: 1.5rem;
   left: 1.5rem;
-  width: 250px;
+  width: 230px;
 }
 
 .widget-molecular {
