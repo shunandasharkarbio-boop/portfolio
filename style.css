@@ -275,11 +275,11 @@ img {
 }
 
 .logo-icon {
-  width: 1.8rem;
-  height: 1.8rem;
+  width: 1.9rem;
+  height: 1.9rem;
   color: var(--color-primary);
   filter: drop-shadow(0 0 5px rgba(0, 245, 155, 0.5));
-  animation: logo-rotate 15s linear infinite;
+  animation: logo-rotate 20s linear infinite;
 }
 
 @keyframes logo-rotate {
