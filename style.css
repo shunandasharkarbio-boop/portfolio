@@ -1447,11 +1447,13 @@ img {
 
 .journey-header-right {
   max-width: 400px;
-  text-align: right;
+  text-align: left;
   color: var(--color-text-secondary);
   font-size: 1.05rem;
   line-height: 1.6;
   margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  border-left: 2px solid rgba(0, 245, 155, 0.4);
 }
 
 .timeline-wrapper {
@@ -1500,29 +1502,22 @@ img {
 .timeline-node-container {
   position: absolute;
   left: 50%;
-  top: 40px;
+  top: 15px;
   transform: translateX(-50%);
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
   z-index: 3;
+  gap: 0.8rem;
 }
 
 .timeline-year {
-  position: absolute;
   font-family: var(--font-family-mono);
   font-size: 1.1rem;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: var(--color-primary);
   text-shadow: 0 0 10px rgba(0,0,0,0.8);
-}
-
-.timeline-item:nth-child(odd) .timeline-year {
-  left: 35px;
-}
-
-.timeline-item:nth-child(even) .timeline-year {
-  right: 35px;
 }
 
 .timeline-node {
@@ -1536,7 +1531,10 @@ img {
 }
 
 .timeline-card {
-  width: 45%;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 47%;
   background: rgba(10, 15, 20, 0.65);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1555,19 +1553,12 @@ img {
 }
 
 .card-image {
+  flex: 0 0 45%;
   width: 100%;
-  aspect-ratio: 16/9;
   background-size: cover;
   background-position: center;
   position: relative;
   transition: transform 0.4s ease;
-}
-
-.card-image::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
 }
 
 .timeline-card:hover .card-image {
@@ -1575,11 +1566,13 @@ img {
 }
 
 .card-content {
-  padding: 1.8rem;
+  flex: 1;
+  padding: 2.5rem 2rem;
   position: relative;
   z-index: 2;
-  background: linear-gradient(to bottom, transparent 0%, rgba(8,13,11,0.95) 25%);
-  margin-top: -50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .card-header-icon {
@@ -2224,6 +2217,17 @@ img {
 
   .timeline-card {
     width: calc(100% - 60px);
+    flex-direction: column;
+  }
+
+  .card-image {
+    width: 100%;
+    flex: none;
+    aspect-ratio: 16/9;
+  }
+
+  .card-content {
+    padding: 1.5rem;
   }
 
   .timeline-node-container {
@@ -2233,8 +2237,6 @@ img {
   
   .timeline-item:nth-child(odd) .timeline-year,
   .timeline-item:nth-child(even) .timeline-year {
-    left: 25px;
-    right: auto;
     font-size: 0.9rem;
   }
   
