@@ -27,7 +27,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <link rel="stylesheet" href="style.css?v=3">
+  <link rel="stylesheet" href="style.css?v=4">
 </head>
 
 <body>
@@ -141,6 +141,13 @@
     <section class="about-section py-large" id="about">
       <div class="container">
 
+        <!-- Section Header Center -->
+        <div class="section-header-center">
+          <span class="section-subtitle">ABOUT ME</span>
+          <h2 class="section-title">Driven by Curiosity, <span class="glowing-accent-cyan">Inspired by Science</span></h2>
+          <p class="section-description">A Biotechnology undergraduate passionate about genetic engineering, molecular biology, and computational genomics.</p>
+        </div>
+
         <div class="about-grid">
           <!-- Left Column: Scientific Holographic Dashboard -->
           <div class="about-dashboard-col animate-on-scroll">
@@ -149,7 +156,8 @@
               <div class="dashboard-img-container">
                 <img
                   src="image/lab_dashboard.png"
-                  alt="Futuristic Laboratory Dashboard" class="dashboard-bg-img" loading="lazy">
+                  alt="Futuristic Laboratory Dashboard" class="dashboard-bg-img" loading="lazy"
+                  onerror="this.style.opacity='0.35';">
                 <div class="dashboard-grid-overlay"></div>
               </div>
               <!-- Holographic Widgets Overlay -->
@@ -334,7 +342,8 @@
                   <div class="about-profile-ring">
                     <div class="about-profile-ring-inner">
                       <img src="image/port.jpeg" alt="Shunanda Sharkar" class="about-profile-img"
-                        id="about-profile-photo" loading="lazy">
+                        id="about-profile-photo" loading="lazy"
+                        onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/shunandasharkarbio-boop/portfolio/main/image/port.jpeg';">
                     </div>
                   </div>
                 </div>
@@ -1629,7 +1638,7 @@
   </div>
 
   <!-- App Logic -->
-  <script src="app.js?v=3"></script>
+  <script src="app.js?v=4"></script>
 </body>
 
 </html>
