@@ -4681,3 +4681,104 @@ section[id],
     width: 30px;
   }
 }
+
+/* ═══════════════════════════════════════════════════════
+   ABOUT SECTION — PREMIUM ANIMATION & PARALLAX ENHANCEMENTS
+   ═══════════════════════════════════════════════════════ */
+
+.about-section {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Floating Biotech Elements */
+.about-floating-biotech {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.bio-particle {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(0, 245, 155, 0.4) 0%, rgba(0, 210, 196, 0) 70%);
+  filter: blur(8px);
+  animation: floatParticle 8s infinite ease-in-out alternate;
+}
+
+.particle-1 {
+  top: 15%;
+  left: 5%;
+  width: 120px;
+  height: 120px;
+  animation-duration: 9s;
+}
+
+.particle-2 {
+  bottom: 20%;
+  right: 8%;
+  width: 160px;
+  height: 160px;
+  animation-duration: 11s;
+}
+
+.particle-3 {
+  top: 60%;
+  left: 45%;
+  width: 90px;
+  height: 90px;
+  animation-duration: 7s;
+}
+
+@keyframes floatParticle {
+  0% { transform: translateY(0) scale(1); opacity: 0.3; }
+  100% { transform: translateY(-30px) scale(1.15); opacity: 0.7; }
+}
+
+.bio-helix-floating {
+  position: absolute;
+  top: 10%;
+  right: 4%;
+  width: 140px;
+  height: 140px;
+  opacity: 0.4;
+  animation: rotateDNA 20s linear infinite;
+}
+
+@keyframes rotateDNA {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+/* 3D Parallax Tilt Perspective */
+.about-dashboard-col {
+  perspective: 1000px;
+}
+
+.about-dashboard-card {
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+  transform-style: preserve-3d;
+}
+
+.about-profile-photo-wrap {
+  perspective: 1000px;
+}
+
+.about-profile-ring {
+  transition: transform 0.15s ease-out, box-shadow 0.3s ease;
+}
+
+/* Animated Stat Counter Glow */
+.stat-number {
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.stat-card:hover .stat-number {
+  color: var(--color-primary, #00f59b);
+  text-shadow: 0 0 15px rgba(0, 245, 155, 0.6);
+}

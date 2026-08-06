@@ -1022,4 +1022,77 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize Carousel
   initAchievementCarousel();
+
+  // ── 9. ABOUT SECTION PARALLAX & ANIMATED STATS COUNTER ──
+  function initAboutParallaxAndStats() {
+    // 1. Mouse Parallax for Dashboard & Profile Photo
+    const dashCard = document.querySelector('.about-dashboard-card');
+    const profileRing = document.querySelector('.about-profile-ring');
+
+    function applyParallax(element, maxDegree = 8) {
+      if (!element) return;
+      const parent = element.parentElement;
+      if (!parent) return;
+
+      parent.addEventListener('mousemove', (e) => {
+        const rect = parent.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        const rotX = (-y / (rect.height / 2)) * maxDegree;
+        const rotY = (x / (rect.width / 2)) * maxDegree;
+        element.style.transform = `rotateX(${rotX.toFixed(2)}deg) rotateY(${rotY.toFixed(2)}deg)`;
+      });
+
+      parent.addEventListener('mouseleave', () => {
+        element.style.transform = 'rotateX(0deg) rotateY(0deg)';
+      });
+    }
+
+    applyParallax(dashCard, 6);
+    applyParallax(profileRing, 10);
+
+    // 2. Count-Up Stats Counter Animation
+    const statNumbers = document.querySelectorAll('.stat-number[data-count]');
+    let hasCounted = false;
+
+    function animateStats() {
+      if (hasCounted) return;
+      statNumbers.forEach(stat => {
+        const target = parseInt(stat.getAttribute('data-count'), 10);
+        if (isNaN(target)) return;
+
+        let current = 0;
+        const duration = 1500; // ms
+        const increment = target / (duration / 16);
+
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= target) {
+            stat.textContent = target + '+';
+            clearInterval(timer);
+          } else {
+            stat.textContent = Math.floor(current) + '+';
+          }
+        }, 16);
+      });
+      hasCounted = true;
+    }
+
+    const statsGrid = document.querySelector('.stats-grid');
+    if (statsGrid && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateStats();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      observer.observe(statsGrid);
+    } else {
+      animateStats();
+    }
+  }
+
+  initAboutParallaxAndStats();
 });
