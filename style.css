@@ -1411,6 +1411,49 @@ img {
 }
 
 /* 11. Evolution Timeline Design */
+.journey-section {
+  position: relative;
+  background-image: url('image/timeline-bg.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+}
+
+.journey-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, var(--bg-dark-obsidian) 0%, rgba(5,8,7,0.85) 50%, var(--bg-dark-obsidian) 100%);
+  z-index: 0;
+}
+
+.journey-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+.journey-header-split {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 4rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgba(0, 245, 155, 0.15);
+}
+
+.journey-header-left {
+  max-width: 500px;
+}
+
+.journey-header-right {
+  max-width: 400px;
+  text-align: right;
+  color: var(--color-text-secondary);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  margin-bottom: 0.5rem;
+}
+
 .timeline-wrapper {
   position: relative;
   width: 100%;
@@ -1426,18 +1469,18 @@ img {
   height: 100%;
   background: var(--color-primary);
   transform: translateX(-50%);
-  box-shadow: 0 0 10px rgba(0, 245, 155, 0.4);
+  box-shadow: 0 0 15px rgba(0, 245, 155, 0.5);
   z-index: 1;
 }
 
 .timeline-item {
   display: flex;
   position: relative;
-  margin-bottom: 4rem;
+  margin-bottom: 5rem;
   width: 100%;
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
 }
 
 .timeline-item.visible,
@@ -1454,37 +1497,61 @@ img {
   justify-content: flex-end;
 }
 
-.timeline-node {
+.timeline-node-container {
   position: absolute;
   left: 50%;
   top: 40px;
   transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+
+.timeline-year {
+  position: absolute;
+  font-family: var(--font-family-mono);
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  text-shadow: 0 0 10px rgba(0,0,0,0.8);
+}
+
+.timeline-item:nth-child(odd) .timeline-year {
+  left: 35px;
+}
+
+.timeline-item:nth-child(even) .timeline-year {
+  right: 35px;
+}
+
+.timeline-node {
   width: 16px;
   height: 16px;
   border-radius: 50%;
   background-color: var(--bg-dark-obsidian);
   border: 3px solid var(--color-primary);
   box-shadow: 0 0 10px var(--color-primary);
-  z-index: 2;
   transition: box-shadow var(--transition-normal) ease;
 }
 
 .timeline-card {
   width: 45%;
-  background: rgba(12, 18, 15, 0.45);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid rgba(0, 245, 155, 0.3);
-  border-radius: 12px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  background: rgba(10, 15, 20, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 210, 196, 0.3);
+  border-radius: 16px;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
   transition: transform var(--transition-normal) ease, box-shadow var(--transition-normal) ease;
   position: relative;
   z-index: 2;
+  overflow: hidden;
 }
 
 .timeline-card:hover {
   transform: translateY(-8px);
-  box-shadow: 0 12px 30px rgba(0, 245, 155, 0.4);
+  box-shadow: 0 12px 30px rgba(0, 210, 196, 0.2);
 }
 
 .card-image {
@@ -1493,9 +1560,7 @@ img {
   background-size: cover;
   background-position: center;
   position: relative;
-  transition: transform var(--transition-normal) ease;
-  border-top-left-radius: 11px;
-  border-top-right-radius: 11px;
+  transition: transform 0.4s ease;
 }
 
 .card-image::after {
@@ -1503,49 +1568,64 @@ img {
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.35);
-  border-top-left-radius: 11px;
-  border-top-right-radius: 11px;
 }
 
 .timeline-card:hover .card-image {
-  /* Subtle brightness increase on hover */
-}
-
-.timeline-card:hover .card-image::after {
-  background: rgba(0, 0, 0, 0.2);
+  transform: scale(1.05);
 }
 
 .card-content {
-  padding: 1.5rem;
+  padding: 1.8rem;
   position: relative;
   z-index: 2;
-  background: linear-gradient(to bottom, transparent 0%, var(--bg-dark-card) 20%);
-  margin-top: -40px;
-  border-bottom-left-radius: 11px;
-  border-bottom-right-radius: 11px;
+  background: linear-gradient(to bottom, transparent 0%, rgba(8,13,11,0.95) 25%);
+  margin-top: -50px;
+}
+
+.card-header-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+  background: rgba(0, 210, 196, 0.1);
+  padding: 0.4rem;
+  border-radius: 8px;
+  border: 1px solid rgba(0, 210, 196, 0.2);
 }
 
 .card-title {
   font-family: var(--font-family-title);
-  font-size: 1.6rem;
+  font-size: 1.7rem;
   font-weight: 700;
   color: var(--color-text-primary);
-  margin-bottom: 0.25rem;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+  margin-bottom: 0.3rem;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.9);
 }
 
 .card-subtitle {
   font-family: var(--font-family-mono);
   font-size: 0.95rem;
-  color: var(--color-primary);
-  margin-bottom: 0.75rem;
-  font-weight: 500;
+  color: var(--color-secondary);
+  margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 .card-description {
   font-size: 0.95rem;
   color: var(--color-text-secondary);
   line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.card-footer-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 @keyframes node-glow {
@@ -2122,6 +2202,17 @@ img {
   }
   
   /* Timeline */
+  .journey-header-split {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: 2rem;
+  }
+  
+  .journey-header-right {
+    text-align: left;
+  }
+
   .timeline-line {
     left: 24px;
     transform: none;
@@ -2135,9 +2226,16 @@ img {
     width: calc(100% - 60px);
   }
 
-  .timeline-node {
+  .timeline-node-container {
     left: 24px;
     transform: translateX(-50%);
+  }
+  
+  .timeline-item:nth-child(odd) .timeline-year,
+  .timeline-item:nth-child(even) .timeline-year {
+    left: 25px;
+    right: auto;
+    font-size: 0.9rem;
   }
   
   .contact-form {
