@@ -621,77 +621,64 @@ document.addEventListener('DOMContentLoaded', () => {
   class InnerCarousel {
     constructor(container) {
       this.container = container;
-      this.folder = container.getAttribute('data-folder');
       this.track = container.querySelector('.inner-carousel-track');
       this.prevBtn = container.querySelector('.inner-carousel-prev');
       this.nextBtn = container.querySelector('.inner-carousel-next');
       this.dotsContainer = container.querySelector('.inner-carousel-dots');
-      
-      this.images = [];
+
+      // Read image list from data-images (comma-separated) — no runtime probing needed
+      const rawImages = (container.getAttribute('data-images') || '').trim();
+      this.images = rawImages ? rawImages.split(',').map(s => s.trim()).filter(Boolean) : [];
+
       this.currentIndex = 0;
       this.autoplayTimer = null;
       this.isHovering = false;
       this.touchStartX = 0;
       this.touchEndX = 0;
 
-      // Optimistically add the first image immediately so there's no blank flash
-      this.images.push(`${this.folder}img_1.png`);
-      this.renderSlides();
-      this.setupControls();
+      if (this.images.length === 0) return;
+
+      this.buildSlides();
+      this.bindControls();
       this.bindEvents();
-
-      // Probe for more images asynchronously
-      this.probeMoreImages();
+      this.startAutoplay();
     }
 
-    async probeMoreImages() {
-      let imgIndex = 2;
-      let keepLooking = true;
-
-      while (keepLooking) {
-        const src = `${this.folder}img_${imgIndex}.png`;
-        const exists = await this.checkImageExists(src);
-        if (exists) {
-          this.images.push(src);
-          this.appendSlide(src, this.images.length - 1);
-          imgIndex++;
-        } else {
-          keepLooking = false;
-        }
-      }
-
-      // If we found more images, update controls and autoplay
-      if (this.images.length > 1) {
-        this.prevBtn.style.display = 'flex';
-        this.nextBtn.style.display = 'flex';
-        this.dotsContainer.style.display = 'flex';
-        this.setupControls(); // Rebind or ensure bound
-        this.startAutoplay();
-      }
-    }
-
-    checkImageExists(url) {
-      return new Promise(resolve => {
-        // Use HEAD request for speed, fallback to Image object
-        fetch(url, { method: 'HEAD' })
-          .then(res => resolve(res.ok))
-          .catch(() => {
-            const img = new Image();
-            img.onload = () => resolve(true);
-            img.onerror = () => resolve(false);
-            img.src = url;
-          });
-      });
-    }
-
-    renderSlides() {
+    buildSlides() {
       this.track.innerHTML = '';
       this.dotsContainer.innerHTML = '';
-      
+
       this.images.forEach((src, index) => {
-        this.appendSlide(src, index, false);
+        // Build slide
+        const slide = document.createElement('div');
+        slide.className = 'inner-carousel-slide' + (index === 0 ? ' active' : '');
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = '';
+        img.className = 'slide-img';
+        img.loading = 'lazy';
+        slide.appendChild(img);
+        this.track.appendChild(slide);
+
+        // Build dot (only when there are multiple images)
+        if (this.images.length > 1) {
+          const dot = document.createElement('div');
+          dot.className = 'inner-dot' + (index === 0 ? ' active' : '');
+          const i = index;
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.goTo(i);
+            this.resetAutoplay();
+          });
+          this.dotsContainer.appendChild(dot);
+        }
       });
 
+      // Cache NodeLists
+      this.slides = this.track.querySelectorAll('.inner-carousel-slide');
+      this.dots   = this.dotsContainer.querySelectorAll('.inner-dot');
+
+      // Hide controls when only one image
       if (this.images.length <= 1) {
         this.prevBtn.style.display = 'none';
         this.nextBtn.style.display = 'none';
@@ -699,30 +686,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    appendSlide(src, index, updateDOM = true) {
-      const slide = document.createElement('div');
-      slide.className = `inner-carousel-slide ${index === 0 ? 'active' : ''}`;
-      const img = document.createElement('img');
-      img.src = src;
-      img.className = 'slide-img'; // CRITICAL FOR ZOOM FX
-      img.loading = "lazy";
-      slide.appendChild(img);
-      this.track.appendChild(slide);
-
-      const dot = document.createElement('div');
-      dot.className = `inner-dot ${index === 0 ? 'active' : ''}`;
-      dot.addEventListener('click', (e) => {
-        e.stopPropagation();
-        this.goTo(index);
-      });
-      this.dotsContainer.appendChild(dot);
-
-      this.slides = this.track.querySelectorAll('.inner-carousel-slide');
-      this.dots = this.dotsContainer.querySelectorAll('.inner-dot');
-    }
-
-    setupControls() {
-      // Remove old listeners to prevent duplicates
+    bindControls() {
+      // Clone nodes to clear any old listeners
       const newPrev = this.prevBtn.cloneNode(true);
       const newNext = this.nextBtn.cloneNode(true);
       this.prevBtn.parentNode.replaceChild(newPrev, this.prevBtn);
@@ -733,98 +698,78 @@ document.addEventListener('DOMContentLoaded', () => {
       this.prevBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         this.prev();
+        this.resetAutoplay();
       });
       this.nextBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         this.next();
+        this.resetAutoplay();
       });
     }
 
     bindEvents() {
+      // Pause autoplay while hovering
       this.container.addEventListener('mouseenter', () => {
         this.isHovering = true;
         this.stopAutoplay();
       });
-      
       this.container.addEventListener('mouseleave', () => {
         this.isHovering = false;
         this.startAutoplay();
       });
 
+      // Swipe support (mobile)
       this.container.addEventListener('touchstart', (e) => {
         this.touchStartX = e.changedTouches[0].screenX;
-        this.stopAutoplay();
       }, { passive: true });
-
       this.container.addEventListener('touchend', (e) => {
         this.touchEndX = e.changedTouches[0].screenX;
-        this.handleSwipe();
-        if (!this.isHovering) this.startAutoplay();
+        const diff = this.touchStartX - this.touchEndX;
+        if (Math.abs(diff) > 40) {
+          diff > 0 ? this.next() : this.prev();
+          this.resetAutoplay();
+        }
       }, { passive: true });
 
+      // Keyboard navigation (Left/Right arrows)
       this.container.addEventListener('keydown', (e) => {
         if (this.images.length > 1) {
-          if (e.key === 'ArrowLeft') {
-            e.stopPropagation();
-            this.prev();
-          } else if (e.key === 'ArrowRight') {
-            e.stopPropagation();
-            this.next();
-          }
+          if (e.key === 'ArrowLeft')  { e.stopPropagation(); this.prev(); this.resetAutoplay(); }
+          if (e.key === 'ArrowRight') { e.stopPropagation(); this.next(); this.resetAutoplay(); }
         }
       });
     }
 
-    handleSwipe() {
-      const swipeThreshold = 40;
-      if (this.touchEndX < this.touchStartX - swipeThreshold) {
-        this.next();
-      }
-      if (this.touchEndX > this.touchStartX + swipeThreshold) {
-        this.prev();
-      }
-    }
-
     goTo(index) {
-      if (this.images.length <= 1 || !this.slides || !this.slides[this.currentIndex]) return;
+      if (!this.slides || this.images.length <= 1) return;
       this.slides[this.currentIndex].classList.remove('active');
       if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.remove('active');
-
-      this.currentIndex = index;
-
-      if (this.slides[this.currentIndex]) this.slides[this.currentIndex].classList.add('active');
+      this.currentIndex = (index + this.images.length) % this.images.length;
+      this.slides[this.currentIndex].classList.add('active');
       if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.add('active');
     }
 
-    next() {
-      if (this.images.length <= 1) return;
-      const newIndex = (this.currentIndex + 1) % this.images.length;
-      this.goTo(newIndex);
-    }
-
-    prev() {
-      if (this.images.length <= 1) return;
-      const newIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
-      this.goTo(newIndex);
-    }
+    next() { this.goTo(this.currentIndex + 1); }
+    prev() { this.goTo(this.currentIndex - 1); }
 
     startAutoplay() {
       if (this.images.length > 1 && !this.autoplayTimer) {
-        this.autoplayTimer = setInterval(() => {
-          this.next();
-        }, 3000);
+        this.autoplayTimer = setInterval(() => this.next(), 3000);
       }
     }
 
     stopAutoplay() {
-      if (this.autoplayTimer) {
-        clearInterval(this.autoplayTimer);
-        this.autoplayTimer = null;
-      }
+      clearInterval(this.autoplayTimer);
+      this.autoplayTimer = null;
+    }
+
+    resetAutoplay() {
+      this.stopAutoplay();
+      if (!this.isHovering) this.startAutoplay();
     }
   }
 
-  // Initialize Inner Carousels
+  // Initialize all inner carousels
   document.querySelectorAll('.inner-carousel-container').forEach(container => {
     new InnerCarousel(container);
   });
