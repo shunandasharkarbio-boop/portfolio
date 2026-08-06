@@ -109,8 +109,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let animationFrameId;
 
     function resizeCanvas() {
-      canvas.width = canvas.parentElement.clientWidth || window.innerWidth;
-      canvas.height = canvas.parentElement.clientHeight || window.innerHeight;
+      if (canvas) {
+        const parent = canvas.parentElement;
+        canvas.width = (parent && parent.clientWidth) ? parent.clientWidth : (window.innerWidth || 1200);
+        canvas.height = (parent && parent.clientHeight) ? parent.clientHeight : (window.innerHeight || 800);
+      }
     }
 
     resizeCanvas();

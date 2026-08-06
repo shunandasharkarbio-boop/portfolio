@@ -2072,13 +2072,21 @@ section[id],
   opacity: 1 !important;
   visibility: visible !important;
   display: block !important;
+  min-height: min-content;
 }
 
-.about-grid,
+.about-grid {
+  display: grid;
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 .about-dashboard-col,
 .about-info-col {
   opacity: 1 !important;
   visibility: visible !important;
+  display: flex !important;
+  flex-direction: column !important;
 }
 
 /* Scroll Animations Utility classes */
