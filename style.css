@@ -3090,3 +3090,30 @@ img {
   .skd-cert-section { padding: 0 1rem 1rem; }
 }
 
+/* Extra Small Phones (320px – 480px) Ultra-Stability */
+@media (max-width: 480px) {
+  html, body {
+    overflow-x: hidden !important;
+    width: 100% !important;
+  }
+  .container {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    max-width: 100% !important;
+  }
+  .hero-title {
+    font-size: 2.1rem !important;
+    word-break: break-word;
+  }
+  .section-title {
+    font-size: 1.8rem !important;
+  }
+  .contact-item-value {
+    font-size: 0.85rem !important;
+    word-break: break-all;
+  }
+  .timeline-card {
+    width: calc(100% - 45px) !important;
+  }
+}
+
