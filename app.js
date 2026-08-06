@@ -559,16 +559,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const academicLightboxClose = document.getElementById('academicLightboxClose');
     const academicLightboxOverlay = document.getElementById('academicLightboxOverlay');
 
-    slides.forEach(slide => {
+    slides.forEach((slide) => {
       const imgWrap = slide.querySelector('.slide-image-wrapper');
       if (imgWrap) {
         imgWrap.addEventListener('click', () => {
-          const imgEl = slide.querySelector('.slide-img');
+          if (!academicLightbox) return;
+          
+          let imgEl = slide.querySelector('.inner-carousel-slide.active img');
+          if (!imgEl) imgEl = slide.querySelector('.slide-img'); // Fallback
+          
           const titleEl = slide.querySelector('.slide-title');
           const descEl = slide.querySelector('.slide-desc');
 
-          if (academicLightboxImg && imgEl) {
+          if (imgEl && academicLightboxImg) {
             academicLightboxImg.src = imgEl.src;
+            academicLightboxImg.alt = imgEl.alt || 'Academic Image';
           }
           if (academicLightboxTitle && titleEl) {
             academicLightboxTitle.textContent = titleEl.textContent;
@@ -610,4 +615,195 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   }
+
+
+  // 7. Inner Image Carousel for Academic Timeline Cards
+  class InnerCarousel {
+    constructor(container) {
+      this.container = container;
+      this.folder = container.getAttribute('data-folder');
+      this.track = container.querySelector('.inner-carousel-track');
+      this.prevBtn = container.querySelector('.inner-carousel-prev');
+      this.nextBtn = container.querySelector('.inner-carousel-next');
+      this.dotsContainer = container.querySelector('.inner-carousel-dots');
+      
+      this.images = [];
+      this.currentIndex = 0;
+      this.autoplayTimer = null;
+      this.isHovering = false;
+      this.touchStartX = 0;
+      this.touchEndX = 0;
+
+      this.init();
+    }
+
+    async init() {
+      // Probing for images in the folder (img_1.png, img_2.png, ...)
+      let imgIndex = 1;
+      let keepLooking = true;
+
+      while (keepLooking) {
+        const src = `${this.folder}img_${imgIndex}.png`;
+        const exists = await this.checkImageExists(src);
+        if (exists) {
+          this.images.push(src);
+          imgIndex++;
+        } else {
+          keepLooking = false;
+        }
+      }
+
+      if (this.images.length === 0) {
+        // Fallback if none found
+        return;
+      }
+
+      this.renderSlides();
+      this.setupControls();
+      this.startAutoplay();
+      this.bindEvents();
+    }
+
+    checkImageExists(url) {
+      return new Promise(resolve => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+
+    renderSlides() {
+      this.images.forEach((src, index) => {
+        // Slide
+        const slide = document.createElement('div');
+        slide.className = `inner-carousel-slide ${index === 0 ? 'active' : ''}`;
+        const img = document.createElement('img');
+        img.src = src;
+        img.loading = "lazy";
+        slide.appendChild(img);
+        this.track.appendChild(slide);
+
+        // Dot
+        if (this.images.length > 1) {
+          const dot = document.createElement('div');
+          dot.className = `inner-dot ${index === 0 ? 'active' : ''}`;
+          dot.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.goTo(index);
+          });
+          this.dotsContainer.appendChild(dot);
+        }
+      });
+
+      this.slides = this.track.querySelectorAll('.inner-carousel-slide');
+      this.dots = this.dotsContainer.querySelectorAll('.inner-dot');
+      
+      if (this.images.length <= 1) {
+        this.prevBtn.style.display = 'none';
+        this.nextBtn.style.display = 'none';
+        this.dotsContainer.style.display = 'none';
+      }
+    }
+
+    setupControls() {
+      if (this.images.length > 1) {
+        this.prevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.prev();
+        });
+        this.nextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.next();
+        });
+      }
+    }
+
+    bindEvents() {
+      this.container.addEventListener('mouseenter', () => {
+        this.isHovering = true;
+        this.stopAutoplay();
+      });
+      
+      this.container.addEventListener('mouseleave', () => {
+        this.isHovering = false;
+        this.startAutoplay();
+      });
+
+      this.container.addEventListener('touchstart', (e) => {
+        this.touchStartX = e.changedTouches[0].screenX;
+        this.stopAutoplay();
+      }, { passive: true });
+
+      this.container.addEventListener('touchend', (e) => {
+        this.touchEndX = e.changedTouches[0].screenX;
+        this.handleSwipe();
+        if (!this.isHovering) this.startAutoplay();
+      }, { passive: true });
+
+      this.container.addEventListener('keydown', (e) => {
+        if (this.images.length > 1) {
+          if (e.key === 'ArrowLeft') {
+            e.stopPropagation();
+            this.prev();
+          } else if (e.key === 'ArrowRight') {
+            e.stopPropagation();
+            this.next();
+          }
+        }
+      });
+    }
+
+    handleSwipe() {
+      const swipeThreshold = 40;
+      if (this.touchEndX < this.touchStartX - swipeThreshold) {
+        this.next();
+      }
+      if (this.touchEndX > this.touchStartX + swipeThreshold) {
+        this.prev();
+      }
+    }
+
+    goTo(index) {
+      if (this.images.length <= 1) return;
+      this.slides[this.currentIndex].classList.remove('active');
+      if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.remove('active');
+
+      this.currentIndex = index;
+
+      this.slides[this.currentIndex].classList.add('active');
+      if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.add('active');
+    }
+
+    next() {
+      const newIndex = (this.currentIndex + 1) % this.images.length;
+      this.goTo(newIndex);
+    }
+
+    prev() {
+      const newIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
+      this.goTo(newIndex);
+    }
+
+    startAutoplay() {
+      if (this.images.length > 1 && !this.autoplayTimer) {
+        this.autoplayTimer = setInterval(() => {
+          this.next();
+        }, 3000);
+      }
+    }
+
+    stopAutoplay() {
+      if (this.autoplayTimer) {
+        clearInterval(this.autoplayTimer);
+        this.autoplayTimer = null;
+      }
+    }
+  }
+
+  // Initialize Inner Carousels
+  document.querySelectorAll('.inner-carousel-container').forEach(container => {
+    new InnerCarousel(container);
+  });
+
 });
