@@ -32,12 +32,47 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 2. Scroll Animation Observer
   const animateElements = document.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card, .achievement-card');
-  
+
+  // Immediately make all elements visible so content is never hidden
+  animateElements.forEach(el => {
+    el.classList.add('is-visible');
+    el.classList.add('visible');
+  });
+
+  function revealVisibleElements() {
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    animateElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top <= windowHeight + 200 && rect.bottom >= -200) {
+        el.classList.add('is-visible');
+        el.classList.add('visible');
+      }
+    });
+  }
+
+  // Force check target section on hash change / direct URL load
+  function checkHashTarget() {
+    if (window.location.hash) {
+      try {
+        const targetSec = document.querySelector(window.location.hash);
+        if (targetSec) {
+          const animEls = targetSec.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card, .achievement-card');
+          animEls.forEach(el => {
+            el.classList.add('is-visible');
+            el.classList.add('visible');
+          });
+        }
+      } catch (e) {
+        // Ignore invalid selectors
+      }
+    }
+  }
+
   if ('IntersectionObserver' in window) {
     const observerOptions = {
       root: null,
-      rootMargin: '50px 0px 50px 0px',
-      threshold: 0.05
+      rootMargin: '200px 0px 200px 0px',
+      threshold: 0.01
     };
 
     const scrollObserver = new IntersectionObserver((entries, observer) => {
@@ -51,13 +86,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }, observerOptions);
 
     animateElements.forEach(el => scrollObserver.observe(el));
-  } else {
-    // Fallback for older browsers
-    animateElements.forEach(el => {
-      el.classList.add('is-visible');
-      el.classList.add('visible');
-    });
   }
+
+  // Initial immediate checks & event bindings
+  revealVisibleElements();
+  checkHashTarget();
+  window.addEventListener('load', () => {
+    revealVisibleElements();
+    checkHashTarget();
+  });
+  window.addEventListener('scroll', revealVisibleElements, { passive: true });
+  window.addEventListener('hashchange', () => {
+    revealVisibleElements();
+    checkHashTarget();
+    setTimeout(revealVisibleElements, 50);
+  });
 
   // 3. Bioluminescent DNA Canvas Particle & Helix Animation
   const canvas = document.getElementById('dnaCanvas');

@@ -2055,18 +2055,52 @@ img {
 
 /* 14. Responsive Layout Styles */
 
+/* Section Offset & Anchoring */
+section[id],
+.about-section,
+.skills-dashboard,
+.projects-section,
+.journey-section,
+.achievements-section {
+  scroll-margin-top: 5rem;
+}
+
+.about-section {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  opacity: 1 !important;
+  visibility: visible !important;
+  display: block !important;
+}
+
+.about-grid,
+.about-dashboard-col,
+.about-info-col {
+  opacity: 1 !important;
+  visibility: visible !important;
+}
+
 /* Scroll Animations Utility classes */
 .animate-on-scroll {
-  opacity: 0;
-  transform: translateY(30px);
+  opacity: 1;
+  transform: translateY(0);
   transition: opacity var(--transition-slow) ease,
     transform var(--transition-slow) ease;
 }
 
 .animate-on-scroll.visible,
 .animate-on-scroll.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-on-scroll {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
 }
 
 @keyframes fade-in-up {
