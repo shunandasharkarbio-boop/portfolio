@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // 2. Scroll Animation Observer
-  const animateElements = document.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card');
+  const animateElements = document.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card, .achievement-card');
   
   if ('IntersectionObserver' in window) {
     const observerOptions = {
@@ -234,6 +234,333 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && certModal.classList.contains('active')) {
         closeModal();
+      }
+    });
+  }
+
+  // 5. Achievement Lightbox Modal & Multi-Image Gallery Logic
+  const achievementCards = document.querySelectorAll('.achievement-card');
+  const achievementLightbox = document.getElementById('achievementLightbox');
+  const lightboxOverlay = document.getElementById('lightboxOverlay');
+  const lightboxCloseBtn = document.getElementById('lightboxCloseBtn');
+  const lightboxPrevBtn = document.getElementById('lightboxPrevBtn');
+  const lightboxNextBtn = document.getElementById('lightboxNextBtn');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxPlaceholder = document.getElementById('lightboxPlaceholder');
+  const lightboxTitle = document.getElementById('lightboxTitle');
+  const lightboxBadge = document.getElementById('lightboxBadge');
+  const lightboxDesc = document.getElementById('lightboxDesc');
+  const lightboxCounter = document.getElementById('lightboxCounter');
+  const lightboxMain = document.getElementById('lightboxMain');
+
+  if (achievementLightbox && achievementCards.length > 0) {
+    let currentGallery = [];
+    let currentIndex = 0;
+    let currentCardData = {};
+
+    function openAchievementLightbox(card) {
+      const rawGallery = card.getAttribute('data-gallery');
+      let gallery = [];
+      try {
+        if (rawGallery) gallery = JSON.parse(rawGallery);
+      } catch (err) {
+        gallery = [];
+      }
+
+      const imgEl = card.querySelector('.achievement-img');
+      const imgSrc = imgEl ? imgEl.getAttribute('src') : '';
+
+      if (!Array.isArray(gallery) || gallery.length === 0) {
+        gallery = [imgSrc || ''];
+      }
+
+      currentGallery = gallery;
+      currentIndex = 0;
+      currentCardData = {
+        title: card.getAttribute('data-title') || '',
+        badge: card.getAttribute('data-badge') || card.getAttribute('data-date') || '',
+        desc: card.getAttribute('data-desc') || ''
+      };
+
+      updateLightboxContent();
+      achievementLightbox.classList.add('active');
+      achievementLightbox.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeAchievementLightbox() {
+      achievementLightbox.classList.remove('active');
+      achievementLightbox.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    function updateLightboxContent() {
+      if (currentGallery.length === 0) return;
+
+      const activeSrc = currentGallery[currentIndex];
+
+      if (lightboxTitle) lightboxTitle.textContent = currentCardData.title;
+      if (lightboxBadge) lightboxBadge.textContent = currentCardData.badge;
+      if (lightboxDesc) lightboxDesc.textContent = currentCardData.desc;
+
+      if (lightboxCounter) {
+        lightboxCounter.textContent = `${currentIndex + 1} / ${currentGallery.length}`;
+      }
+
+      if (activeSrc && activeSrc.trim() !== '') {
+        if (lightboxImg) {
+          lightboxImg.src = activeSrc;
+          lightboxImg.style.display = 'block';
+          lightboxImg.onerror = function() {
+            this.style.display = 'none';
+            if (lightboxPlaceholder) lightboxPlaceholder.style.display = 'flex';
+          };
+          lightboxImg.onload = function() {
+            this.style.display = 'block';
+            if (lightboxPlaceholder) lightboxPlaceholder.style.display = 'none';
+          };
+        }
+      } else {
+        if (lightboxImg) {
+          lightboxImg.src = '';
+          lightboxImg.style.display = 'none';
+        }
+        if (lightboxPlaceholder) lightboxPlaceholder.style.display = 'flex';
+      }
+
+      if (currentGallery.length > 1) {
+        if (lightboxPrevBtn) lightboxPrevBtn.style.display = 'flex';
+        if (lightboxNextBtn) lightboxNextBtn.style.display = 'flex';
+      } else {
+        if (lightboxPrevBtn) lightboxPrevBtn.style.display = 'none';
+        if (lightboxNextBtn) lightboxNextBtn.style.display = 'none';
+      }
+    }
+
+    function showNextImage() {
+      if (currentGallery.length <= 1) return;
+      currentIndex = (currentIndex + 1) % currentGallery.length;
+      updateLightboxContent();
+    }
+
+    function showPrevImage() {
+      if (currentGallery.length <= 1) return;
+      currentIndex = (currentIndex - 1 + currentGallery.length) % currentGallery.length;
+      updateLightboxContent();
+    }
+
+    achievementCards.forEach(card => {
+      const imgContainer = card.querySelector('.achievement-img-container');
+      if (imgContainer) {
+        imgContainer.addEventListener('click', () => openAchievementLightbox(card));
+        imgContainer.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            openAchievementLightbox(card);
+          }
+        });
+      }
+    });
+
+    if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeAchievementLightbox);
+    if (lightboxOverlay) lightboxOverlay.addEventListener('click', closeAchievementLightbox);
+    if (lightboxNextBtn) lightboxNextBtn.addEventListener('click', showNextImage);
+    if (lightboxPrevBtn) lightboxPrevBtn.addEventListener('click', showPrevImage);
+
+    document.addEventListener('keydown', (e) => {
+      if (!achievementLightbox.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        closeAchievementLightbox();
+      } else if (e.key === 'ArrowRight') {
+        showNextImage();
+      } else if (e.key === 'ArrowLeft') {
+        showPrevImage();
+      }
+    });
+
+    // Touch Swipe Support for Mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    if (lightboxMain) {
+      lightboxMain.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+      }, { passive: true });
+
+      lightboxMain.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        handleSwipe();
+      }, { passive: true });
+    }
+
+    function handleSwipe() {
+      const swipeThreshold = 40;
+      if (touchEndX < touchStartX - swipeThreshold) {
+        showNextImage();
+      }
+      if (touchEndX > touchStartX + swipeThreshold) {
+        showPrevImage();
+      }
+    }
+  }
+
+  // 6. Academic Evolution Gallery Slider Logic
+  const sliderTrack = document.getElementById('sliderTrack');
+  const sliderCard = document.getElementById('academicSliderCard');
+  const prevBtn = document.getElementById('sliderPrevBtn');
+  const nextBtn = document.getElementById('sliderNextBtn');
+  const dots = document.querySelectorAll('#sliderDots .dot-btn');
+  const slides = document.querySelectorAll('.academic-slide');
+
+  if (sliderTrack && slides.length > 0) {
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+    let autoplayTimer = null;
+
+    function goToSlide(index) {
+      currentSlide = (index + totalSlides) % totalSlides;
+      sliderTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+      slides.forEach((slide, idx) => {
+        if (idx === currentSlide) {
+          slide.classList.add('active');
+        } else {
+          slide.classList.remove('active');
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        if (idx === currentSlide) {
+          dot.classList.add('active');
+        } else {
+          dot.classList.remove('active');
+        }
+      });
+    }
+
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = setInterval(() => {
+        goToSlide(currentSlide + 1);
+      }, 4000);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', () => {
+        goToSlide(currentSlide + 1);
+        startAutoplay();
+      });
+    }
+
+    if (prevBtn) {
+      prevBtn.addEventListener('click', () => {
+        goToSlide(currentSlide - 1);
+        startAutoplay();
+      });
+    }
+
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        const slideIndex = parseInt(dot.getAttribute('data-slide'), 10);
+        if (!isNaN(slideIndex)) {
+          goToSlide(slideIndex);
+          startAutoplay();
+        }
+      });
+    });
+
+    if (sliderCard) {
+      sliderCard.addEventListener('mouseenter', stopAutoplay);
+      sliderCard.addEventListener('mouseleave', startAutoplay);
+    }
+
+    // Touch Swipe Support for Slider on Mobile
+    let sliderTouchStartX = 0;
+    let sliderTouchEndX = 0;
+
+    sliderTrack.addEventListener('touchstart', (e) => {
+      sliderTouchStartX = e.changedTouches[0].screenX;
+      stopAutoplay();
+    }, { passive: true });
+
+    sliderTrack.addEventListener('touchend', (e) => {
+      sliderTouchEndX = e.changedTouches[0].screenX;
+      const swipeThreshold = 35;
+      if (sliderTouchEndX < sliderTouchStartX - swipeThreshold) {
+        goToSlide(currentSlide + 1);
+      } else if (sliderTouchEndX > sliderTouchStartX + swipeThreshold) {
+        goToSlide(currentSlide - 1);
+      }
+      startAutoplay();
+    }, { passive: true });
+
+    // Start 4-second autoplay loop
+    startAutoplay();
+
+    // Academic Lightbox Modal Logic
+    const academicLightbox = document.getElementById('academicLightbox');
+    const academicLightboxImg = document.getElementById('academicLightboxImg');
+    const academicLightboxTitle = document.getElementById('academicLightboxTitle');
+    const academicLightboxDesc = document.getElementById('academicLightboxDesc');
+    const academicLightboxClose = document.getElementById('academicLightboxClose');
+    const academicLightboxOverlay = document.getElementById('academicLightboxOverlay');
+
+    slides.forEach(slide => {
+      const imgWrap = slide.querySelector('.slide-image-wrapper');
+      if (imgWrap) {
+        imgWrap.addEventListener('click', () => {
+          const imgEl = slide.querySelector('.slide-img');
+          const titleEl = slide.querySelector('.slide-title');
+          const descEl = slide.querySelector('.slide-desc');
+
+          if (academicLightboxImg && imgEl) {
+            academicLightboxImg.src = imgEl.src;
+          }
+          if (academicLightboxTitle && titleEl) {
+            academicLightboxTitle.textContent = titleEl.textContent;
+          }
+          if (academicLightboxDesc && descEl) {
+            academicLightboxDesc.textContent = descEl.textContent;
+          }
+
+          if (academicLightbox) {
+            academicLightbox.classList.add('active');
+            academicLightbox.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+          }
+        });
+
+        imgWrap.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            imgWrap.click();
+          }
+        });
+      }
+    });
+
+    function closeAcademicLightbox() {
+      if (academicLightbox) {
+        academicLightbox.classList.remove('active');
+        academicLightbox.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+      }
+    }
+
+    if (academicLightboxClose) academicLightboxClose.addEventListener('click', closeAcademicLightbox);
+    if (academicLightboxOverlay) academicLightboxOverlay.addEventListener('click', closeAcademicLightbox);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && academicLightbox && academicLightbox.classList.contains('active')) {
+        closeAcademicLightbox();
       }
     });
   }
