@@ -634,12 +634,18 @@ document.addEventListener('DOMContentLoaded', () => {
       this.touchStartX = 0;
       this.touchEndX = 0;
 
-      this.init();
+      // Optimistically add the first image immediately so there's no blank flash
+      this.images.push(`${this.folder}img_1.png`);
+      this.renderSlides();
+      this.setupControls();
+      this.bindEvents();
+
+      // Probe for more images asynchronously
+      this.probeMoreImages();
     }
 
-    async init() {
-      // Probing for images in the folder (img_1.png, img_2.png, ...)
-      let imgIndex = 1;
+    async probeMoreImages() {
+      let imgIndex = 2;
       let keepLooking = true;
 
       while (keepLooking) {
@@ -647,58 +653,45 @@ document.addEventListener('DOMContentLoaded', () => {
         const exists = await this.checkImageExists(src);
         if (exists) {
           this.images.push(src);
+          this.appendSlide(src, this.images.length - 1);
           imgIndex++;
         } else {
           keepLooking = false;
         }
       }
 
-      if (this.images.length === 0) {
-        // Fallback if none found
-        return;
+      // If we found more images, update controls and autoplay
+      if (this.images.length > 1) {
+        this.prevBtn.style.display = 'flex';
+        this.nextBtn.style.display = 'flex';
+        this.dotsContainer.style.display = 'flex';
+        this.setupControls(); // Rebind or ensure bound
+        this.startAutoplay();
       }
-
-      this.renderSlides();
-      this.setupControls();
-      this.startAutoplay();
-      this.bindEvents();
     }
 
     checkImageExists(url) {
       return new Promise(resolve => {
-        const img = new Image();
-        img.onload = () => resolve(true);
-        img.onerror = () => resolve(false);
-        img.src = url;
+        // Use HEAD request for speed, fallback to Image object
+        fetch(url, { method: 'HEAD' })
+          .then(res => resolve(res.ok))
+          .catch(() => {
+            const img = new Image();
+            img.onload = () => resolve(true);
+            img.onerror = () => resolve(false);
+            img.src = url;
+          });
       });
     }
 
     renderSlides() {
+      this.track.innerHTML = '';
+      this.dotsContainer.innerHTML = '';
+      
       this.images.forEach((src, index) => {
-        // Slide
-        const slide = document.createElement('div');
-        slide.className = `inner-carousel-slide ${index === 0 ? 'active' : ''}`;
-        const img = document.createElement('img');
-        img.src = src;
-        img.loading = "lazy";
-        slide.appendChild(img);
-        this.track.appendChild(slide);
-
-        // Dot
-        if (this.images.length > 1) {
-          const dot = document.createElement('div');
-          dot.className = `inner-dot ${index === 0 ? 'active' : ''}`;
-          dot.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.goTo(index);
-          });
-          this.dotsContainer.appendChild(dot);
-        }
+        this.appendSlide(src, index, false);
       });
 
-      this.slides = this.track.querySelectorAll('.inner-carousel-slide');
-      this.dots = this.dotsContainer.querySelectorAll('.inner-dot');
-      
       if (this.images.length <= 1) {
         this.prevBtn.style.display = 'none';
         this.nextBtn.style.display = 'none';
@@ -706,17 +699,45 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
+    appendSlide(src, index, updateDOM = true) {
+      const slide = document.createElement('div');
+      slide.className = `inner-carousel-slide ${index === 0 ? 'active' : ''}`;
+      const img = document.createElement('img');
+      img.src = src;
+      img.className = 'slide-img'; // CRITICAL FOR ZOOM FX
+      img.loading = "lazy";
+      slide.appendChild(img);
+      this.track.appendChild(slide);
+
+      const dot = document.createElement('div');
+      dot.className = `inner-dot ${index === 0 ? 'active' : ''}`;
+      dot.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.goTo(index);
+      });
+      this.dotsContainer.appendChild(dot);
+
+      this.slides = this.track.querySelectorAll('.inner-carousel-slide');
+      this.dots = this.dotsContainer.querySelectorAll('.inner-dot');
+    }
+
     setupControls() {
-      if (this.images.length > 1) {
-        this.prevBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.prev();
-        });
-        this.nextBtn.addEventListener('click', (e) => {
-          e.stopPropagation();
-          this.next();
-        });
-      }
+      // Remove old listeners to prevent duplicates
+      const newPrev = this.prevBtn.cloneNode(true);
+      const newNext = this.nextBtn.cloneNode(true);
+      this.prevBtn.parentNode.replaceChild(newPrev, this.prevBtn);
+      this.nextBtn.parentNode.replaceChild(newNext, this.nextBtn);
+      this.prevBtn = newPrev;
+      this.nextBtn = newNext;
+
+      this.prevBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.prev();
+      });
+      this.nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.next();
+      });
     }
 
     bindEvents() {
@@ -765,22 +786,24 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     goTo(index) {
-      if (this.images.length <= 1) return;
+      if (this.images.length <= 1 || !this.slides || !this.slides[this.currentIndex]) return;
       this.slides[this.currentIndex].classList.remove('active');
       if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.remove('active');
 
       this.currentIndex = index;
 
-      this.slides[this.currentIndex].classList.add('active');
+      if (this.slides[this.currentIndex]) this.slides[this.currentIndex].classList.add('active');
       if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.add('active');
     }
 
     next() {
+      if (this.images.length <= 1) return;
       const newIndex = (this.currentIndex + 1) % this.images.length;
       this.goTo(newIndex);
     }
 
     prev() {
+      if (this.images.length <= 1) return;
       const newIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
       this.goTo(newIndex);
     }
