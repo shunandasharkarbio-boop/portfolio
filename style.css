@@ -4085,4 +4085,172 @@ img {
   white-space: nowrap;
 }
 
+/* --- Vertical Academic Timeline --- */
+.vertical-timeline-container {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 40px 0;
+}
+
+.vertical-timeline-line {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 120px;
+  width: 2px;
+  background: var(--color-secondary);
+  box-shadow: 0 0 10px var(--color-secondary);
+  transform: translateX(-50%);
+}
+
+.v-timeline-row {
+  display: flex;
+  position: relative;
+  margin-bottom: 60px;
+  align-items: flex-start;
+}
+
+.v-timeline-year {
+  width: 100px;
+  text-align: right;
+  padding-right: 30px;
+  font-weight: 700;
+  color: var(--color-secondary);
+  font-size: 1.2rem;
+  padding-top: 20px;
+}
+
+.v-timeline-dot {
+  position: absolute;
+  left: 120px;
+  top: 30px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background-color: var(--color-secondary);
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 10px var(--color-secondary), 0 0 20px var(--color-secondary);
+  z-index: 2;
+}
+
+.v-timeline-card {
+  flex: 1;
+  margin-left: 50px;
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid rgba(0, 210, 196, 0.2);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.v-timeline-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 210, 196, 0.15);
+  border-color: rgba(0, 210, 196, 0.5);
+}
+
+.v-timeline-img-wrap {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.v-timeline-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.v-timeline-card:hover .v-timeline-img {
+  transform: scale(1.05);
+}
+
+.v-timeline-content {
+  padding: 25px;
+}
+
+.v-timeline-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 15px;
+}
+
+.v-timeline-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(0, 210, 196, 0.1);
+  border: 1px solid rgba(0, 210, 196, 0.3);
+  border-radius: 8px;
+  font-size: 1.2rem;
+}
+
+.v-timeline-title {
+  font-size: 1.5rem;
+  color: var(--color-text-primary);
+  margin: 0;
+  font-weight: 600;
+}
+
+.v-timeline-subtitle {
+  color: var(--color-secondary);
+  font-size: 1rem;
+  margin-bottom: 15px;
+  font-weight: 500;
+}
+
+.v-timeline-desc {
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  margin-bottom: 20px;
+  font-size: 0.95rem;
+}
+
+.v-timeline-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  color: var(--color-text-primary);
+  font-size: 0.85rem;
+  cursor: default;
+  transition: background 0.3s ease;
+}
+
+.v-timeline-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .vertical-timeline-line {
+    left: 30px;
+  }
+  .v-timeline-year {
+    position: absolute;
+    top: 0;
+    left: 60px;
+    width: auto;
+    text-align: left;
+    padding: 0;
+    font-size: 1rem;
+  }
+  .v-timeline-dot {
+    left: 30px;
+    top: 10px;
+  }
+  .v-timeline-card {
+    margin-left: 60px;
+    margin-top: 30px;
+  }
+}
 
