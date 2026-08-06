@@ -395,17 +395,24 @@ document.addEventListener('DOMContentLoaded', () => {
       updateLightboxContent();
     }
 
-    achievementCards.forEach(card => {
-      const imgContainer = card.querySelector('.achievement-img-container');
-      if (imgContainer) {
-        imgContainer.addEventListener('click', () => openAchievementLightbox(card));
-        imgContainer.addEventListener('keydown', (e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault();
-            openAchievementLightbox(card);
-          }
-        });
-      }
+    // Use event delegation so cloned carousel cards also trigger the lightbox
+    document.addEventListener('click', (e) => {
+      const imgContainer = e.target.closest('.achievement-img-container');
+      if (!imgContainer) return;
+      const card = imgContainer.closest('.achievement-card');
+      if (!card) return;
+      openAchievementLightbox(card);
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key !== 'Enter' && e.key !== ' ') return;
+      const imgContainer = document.activeElement && document.activeElement.closest
+        ? document.activeElement.closest('.achievement-img-container')
+        : null;
+      if (!imgContainer) return;
+      const card = imgContainer.closest('.achievement-card');
+      if (!card) return;
+      e.preventDefault();
+      openAchievementLightbox(card);
     });
 
     if (lightboxCloseBtn) lightboxCloseBtn.addEventListener('click', closeAchievementLightbox);
@@ -773,5 +780,111 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('.inner-carousel-container').forEach(container => {
     new InnerCarousel(container);
   });
+
+
+  // ── 8. ACHIEVEMENTS INFINITE HORIZONTAL CAROUSEL ──────────────────────────
+  function achCarouselInit() {
+    const wrapper = document.getElementById('achCarouselWrapper');
+    const track   = document.getElementById('achTrack');
+    if (!wrapper || !track) return;
+
+    // Clone all original cards to make the loop seamless
+    const origCards = Array.from(track.children);
+    if (origCards.length === 0) return;
+
+    // Clone enough times so we always have cards off-screen
+    // We need at least 2 full sets for a seamless loop
+    const cloneCount = 3; // total = origCards * (1 + cloneCount)
+    for (let c = 0; c < cloneCount; c++) {
+      origCards.forEach(card => {
+        const clone = card.cloneNode(true);
+        clone.setAttribute('aria-hidden', 'true');
+        track.appendChild(clone);
+      });
+    }
+
+    // Rebind lightbox on ALL cards (including clones)
+    rebindCarouselCardListeners();
+
+    const SPEED = 0.6;      // px per frame at 60fps  ≈ 36px/s
+    let offset   = 0;
+    let paused   = false;
+    let rafId    = null;
+
+    // Width of ONE full set of original cards (cards + gaps)
+    function getSetWidth() {
+      const gap = parseFloat(getComputedStyle(track).gap) || 32;
+      return origCards.reduce((acc, card) => acc + card.offsetWidth + gap, 0);
+    }
+
+    function tick() {
+      if (!paused) {
+        offset += SPEED;
+        const setW = getSetWidth();
+        // When we've scrolled one full set, jump back seamlessly
+        if (setW > 0 && offset >= setW) {
+          offset -= setW;
+        }
+        track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+      }
+      rafId = requestAnimationFrame(tick);
+    }
+
+    // Pause on hover
+    wrapper.addEventListener('mouseenter', () => { paused = true; });
+    wrapper.addEventListener('mouseleave', () => { paused = false; });
+
+    // Touch / swipe drag
+    let touchStartX = 0, touchOffsetStart = 0;
+    wrapper.addEventListener('touchstart', (e) => {
+      paused = true;
+      touchStartX = e.touches[0].clientX;
+      touchOffsetStart = offset;
+    }, { passive: true });
+    wrapper.addEventListener('touchmove', (e) => {
+      const dx = touchStartX - e.touches[0].clientX;
+      offset = touchOffsetStart + dx;
+      // Keep offset in range
+      const setW = getSetWidth();
+      if (setW > 0) {
+        offset = ((offset % setW) + setW) % setW;
+      }
+      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+    }, { passive: true });
+    wrapper.addEventListener('touchend', () => {
+      paused = false;
+    }, { passive: true });
+
+    // Mouse-wheel horizontal scroll
+    wrapper.addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+        e.preventDefault();
+        offset += e.deltaX * 0.8;
+        const setW = getSetWidth();
+        if (setW > 0) offset = ((offset % setW) + setW) % setW;
+      }
+    }, { passive: false });
+
+    // Start animation
+    rafId = requestAnimationFrame(tick);
+  }
+
+  function rebindCarouselCardListeners() {
+    const track = document.getElementById('achTrack');
+    if (!track) return;
+
+    // Remove existing listeners by replacing nodes is expensive on clones;
+    // instead use event delegation on the track
+    track.addEventListener('click', (e) => {
+      // Find the card ancestor
+      const card = e.target.closest('.ach-carousel-card');
+      if (!card || card.getAttribute('aria-hidden') === 'true') return;
+
+      // Reuse existing lightbox logic — dispatch a custom event
+      card.dispatchEvent(new CustomEvent('open-achievement-lightbox', { bubbles: true }));
+    });
+  }
+
+  achCarouselInit();
 
 });

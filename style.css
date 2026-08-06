@@ -4712,3 +4712,88 @@ section[id],
   transform: scale(1.2);
   box-shadow: 0 0 10px var(--color-primary);
 }
+
+/* ═══════════════════════════════════════════════════
+   ACHIEVEMENTS INFINITE HORIZONTAL CAROUSEL
+   ═══════════════════════════════════════════════════ */
+.ach-carousel-wrapper {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  margin-top: 3.5rem;
+  /* Padding so the cards pop up on hover without clipping */
+  padding: 1.5rem 0 2.5rem;
+}
+
+/* Edge fade overlays */
+.ach-fade {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 20;
+  pointer-events: none;
+}
+.ach-fade-left {
+  left: 0;
+  background: linear-gradient(90deg, var(--color-bg, #040914) 0%, transparent 100%);
+}
+.ach-fade-right {
+  right: 0;
+  background: linear-gradient(-90deg, var(--color-bg, #040914) 0%, transparent 100%);
+}
+
+/* The scrolling row — width set by JS */
+.ach-track {
+  display: flex;
+  gap: 2rem;
+  width: max-content;
+  will-change: transform;
+  /* animation driven by JS requestAnimationFrame */
+}
+
+/* Individual carousel card sizing */
+.ach-carousel-card {
+  /* Desktop: 3 visible → ~(100vw - padding) / 3 */
+  flex: 0 0 clamp(280px, calc(33.33vw - 3rem), 420px);
+  width: clamp(280px, calc(33.33vw - 3rem), 420px);
+  cursor: pointer;
+  /* Override translateY so hover lift doesn't clip */
+  transform-origin: center bottom;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.ach-carousel-card:hover {
+  transform: translateY(-10px) scale(1.025);
+  border-color: rgba(0, 245, 155, 0.75);
+  box-shadow:
+    0 20px 50px rgba(0, 245, 155, 0.22),
+    0 0 30px rgba(0, 210, 196, 0.18),
+    inset 0 1px 1px rgba(0, 245, 155, 0.25);
+}
+
+.ach-carousel-card:hover::before {
+  opacity: 1;
+  box-shadow: 0 0 18px var(--color-primary);
+}
+
+/* Tablet: 2 cards visible */
+@media (max-width: 1024px) {
+  .ach-carousel-card {
+    flex: 0 0 clamp(240px, calc(50vw - 2.5rem), 380px);
+    width: clamp(240px, calc(50vw - 2.5rem), 380px);
+  }
+  .ach-fade { width: 60px; }
+}
+
+/* Mobile: 1 card visible */
+@media (max-width: 640px) {
+  .ach-carousel-card {
+    flex: 0 0 clamp(240px, calc(85vw), 340px);
+    width: clamp(240px, calc(85vw), 340px);
+  }
+  .ach-fade { width: 30px; }
+}

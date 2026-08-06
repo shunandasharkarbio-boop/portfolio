@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <div class="inner-carousel-container" data-folder="./image/2024-btech.jpg/">
+    <div class="inner-carousel-track"></div>
+    <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
+    <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
+    <div class="inner-carousel-dots"></div>
+  </div>
+  <script>
+    class InnerCarousel {
+      constructor(container) {
+        this.container = container;
+        this.folder = container.getAttribute('data-folder');
+        this.track = container.querySelector('.inner-carousel-track');
+        this.prevBtn = container.querySelector('.inner-carousel-prev');
+        this.nextBtn = container.querySelector('.inner-carousel-next');
+        this.dotsContainer = container.querySelector('.inner-carousel-dots');
+        
+        this.images = [];
+        this.currentIndex = 0;
+        this.autoplayTimer = null;
+        this.isHovering = false;
+        
+        this.init();
+      }
+      async init() {
+        let imgIndex = 1;
+        let keepLooking = true;
+        while (keepLooking) {
+          const src = `${this.folder}img_${imgIndex}.png`;
+          const exists = await this.checkImageExists(src);
+          if (exists) {
+            this.images.push(src);
+            imgIndex++;
+          } else {
+            keepLooking = false;
+          }
+        }
+        if (this.images.length === 0) return;
+        this.renderSlides();
+        this.setupControls();
+        this.startAutoplay();
+        console.log("Carousel init complete with", this.images.length, "images");
+      }
+      checkImageExists(url) {
+        return new Promise(resolve => {
+          const img = new Image();
+          img.onload = () => resolve(true);
+          img.onerror = () => resolve(false);
+          img.src = url;
+        });
+      }
+      renderSlides() {
+        this.images.forEach((src, index) => {
+          const slide = document.createElement('div');
+          slide.className = `inner-carousel-slide ${index === 0 ? 'active' : ''}`;
+          const img = document.createElement('img');
+          img.src = src;
+          slide.appendChild(img);
+          this.track.appendChild(slide);
+          
+          if (this.images.length > 1) {
+            const dot = document.createElement('div');
+            dot.className = `inner-dot ${index === 0 ? 'active' : ''}`;
+            this.dotsContainer.appendChild(dot);
+          }
+        });
+        if (this.images.length <= 1) {
+          this.prevBtn.style.display = 'none';
+          this.nextBtn.style.display = 'none';
+        }
+      }
+      setupControls() {}
+      startAutoplay() {
+        if (this.images.length > 1) {
+          this.autoplayTimer = setInterval(() => console.log("Autoplay next!"), 3000);
+        }
+      }
+    }
+    
+    document.querySelectorAll('.inner-carousel-container').forEach(container => {
+      new InnerCarousel(container);
+    });
+  </script>
+</body>
+</html>
