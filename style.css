@@ -3445,6 +3445,7 @@ img {
   color: var(--color-secondary);
   background: linear-gradient(135deg, #00d2c4 0%, #00f59b 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 0 20px rgba(0, 210, 196, 0.4);
 }
