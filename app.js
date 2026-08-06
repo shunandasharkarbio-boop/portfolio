@@ -781,110 +781,245 @@ document.addEventListener('DOMContentLoaded', () => {
     new InnerCarousel(container);
   });
 
+  // ═══════════════════════════════════════════════════════════
+  // 8. ACHIEVEMENTS INFINITE HORIZONTAL CAROUSEL
+  // Single row, CSS-transform based, requestAnimationFrame
+  // ═══════════════════════════════════════════════════════════
+  (function initAchCarousel() {
+    const track = document.getElementById('achTrack');
+    if (!track) return;
 
-  // ── 8. ACHIEVEMENTS INFINITE HORIZONTAL CAROUSEL ──────────────────────────
-  function achCarouselInit() {
-    const wrapper = document.getElementById('achCarouselWrapper');
-    const track   = document.getElementById('achTrack');
-    if (!wrapper || !track) return;
+    // Speed: pixels per frame (at ~60fps → 40s for 5 cards × ~380px = ~1900px set)
+    const SPEED = 0.5; // ~30px/s
 
-    // Clone all original cards to make the loop seamless
-    const origCards = Array.from(track.children);
-    if (origCards.length === 0) return;
+    let offset     = 0;
+    let paused     = false;
+    let isDragging = false;
+    let dragStartX = 0;
+    let dragStartOffset = 0;
 
-    // Clone enough times so we always have cards off-screen
-    // We need at least 2 full sets for a seamless loop
-    const cloneCount = 3; // total = origCards * (1 + cloneCount)
-    for (let c = 0; c < cloneCount; c++) {
-      origCards.forEach(card => {
+    // ── Measure one full set of original cards ──────────────
+    const originalCards = Array.from(track.querySelectorAll('.ach-carousel-card:not([aria-hidden])'));
+    const gap = 28; // matches CSS 1.75rem gap at 16px base
+
+    function getSetWidth() {
+      return originalCards.reduce((acc, card) => acc + card.offsetWidth + gap, 0);
+    }
+
+    // ── Animation loop ──────────────────────────────────────
+    function tick() {
+      if (!paused && !isDragging) {
+        offset += SPEED;
+        const setW = getSetWidth();
+        if (setW > 0 && offset >= setW) {
+          offset -= setW; // seamless jump
+        }
+      }
+      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+      requestAnimationFrame(tick);
+    }
+
+    // ── Pause on hover ──────────────────────────────────────
+    track.addEventListener('mouseenter', () => { paused = true;  });
+    track.addEventListener('mouseleave', () => { paused = false; isDragging = false; });
+
+    // ── Mouse drag ──────────────────────────────────────────
+    track.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
+      isDragging   = true;
+      paused       = true;
+      dragStartX   = e.clientX;
+      dragStartOffset = offset;
+      track.classList.add('is-dragging');
+      e.preventDefault();
+    });
+
+    document.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx   = dragStartX - e.clientX;
+      const setW = getSetWidth();
+      offset = ((dragStartOffset + dx) % setW + setW) % setW;
+      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+    });
+
+    document.addEventListener('mouseup', () => {
+      if (!isDragging) return;
+      isDragging = false;
+      paused     = false;
+      track.classList.remove('is-dragging');
+    });
+
+    // ── Touch drag ──────────────────────────────────────────
+    let touchStartX = 0;
+    track.addEventListener('touchstart', (e) => {
+      touchStartX     = e.touches[0].clientX;
+      dragStartOffset = offset;
+      paused = true;
+    }, { passive: true });
+
+    track.addEventListener('touchmove', (e) => {
+      const dx   = touchStartX - e.touches[0].clientX;
+      const setW = getSetWidth();
+      offset = ((dragStartOffset + dx) % setW + setW) % setW;
+      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+    }, { passive: true });
+
+    track.addEventListener('touchend', () => { paused = false; }, { passive: true });
+
+    // ── Mouse wheel horizontal scroll ───────────────────────
+    track.closest('.ach-carousel-outer') && track.closest('.ach-carousel-outer').addEventListener('wheel', (e) => {
+      if (Math.abs(e.deltaX) < Math.abs(e.deltaY) && Math.abs(e.deltaY) < 5) return;
+      e.preventDefault();
+      const setW = getSetWidth();
+      offset = ((offset + (e.deltaX || e.deltaY) * 0.6) % setW + setW) % setW;
+      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+    }, { passive: false });
+
+    // ── Lightbox delegation (works on originals + clones) ───
+    // (Already handled by global delegation in section 5 above)
+
+    // Start
+    requestAnimationFrame(tick);
+  })();
+
+
+  // ── 8. ACHIEVEMENTS INFINITE HORIZONTAL CAROUSEL (30-40s FULL LOOP, DRAG, WHEEL, SWIPE) ──
+  function initAchievementCarousel() {
+    const outer = document.getElementById('achCarouselOuter');
+    const track = document.getElementById('achTrack');
+    if (!outer || !track) return;
+
+    const originalCards = Array.from(track.children);
+    if (originalCards.length === 0) return;
+
+    // Clone the 5 original cards 3 times (total 20 cards) to ensure infinite loop seamlessly
+    for (let i = 0; i < 3; i++) {
+      originalCards.forEach(card => {
         const clone = card.cloneNode(true);
         clone.setAttribute('aria-hidden', 'true');
         track.appendChild(clone);
       });
     }
 
-    // Rebind lightbox on ALL cards (including clones)
-    rebindCarouselCardListeners();
+    let position = 0;
+    let isHovered = false;
+    let isDragging = false;
+    let startX = 0;
+    let dragStartPos = 0;
+    let hasDraggedFar = false;
 
-    const SPEED = 0.6;      // px per frame at 60fps  ≈ 36px/s
-    let offset   = 0;
-    let paused   = false;
-    let rafId    = null;
-
-    // Width of ONE full set of original cards (cards + gaps)
-    function getSetWidth() {
-      const gap = parseFloat(getComputedStyle(track).gap) || 32;
-      return origCards.reduce((acc, card) => acc + card.offsetWidth + gap, 0);
+    // Measure single set width (5 cards + gaps)
+    function getSingleSetWidth() {
+      const gap = parseFloat(window.getComputedStyle(track).gap) || 32;
+      let totalWidth = 0;
+      for (let i = 0; i < originalCards.length; i++) {
+        totalWidth += originalCards[i].offsetWidth + gap;
+      }
+      return totalWidth;
     }
 
-    function tick() {
-      if (!paused) {
-        offset += SPEED;
-        const setW = getSetWidth();
-        // When we've scrolled one full set, jump back seamlessly
-        if (setW > 0 && offset >= setW) {
-          offset -= setW;
+    // 35 seconds per full loop (60 FPS calculation)
+    function getSpeed() {
+      const singleWidth = getSingleSetWidth();
+      return singleWidth > 0 ? singleWidth / (35 * 60) : 0.5;
+    }
+
+    // Animation Loop (60 FPS via requestAnimationFrame)
+    function step() {
+      if (!isHovered && !isDragging) {
+        position += getSpeed();
+        const singleWidth = getSingleSetWidth();
+        if (singleWidth > 0 && position >= singleWidth) {
+          position -= singleWidth;
         }
-        track.style.transform = `translate3d(-${offset}px, 0, 0)`;
+        track.style.transform = `translateX(-${position}px)`;
       }
-      rafId = requestAnimationFrame(tick);
+      requestAnimationFrame(step);
     }
 
-    // Pause on hover
-    wrapper.addEventListener('mouseenter', () => { paused = true; });
-    wrapper.addEventListener('mouseleave', () => { paused = false; });
+    // Hover Pause
+    outer.addEventListener('mouseenter', () => { isHovered = true; });
+    outer.addEventListener('mouseleave', () => {
+      isHovered = false;
+      isDragging = false;
+    });
 
-    // Touch / swipe drag
-    let touchStartX = 0, touchOffsetStart = 0;
-    wrapper.addEventListener('touchstart', (e) => {
-      paused = true;
-      touchStartX = e.touches[0].clientX;
-      touchOffsetStart = offset;
-    }, { passive: true });
-    wrapper.addEventListener('touchmove', (e) => {
-      const dx = touchStartX - e.touches[0].clientX;
-      offset = touchOffsetStart + dx;
-      // Keep offset in range
-      const setW = getSetWidth();
-      if (setW > 0) {
-        offset = ((offset % setW) + setW) % setW;
+    // Mouse Drag
+    outer.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      hasDraggedFar = false;
+      startX = e.clientX;
+      dragStartPos = position;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      const dx = startX - e.clientX;
+      if (Math.abs(dx) > 5) hasDraggedFar = true;
+      position = dragStartPos + dx;
+      const singleWidth = getSingleSetWidth();
+      if (singleWidth > 0) {
+        position = ((position % singleWidth) + singleWidth) % singleWidth;
       }
-      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
-    }, { passive: true });
-    wrapper.addEventListener('touchend', () => {
-      paused = false;
+      track.style.transform = `translateX(-${position}px)`;
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (isDragging) {
+        setTimeout(() => { isDragging = false; }, 50);
+      }
+    });
+
+    // Touch Swipe (Mobile)
+    outer.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      hasDraggedFar = false;
+      startX = e.touches[0].clientX;
+      dragStartPos = position;
     }, { passive: true });
 
-    // Mouse-wheel horizontal scroll
-    wrapper.addEventListener('wheel', (e) => {
-      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) {
+    outer.addEventListener('touchmove', (e) => {
+      if (!isDragging) return;
+      const dx = startX - e.touches[0].clientX;
+      if (Math.abs(dx) > 5) hasDraggedFar = true;
+      position = dragStartPos + dx;
+      const singleWidth = getSingleSetWidth();
+      if (singleWidth > 0) {
+        position = ((position % singleWidth) + singleWidth) % singleWidth;
+      }
+      track.style.transform = `translateX(-${position}px)`;
+    }, { passive: true });
+
+    outer.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Mouse Wheel Horizontal Scroll
+    outer.addEventListener('wheel', (e) => {
+      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
+      if (Math.abs(delta) > 5) {
         e.preventDefault();
-        offset += e.deltaX * 0.8;
-        const setW = getSetWidth();
-        if (setW > 0) offset = ((offset % setW) + setW) % setW;
+        position += delta * 0.8;
+        const singleWidth = getSingleSetWidth();
+        if (singleWidth > 0) {
+          position = ((position % singleWidth) + singleWidth) % singleWidth;
+        }
+        track.style.transform = `translateX(-${position}px)`;
       }
     }, { passive: false });
 
-    // Start animation
-    rafId = requestAnimationFrame(tick);
-  }
-
-  function rebindCarouselCardListeners() {
-    const track = document.getElementById('achTrack');
-    if (!track) return;
-
-    // Remove existing listeners by replacing nodes is expensive on clones;
-    // instead use event delegation on the track
+    // Prevent click on drag, but allow click on card to open gallery lightbox
     track.addEventListener('click', (e) => {
-      // Find the card ancestor
-      const card = e.target.closest('.ach-carousel-card');
-      if (!card || card.getAttribute('aria-hidden') === 'true') return;
+      if (hasDraggedFar) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+    }, true);
 
-      // Reuse existing lightbox logic — dispatch a custom event
-      card.dispatchEvent(new CustomEvent('open-achievement-lightbox', { bubbles: true }));
-    });
+    // Start 60 FPS animation loop
+    requestAnimationFrame(step);
   }
 
-  achCarouselInit();
-
+  // Initialize Carousel
+  initAchievementCarousel();
 });

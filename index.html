@@ -1205,151 +1205,264 @@
       </div>
     </div>
 
-    <!-- 5.5. Achievements Section -->
+        <!-- 5.5. Achievements Section (Single-Row Infinite Horizontal Carousel) -->
     <section class="achievements-section py-large" id="achievements">
       <div class="container">
         <div class="section-header-center">
           <span class="section-subtitle">ACHIEVEMENTS</span>
           <h2 class="section-title">Beyond <span class="glowing-accent-cyan">Academics</span></h2>
-          <p class="section-description">Beyond Academics, Sports, Leadership & International Experiences.</p>
+          <p class="section-description">Beyond Academics, Sports, Leadership &amp; International Experiences.</p>
         </div>
 
-        <!-- Infinite Horizontal Carousel -->
-        <div class="ach-carousel-wrapper" id="achCarouselWrapper">
-          <!-- Left/right edge fades -->
-          <div class="ach-fade ach-fade-left"></div>
-          <div class="ach-fade ach-fade-right"></div>
+        <!-- Single-Row Horizontal Infinite Carousel Container -->
+        <div class="ach-carousel-outer" id="achCarouselOuter">
+          <!-- Gradient Edge Fades -->
+          <div class="ach-fade-left"></div>
+          <div class="ach-fade-right"></div>
 
-          <!-- The scrolling track (cards are cloned inside by JS) -->
+          <!-- Single-Row Flex Track (No Wrap, No Grid) -->
           <div class="ach-track" id="achTrack">
 
-    <!-- Achievements Lightbox Modal -->
-    <div class="achievement-lightbox" id="achievementLightbox" aria-hidden="true" role="dialog" aria-modal="true"
-      aria-label="Achievement Image Lightbox">
-      <div class="lightbox-overlay" id="lightboxOverlay"></div>
-      <div class="lightbox-container">
-        <button class="lightbox-btn lightbox-close" id="lightboxCloseBtn" aria-label="Close Lightbox">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <line x1="18" y1="6" x2="6" y2="18"></line>
-            <line x1="6" y1="6" x2="18" y2="18"></line>
-          </svg>
-        </button>
-
-        <button class="lightbox-btn lightbox-prev" id="lightboxPrevBtn" aria-label="Previous Image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="15 18 9 12 15 6"></polyline>
-          </svg>
-        </button>
-
-        <button class="lightbox-btn lightbox-next" id="lightboxNextBtn" aria-label="Next Image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <polyline points="9 18 15 12 9 6"></polyline>
-          </svg>
-        </button>
-
-        <div class="lightbox-main" id="lightboxMain">
-          <div class="lightbox-stage">
-            <img id="lightboxImg" src="" alt="Achievement Full Image" class="lightbox-img" />
-            <div id="lightboxPlaceholder" class="lightbox-placeholder-view">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="48" height="48">
-                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                <circle cx="8.5" cy="8.5" r="1.5" />
-                <polyline points="21 15 16 10 5 21" />
-              </svg>
-              <p class="placeholder-modal-text">Image Placeholder</p>
-              <p class="placeholder-modal-subtext">Add image URLs in data-gallery attribute or img src to display photos
-              </p>
+            <!-- Card 1: University Handball Team -->
+            <div class="achievement-card ach-carousel-card"
+              data-gallery='["image/University Handball Team/45407.jpg", "image/University Handball Team/45409.jpg"]'
+              data-title="University Handball Team" data-badge="Sports"
+              data-desc="Represented Andhra University in competitive handball tournaments, demonstrating strategic teamwork, athletic agility, tactical coordination, and sportsmanship on and off the court.">
+              <div class="achievement-img-container" tabindex="0" role="button"
+                aria-label="Open gallery for University Handball Team">
+                <div class="achievement-img-aspect">
+                  <img src="./image/University Handball Team/45407.jpg" alt="University Handball Team"
+                    class="achievement-img" loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="achievement-img-placeholder">
+                    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <span class="placeholder-text">View Gallery</span>
+                  </div>
+                  <div class="card-badge-top">Sports</div>
+                  <div class="card-zoom-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      <line x1="11" y1="8" x2="11" y2="14"></line>
+                      <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="achievement-body">
+                <div class="achievement-title-group">
+                  <span class="achievement-icon">🏆</span>
+                  <h3 class="achievement-card-title">University Handball Team</h3>
+                </div>
+                <p class="achievement-description">
+                  Represented Andhra University in competitive handball tournaments, demonstrating strategic teamwork,
+                  athletic agility, tactical coordination, and sportsmanship on and off the court.
+                </p>
+                <div class="achievement-highlights">
+                  <div class="highlight-item"><span class="hl-icon">🤾</span> University Handball Player</div>
+                  <div class="highlight-item"><span class="hl-icon">🤝</span> Teamwork</div>
+                  <div class="highlight-item"><span class="hl-icon">🎯</span> Leadership</div>
+                  <div class="highlight-item"><span class="hl-icon">⭐</span> Sportsmanship</div>
+                </div>
+              </div>
             </div>
-          </div>
 
-          <div class="lightbox-caption">
-            <div class="lightbox-info">
-              <h4 id="lightboxTitle" class="lightbox-title">Achievement Title</h4>
-              <span id="lightboxBadge" class="lightbox-badge">Date / Location</span>
-              <p id="lightboxDesc" class="lightbox-desc">Description</p>
+            <!-- Card 2: ICCR Scholar & International Student -->
+            <div class="achievement-card ach-carousel-card"
+              data-gallery='["image/ICCR Scholar &amp; International Student/45424.jpg", "image/ICCR Scholar &amp; International Student/45425.jpg", "image/ICCR Scholar &amp; International Student/45426.jpg", "image/ICCR Scholar &amp; International Student/45427.jpg"]'
+              data-title="ICCR Scholar &amp; International Student" data-badge="International"
+              data-desc="Awarded the prestigious Indian Council for Cultural Relations (ICCR) Scholarship for higher studies in Biotechnology, engaging in global educational exchange and campus leadership.">
+              <div class="achievement-img-container" tabindex="0" role="button"
+                aria-label="Open gallery for ICCR Scholar &amp; International Student">
+                <div class="achievement-img-aspect">
+                  <img src="./image/ICCR Scholar &amp; International Student/45424.jpg"
+                    alt="ICCR Scholar &amp; International Student" class="achievement-img" loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="achievement-img-placeholder">
+                    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <span class="placeholder-text">View Gallery</span>
+                  </div>
+                  <div class="card-badge-top">International</div>
+                  <div class="card-zoom-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      <line x1="11" y1="8" x2="11" y2="14"></line>
+                      <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="achievement-body">
+                <div class="achievement-title-group">
+                  <span class="achievement-icon">🌍</span>
+                  <h3 class="achievement-card-title">ICCR Scholar &amp; International Student</h3>
+                </div>
+                <p class="achievement-description">
+                  Awarded the prestigious Indian Council for Cultural Relations (ICCR) Scholarship for higher studies in
+                  Biotechnology, engaging in global educational exchange and campus leadership.
+                </p>
+                <div class="achievement-highlights">
+                  <div class="highlight-item"><span class="hl-icon">📜</span> ICCR Scholar</div>
+                  <div class="highlight-item"><span class="hl-icon">🇧🇩</span> Bangladesh Representative</div>
+                  <div class="highlight-item"><span class="hl-icon">🤝</span> Cultural Exchange</div>
+                  <div class="highlight-item"><span class="hl-icon">🎓</span> International Student</div>
+                </div>
+              </div>
             </div>
-            <div id="lightboxCounter" class="lightbox-counter">1 / 1</div>
-          </div>
-        </div>
-      </div>
-    </div>
 
-    <!-- 6. Contact Section -->
-    <section class="contact-section py-large" id="contact">
-      <div class="container new-contact-horizontal">
-
-        <div class="contact-header-center">
-          <h2 class="contact-title">Let's Connect</h2>
-          <p class="contact-description">
-            I'm always open to discussing new opportunities, research collaborations,
-            and innovative ideas. Feel free to reach out!
-          </p>
-        </div>
-
-        <div class="contact-cards-horizontal">
-          <!-- Email -->
-          <a href="mailto:shunanda.sharkar.bio@gmail.com" class="contact-card-box">
-            <div class="contact-item-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                <polyline points="22,6 12,13 2,6" />
-              </svg>
+            <!-- Card 3: Karate Achievements -->
+            <div class="achievement-card ach-carousel-card"
+              data-gallery='["image/Karate Achievements/45421.jpg", "image/Karate Achievements/45423.jpg"]'
+              data-title="Karate Achievements" data-badge="Martial Arts"
+              data-desc="Trained in martial arts, mastering mental discipline, focus, physical endurance, and competitive sparring while earning recognitions in regional karate demonstrations.">
+              <div class="achievement-img-container" tabindex="0" role="button"
+                aria-label="Open gallery for Karate Achievements">
+                <div class="achievement-img-aspect">
+                  <img src="./image/Karate Achievements/45421.jpg" alt="Karate Achievements" class="achievement-img"
+                    loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="achievement-img-placeholder">
+                    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <span class="placeholder-text">View Gallery</span>
+                  </div>
+                  <div class="card-badge-top">Martial Arts</div>
+                  <div class="card-zoom-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      <line x1="11" y1="8" x2="11" y2="14"></line>
+                      <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="achievement-body">
+                <div class="achievement-title-group">
+                  <span class="achievement-icon">🥋</span>
+                  <h3 class="achievement-card-title">Karate Achievements</h3>
+                </div>
+                <p class="achievement-description">
+                  Trained in martial arts, mastering mental discipline, focus, physical endurance, and competitive
+                  sparring while earning recognitions in regional karate demonstrations.
+                </p>
+                <div class="achievement-highlights">
+                  <div class="highlight-item"><span class="hl-icon">🥋</span> Karate Competitor</div>
+                  <div class="highlight-item"><span class="hl-icon">🏅</span> Medal Winner</div>
+                  <div class="highlight-item"><span class="hl-icon">⚡</span> Discipline</div>
+                  <div class="highlight-item"><span class="hl-icon">💪</span> Self Confidence</div>
+                </div>
+              </div>
             </div>
-            <div class="contact-item-text">
-              <span class="contact-item-label">Email</span>
-              <span class="contact-item-value">shunanda.sharkar.bio@gmail.com</span>
-            </div>
-          </a>
-          <!-- Phone -->
-          <div class="contact-card-box">
-            <div class="contact-item-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path
-                  d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-              </svg>
-            </div>
-            <div class="contact-item-text">
-              <span class="contact-item-label">Phone</span>
-              <span class="contact-item-value">+91 9866855390</span>
-            </div>
-          </div>
 
-          <!-- Location -->
-          <div class="contact-card-box">
-            <div class="contact-item-icon">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-                <circle cx="12" cy="10" r="3" />
-              </svg>
+            <!-- Card 4: Running & Marathon -->
+            <div class="achievement-card ach-carousel-card"
+              data-gallery='["image/Running &amp; Marathon/45882.jpg", "image/Running &amp; Marathon/45883.jpg"]'
+              data-title="Running &amp; Marathon" data-badge="Sports"
+              data-desc="Active distance runner participating in marathons and university athletics events, cultivating endurance, mental resilience, consistency, and physical fitness.">
+              <div class="achievement-img-container" tabindex="0" role="button"
+                aria-label="Open gallery for Running &amp; Marathon">
+                <div class="achievement-img-aspect">
+                  <img src="./image/Running &amp; Marathon/45882.jpg" alt="Running &amp; Marathon" class="achievement-img"
+                    loading="lazy" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="achievement-img-placeholder">
+                    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <span class="placeholder-text">View Gallery</span>
+                  </div>
+                  <div class="card-badge-top">Sports</div>
+                  <div class="card-zoom-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      <line x1="11" y1="8" x2="11" y2="14"></line>
+                      <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="achievement-body">
+                <div class="achievement-title-group">
+                  <span class="achievement-icon">🏃</span>
+                  <h3 class="achievement-card-title">Running &amp; Marathon</h3>
+                </div>
+                <p class="achievement-description">
+                  Active distance runner participating in marathons and university athletics events, cultivating
+                  endurance, mental resilience, consistency, and physical fitness.
+                </p>
+                <div class="achievement-highlights">
+                  <div class="highlight-item"><span class="hl-icon">🏃</span> Half Marathon</div>
+                  <div class="highlight-item"><span class="hl-icon">💪</span> Fitness</div>
+                  <div class="highlight-item"><span class="hl-icon">⚡</span> Endurance</div>
+                  <div class="highlight-item"><span class="hl-icon">🎯</span> Consistency</div>
+                </div>
+              </div>
             </div>
-            <div class="contact-item-text">
-              <span class="contact-item-label">Location</span>
-              <span class="contact-item-value">Visakhapatnam, India</span>
+
+            <!-- Card 5: Andhra University Centennial Celebrations -->
+            <div class="achievement-card ach-carousel-card"
+              data-gallery='["image/Andhra University Centennial Celebrations/32801.jpg", "image/Andhra University Centennial Celebrations/32883.jpg"]'
+              data-title="Andhra University Centennial Celebrations" data-badge="University"
+              data-desc="Actively contributed as a student coordinator and volunteer during the historic 100-Year Centennial Celebrations of Andhra University, coordinating campus events and cultural activities.">
+              <div class="achievement-img-container" tabindex="0" role="button"
+                aria-label="Open gallery for Andhra University Centennial Celebrations">
+                <div class="achievement-img-aspect">
+                  <img src="./image/Andhra University Centennial Celebrations/32801.jpg"
+                    alt="Andhra University Centennial Celebrations" class="achievement-img" loading="lazy"
+                    onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                  <div class="achievement-img-placeholder">
+                    <svg class="placeholder-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                      <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                      <circle cx="8.5" cy="8.5" r="1.5" />
+                      <polyline points="21 15 16 10 5 21" />
+                    </svg>
+                    <span class="placeholder-text">View Gallery</span>
+                  </div>
+                  <div class="card-badge-top">University</div>
+                  <div class="card-zoom-btn">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                      <circle cx="11" cy="11" r="8"></circle>
+                      <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                      <line x1="11" y1="8" x2="11" y2="14"></line>
+                      <line x1="8" y1="11" x2="14" y2="11"></line>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+              <div class="achievement-body">
+                <div class="achievement-title-group">
+                  <span class="achievement-icon">🎓</span>
+                  <h3 class="achievement-card-title">Andhra University Centennial Celebrations</h3>
+                </div>
+                <p class="achievement-description">
+                  Actively contributed as a student coordinator and volunteer during the historic 100-Year Centennial
+                  Celebrations of Andhra University, coordinating campus events and cultural activities.
+                </p>
+                <div class="achievement-highlights">
+                  <div class="highlight-item"><span class="hl-icon">🏛️</span> AU 100 Years</div>
+                  <div class="highlight-item"><span class="hl-icon">🎉</span> Student Activities</div>
+                  <div class="highlight-item"><span class="hl-icon">🎭</span> Cultural Events</div>
+                  <div class="highlight-item"><span class="hl-icon">🤝</span> University Participation</div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="contact-social-icons">
-          <!-- LinkedIn -->
-          <a href="https://www.linkedin.com/in/shunanda-sharkar-a52a54344" target="_blank" rel="noopener noreferrer"
-            class="social-icon-btn" aria-label="LinkedIn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-              <rect x="2" y="9" width="4" height="12" />
-              <circle cx="4" cy="4" r="2" />
-            </svg>
-          </a>
-
-          <!-- GitHub -->
-          <a href="https://github.com/shunandasharkarbio-boop" target="_blank" rel="noopener noreferrer"
-            class="social-icon-btn" aria-label="GitHub">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <path
-                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
-            </svg>
-          </a>
-        </div>
-
+          </div><!-- /.ach-track -->
+        </div><!-- /.ach-carousel-outer -->
       </div>
     </section>
 
