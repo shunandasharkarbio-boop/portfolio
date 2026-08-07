@@ -120,18 +120,18 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('resize', resizeCanvas);
 
     // Particle system for ambient bio-sparks
-    const particleCount = 50;
+    const particleCount = 40;
     const particles = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * canvas.width,
         y: Math.random() * canvas.height,
-        radius: Math.random() * 2.5 + 0.5,
-        color: Math.random() > 0.35 ? '#00f59b' : '#00d2c4',
-        alpha: Math.random() * 0.6 + 0.2,
-        speedX: (Math.random() - 0.5) * 0.5,
-        speedY: (Math.random() - 0.5) * 0.5,
+        radius: Math.random() * 2 + 0.5,
+        color: Math.random() > 0.4 ? '#00f59b' : '#00d2c4',
+        alpha: Math.random() * 0.5 + 0.2,
+        speedX: (Math.random() - 0.5) * 0.4,
+        speedY: (Math.random() - 0.5) * 0.4,
         pulseSpeed: Math.random() * 0.02 + 0.01
       });
     }
@@ -140,9 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.018;
+      time += 0.015;
 
-      // Draw floating ambient bioluminescent particles
+      // Draw floating bioluminescent particles
       particles.forEach(p => {
         p.x += p.speedX;
         p.y += p.speedY;
@@ -154,123 +154,72 @@ document.addEventListener('DOMContentLoaded', () => {
         if (p.y > canvas.height) p.y = 0;
 
         ctx.save();
-        ctx.globalAlpha = Math.max(0.1, Math.min(0.85, p.alpha));
+        ctx.globalAlpha = Math.max(0.1, Math.min(0.8, p.alpha));
         ctx.fillStyle = p.color;
         ctx.shadowColor = p.color;
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 10;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
       });
 
-      // Ambient right side neon glow aura
-      const centerX = canvas.width > 768 ? canvas.width * 0.72 : canvas.width * 0.5;
-      const centerY = canvas.height * 0.5;
-      
-      ctx.save();
-      const glowGrad = ctx.createRadialGradient(centerX, centerY, 10, centerX, centerY, Math.min(canvas.width * 0.35, 300));
-      glowGrad.addColorStop(0, 'rgba(0, 245, 155, 0.15)');
-      glowGrad.addColorStop(0.5, 'rgba(0, 210, 196, 0.07)');
-      glowGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-      ctx.fillStyle = glowGrad;
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, Math.min(canvas.width * 0.35, 300), 0, Math.PI * 2);
-      ctx.fill();
-      ctx.restore();
-
-      // 3D Rotating DNA Double Helix Parameters
-      const startY = canvas.height * 0.05;
-      const endY = canvas.height * 0.95;
-      const numNodes = 36;
+      // Draw 3D Rotating DNA Strand across background right side
+      const centerX = canvas.width * 0.75;
+      const startY = canvas.height * 0.1;
+      const endY = canvas.height * 0.9;
+      const numNodes = 28;
       const nodeSpacing = (endY - startY) / numNodes;
-      const amplitude = Math.min(130, canvas.width * 0.16);
+      const amplitude = Math.min(100, canvas.width * 0.12);
 
-      const nodes = [];
-
-      for (let i = 0; i <= numNodes; i++) {
+      for (let i = 0; i < numNodes; i++) {
         const y = startY + i * nodeSpacing;
-        const phase = time * 1.6 + (i * 0.22);
+        const phase = time * 1.5 + (i * 0.25);
         const x1 = centerX + Math.sin(phase) * amplitude;
         const x2 = centerX - Math.sin(phase) * amplitude;
         const z1 = Math.cos(phase);
         const z2 = -Math.cos(phase);
 
-        nodes.push({ y, x1, x2, z1, z2 });
-      }
+        // Calculate size based on depth (z-index simulation)
+        const r1 = Math.max(1.5, 3.5 + z1 * 1.5);
+        const r2 = Math.max(1.5, 3.5 + z2 * 1.5);
 
-      // 1. Draw continuous backbone curve for Strand 1
-      ctx.save();
-      ctx.strokeStyle = '#00f59b';
-      ctx.shadowColor = '#00f59b';
-      ctx.shadowBlur = 12;
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
-        if (i === 0) ctx.moveTo(n.x1, n.y);
-        else ctx.lineTo(n.x1, n.y);
-      }
-      ctx.stroke();
-      ctx.restore();
+        const alpha1 = Math.max(0.2, 0.5 + z1 * 0.3);
+        const alpha2 = Math.max(0.2, 0.5 + z2 * 0.3);
 
-      // 2. Draw continuous backbone curve for Strand 2
-      ctx.save();
-      ctx.strokeStyle = '#00d2c4';
-      ctx.shadowColor = '#00d2c4';
-      ctx.shadowBlur = 12;
-      ctx.lineWidth = 2.5;
-      ctx.beginPath();
-      for (let i = 0; i < nodes.length; i++) {
-        const n = nodes[i];
-        if (i === 0) ctx.moveTo(n.x2, n.y);
-        else ctx.lineTo(n.x2, n.y);
-      }
-      ctx.stroke();
-      ctx.restore();
-
-      // 3. Draw horizontal base-pair rungs and nucleotide nodes
-      nodes.forEach((n) => {
-        const r1 = Math.max(2, 4 + n.z1 * 2);
-        const r2 = Math.max(2, 4 + n.z2 * 2);
-        const alpha1 = Math.max(0.25, 0.6 + n.z1 * 0.35);
-        const alpha2 = Math.max(0.25, 0.6 + n.z2 * 0.35);
-
-        // Rung line
+        // Draw horizontal base pair rung connecting the two strands
         ctx.save();
-        ctx.globalAlpha = Math.min(alpha1, alpha2) * 0.45;
-        ctx.strokeStyle = '#00f59b';
-        ctx.shadowColor = '#00f59b';
-        ctx.shadowBlur = 6;
-        ctx.lineWidth = 1.5;
+        ctx.globalAlpha = Math.min(alpha1, alpha2) * 0.35;
+        ctx.strokeStyle = '#00d2c4';
+        ctx.lineWidth = 1;
         ctx.beginPath();
-        ctx.moveTo(n.x1, n.y);
-        ctx.lineTo(n.x2, n.y);
+        ctx.moveTo(x1, y);
+        ctx.lineTo(x2, y);
         ctx.stroke();
         ctx.restore();
 
-        // Node 1
+        // Draw Strand 1 Node
         ctx.save();
         ctx.globalAlpha = alpha1;
         ctx.fillStyle = '#00f59b';
         ctx.shadowColor = '#00f59b';
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 8;
         ctx.beginPath();
-        ctx.arc(n.x1, n.y, r1, 0, Math.PI * 2);
+        ctx.arc(x1, y, r1, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
 
-        // Node 2
+        // Draw Strand 2 Node
         ctx.save();
         ctx.globalAlpha = alpha2;
         ctx.fillStyle = '#00d2c4';
         ctx.shadowColor = '#00d2c4';
-        ctx.shadowBlur = 12;
+        ctx.shadowBlur = 8;
         ctx.beginPath();
-        ctx.arc(n.x2, n.y, r2, 0, Math.PI * 2);
+        ctx.arc(x2, y, r2, 0, Math.PI * 2);
         ctx.fill();
         ctx.restore();
-      });
+      }
 
       animationFrameId = requestAnimationFrame(animate);
     }
