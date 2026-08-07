@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const endY = canvas.height * 0.9;
       const numNodes = 28;
       const nodeSpacing = (endY - startY) / numNodes;
-      const amplitude = canvas.width > 768 ? Math.min(75, canvas.width * 0.09) : Math.min(65, canvas.width * 0.18);
+      const amplitude = Math.min(100, canvas.width * 0.12);
 
       for (let i = 0; i < numNodes; i++) {
         const y = startY + i * nodeSpacing;
