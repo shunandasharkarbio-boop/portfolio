@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.015;
+      time += 0.007;
 
       // Draw floating bioluminescent particles
       particles.forEach(p => {
@@ -170,11 +170,11 @@ document.addEventListener('DOMContentLoaded', () => {
       const endY = canvas.height * 0.9;
       const numNodes = 28;
       const nodeSpacing = (endY - startY) / numNodes;
-      const amplitude = Math.min(100, canvas.width * 0.12);
+      const amplitude = Math.min(75, canvas.width * 0.09);
 
       for (let i = 0; i < numNodes; i++) {
         const y = startY + i * nodeSpacing;
-        const phase = time * 1.5 + (i * 0.25);
+        const phase = time * 0.9 + (i * 0.25);
         const x1 = centerX + Math.sin(phase) * amplitude;
         const x2 = centerX - Math.sin(phase) * amplitude;
         const z1 = Math.cos(phase);
