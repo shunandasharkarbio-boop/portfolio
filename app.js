@@ -140,7 +140,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function animate() {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      time += 0.007;
+      time += 0.015;
 
       // Draw floating bioluminescent particles
       particles.forEach(p => {
@@ -164,8 +164,8 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.restore();
       });
 
-      // Draw 3D Rotating DNA Strand across background (right side on desktop, center on mobile)
-      const centerX = canvas.width > 768 ? canvas.width * 0.75 : canvas.width * 0.5;
+      // Draw 3D Rotating DNA Strand across background right side
+      const centerX = canvas.width * 0.75;
       const startY = canvas.height * 0.1;
       const endY = canvas.height * 0.9;
       const numNodes = 28;
@@ -174,7 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       for (let i = 0; i < numNodes; i++) {
         const y = startY + i * nodeSpacing;
-        const phase = time * 0.9 + (i * 0.25);
+        const phase = time * 1.5 + (i * 0.25);
         const x1 = centerX + Math.sin(phase) * amplitude;
         const x2 = centerX - Math.sin(phase) * amplitude;
         const z1 = Math.cos(phase);
