@@ -789,37 +789,49 @@
     </section>
 
     <!-- 5. Evolution Timeline Section (Vertical Interactive Timeline) -->
+        <!-- 5. Evolution Timeline Section (Tree of Scientific Growth) -->
     <section class="journey-section py-large" id="journey">
       <div class="container">
         <div class="section-header-center">
           <span class="section-subtitle">MY JOURNEY</span>
           <h2 class="section-title">Academic <span class="glowing-accent-cyan">Evolution</span></h2>
-          <p class="section-description">A visual timeline of my academic journey, continuous learning, and research aspirations.</p>
+          <p class="section-description">A visual tree of scientific growth, continuous learning, and research aspirations.</p>
         </div>
 
-        <!-- VERTICAL TIMELINE CONTAINER -->
-        <div class="timeline-wrapper">
-          <!-- Bioluminescent Tree of Knowledge SVG Trunk & Branches -->
-          <svg class="tree-svg-container" viewBox="0 0 800 1200" preserveAspectRatio="none" aria-hidden="true">
+        <!-- TREE OF SCIENTIFIC GROWTH CONTAINER -->
+        <div class="timeline-wrapper tree-growth-wrapper">
+
+          <!-- Top Leaf Badge (as in reference image) -->
+          <div class="tree-top-node-badge" aria-hidden="true">
+            <div class="tree-badge-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00F5C3" stroke-width="2">
+                <path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.4 19 2c1 2 2 4.1 1.4 9-1 7-6 9-8.4 9z" />
+                <path d="M11 20c-1-3.5 1-6.5 4-8.5" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Bioluminescent SVG Tree Trunk, Branches & Roots -->
+          <svg class="tree-svg-container" viewBox="0 0 800 1300" preserveAspectRatio="none" aria-hidden="true">
             <defs>
-              <linearGradient id="trunkGrad" x1="0" y1="100%" x2="0" y2="0%">
-                <stop offset="0%" stop-color="#00d2c4" stop-opacity="0.3" />
-                <stop offset="50%" stop-color="#00f59b" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#00f59b" stop-opacity="1" />
+              <linearGradient id="treeTrunkGrad" x1="0" y1="100%" x2="0" y2="0%">
+                <stop offset="0%" stop-color="#12E7B8" stop-opacity="0.4" />
+                <stop offset="50%" stop-color="#00F5C3" stop-opacity="0.95" />
+                <stop offset="100%" stop-color="#64FFD6" stop-opacity="1" />
               </linearGradient>
 
-              <linearGradient id="branchGradLeft" x1="100%" y1="0%" x2="0%" y2="0%">
-                <stop offset="0%" stop-color="#00f59b" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#00d2c4" stop-opacity="0.4" />
+              <linearGradient id="branchRightGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00F5C3" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#12E7B8" stop-opacity="0.3" />
               </linearGradient>
 
-              <linearGradient id="branchGradRight" x1="0%" y1="0%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#00f59b" stop-opacity="0.9" />
-                <stop offset="100%" stop-color="#00d2c4" stop-opacity="0.4" />
+              <linearGradient id="branchLeftGrad" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#00F5C3" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#12E7B8" stop-opacity="0.3" />
               </linearGradient>
 
-              <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="6" result="blur" />
+              <filter id="treeCyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="5" result="blur" />
                 <feMerge>
                   <feMergeNode in="blur" />
                   <feMergeNode in="SourceGraphic" />
@@ -827,54 +839,52 @@
               </filter>
             </defs>
 
-            <!-- Tree Roots at Base -->
-            <g class="tree-roots" filter="url(#cyanGlow)">
-              <path d="M400,1200 C370,1180 320,1190 280,1200" stroke="#00d2c4" stroke-width="3" fill="none" opacity="0.6" />
-              <path d="M400,1200 C430,1180 480,1190 520,1200" stroke="#00d2c4" stroke-width="3" fill="none" opacity="0.6" />
-              <path d="M400,1200 C390,1185 350,1195 310,1200" stroke="#00f59b" stroke-width="2" fill="none" opacity="0.4" />
+            <!-- Spreading Organic Roots at Bottom -->
+            <g class="tree-roots-group" filter="url(#treeCyanGlow)">
+              <path class="root-strand" d="M400,1230 C350,1250 280,1270 180,1295" stroke="#00F5C3" stroke-width="3" fill="none" opacity="0.6" />
+              <path class="root-strand" d="M400,1230 C330,1265 240,1285 120,1300" stroke="#12E7B8" stroke-width="2.5" fill="none" opacity="0.5" />
+              <path class="root-strand" d="M400,1230 C450,1250 520,1270 620,1295" stroke="#00F5C3" stroke-width="3" fill="none" opacity="0.6" />
+              <path class="root-strand" d="M400,1230 C470,1265 560,1285 680,1300" stroke="#12E7B8" stroke-width="2.5" fill="none" opacity="0.5" />
             </g>
 
-            <!-- Central Organic Trunk -->
-            <path class="tree-trunk-path" d="M400,1200 Q395,900 400,600 T400,20" stroke="url(#trunkGrad)" stroke-width="8" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
+            <!-- Central Trunk -->
+            <path class="tree-trunk-path" d="M400,1230 L400,60" stroke="url(#treeTrunkGrad)" stroke-width="6" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
 
-            <!-- Embedded DNA Strand Pattern Inside Trunk -->
-            <path class="tree-dna-strand-1" d="M400,1200 Q415,1050 400,900 Q385,750 400,600 Q415,450 400,300 Q385,150 400,20" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 4" fill="none" opacity="0.5" />
-            <path class="tree-dna-strand-2" d="M400,1200 Q385,1050 400,900 Q415,750 400,600 Q385,450 400,300 Q415,150 400,20" stroke="#00f59b" stroke-width="1.5" stroke-dasharray="4 4" fill="none" opacity="0.7" />
+            <!-- Embedded DNA Strand Animation inside Trunk -->
+            <path class="tree-dna-core-1" d="M400,1230 Q415,1080 400,930 Q385,780 400,630 Q415,480 400,330 Q385,180 400,60" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3 4" fill="none" opacity="0.45" />
+            <path class="tree-dna-core-2" d="M400,1230 Q385,1080 400,930 Q415,780 400,630 Q385,480 400,330 Q415,180 400,60" stroke="#64FFD6" stroke-width="1.5" stroke-dasharray="3 4" fill="none" opacity="0.6" />
 
-            <!-- Branch 1 (2024 - Right) -->
+            <!-- Curved Organic Branches to Cards -->
+            <!-- 2024 (Right) -->
             <g class="tree-branch-group" id="branch-2024">
-              <path class="tree-branch-path" d="M400,1050 C440,1040 480,1030 540,1030" stroke="url(#branchGradRight)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
-              <circle cx="530" cy="1025" r="4" fill="#00f59b" />
-              <circle cx="510" cy="1035" r="3" fill="#00d2c4" />
+              <path class="tree-branch-path" d="M400,1050 C450,1050 490,1035 560,1035" stroke="url(#branchRightGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <circle cx="550" cy="1030" r="4" fill="#64FFD6" />
+              <path d="M545,1025 Q550,1020 555,1025 Z" fill="#00F5C3" />
             </g>
 
-            <!-- Branch 2 (2025 - Left) -->
+            <!-- 2025 (Left) -->
             <g class="tree-branch-group" id="branch-2025">
-              <path class="tree-branch-path" d="M400,750 C360,740 320,730 260,730" stroke="url(#branchGradLeft)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
-              <circle cx="270" cy="725" r="4" fill="#00f59b" />
-              <circle cx="290" cy="735" r="3" fill="#00d2c4" />
+              <path class="tree-branch-path" d="M400,770 C350,770 310,755 240,755" stroke="url(#branchLeftGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <circle cx="250" cy="750" r="4" fill="#64FFD6" />
+              <path d="M245,745 Q250,740 255,745 Z" fill="#00F5C3" />
             </g>
 
-            <!-- Branch 3 (2026 - Right) -->
+            <!-- 2026 (Right) -->
             <g class="tree-branch-group" id="branch-2026">
-              <path class="tree-branch-path" d="M400,450 C440,440 480,430 540,430" stroke="url(#branchGradRight)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
-              <circle cx="530" cy="425" r="4" fill="#00f59b" />
-              <circle cx="510" cy="435" r="3" fill="#00d2c4" />
+              <path class="tree-branch-path" d="M400,490 C450,490 490,475 560,475" stroke="url(#branchRightGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <circle cx="550" cy="470" r="4" fill="#64FFD6" />
+              <path d="M545,465 Q550,460 555,465 Z" fill="#00F5C3" />
             </g>
 
-            <!-- Branch 4 (Future - Top Blossom) -->
+            <!-- Future (Left) -->
             <g class="tree-branch-group" id="branch-future">
-              <path class="tree-branch-path" d="M400,150 C370,130 330,120 260,120" stroke="url(#branchGradLeft)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
-              <!-- Glowing Blossom At Top of Tree -->
-              <g class="top-blossom" transform="translate(400, 20)">
-                <circle cx="0" cy="0" r="16" fill="rgba(0, 245, 155, 0.3)" filter="url(#cyanGlow)" />
-                <circle cx="0" cy="0" r="8" fill="#00f59b" />
-                <circle cx="0" cy="0" r="3.5" fill="#ffffff" />
-              </g>
+              <path class="tree-branch-path" d="M400,210 C350,210 310,195 240,195" stroke="url(#branchLeftGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <circle cx="250" cy="190" r="4" fill="#64FFD6" />
+              <path d="M245,185 Q250,180 255,185 Z" fill="#00F5C3" />
             </g>
           </svg>
 
-          <!-- Floating Fireflies / Pollen Particles -->
+          <!-- Floating Bioluminescent Spores / Particles -->
           <div class="tree-particles-wrap" aria-hidden="true">
             <div class="tree-firefly f1"></div>
             <div class="tree-firefly f2"></div>
@@ -883,13 +893,40 @@
             <div class="tree-firefly f5"></div>
           </div>
 
-          <!-- Item 1: 2024 -->
-          <div class="timeline-item">
+          <!-- Bottom Spreading Roots DNA Badge (as in reference image) -->
+          <div class="tree-bottom-node-badge" aria-hidden="true">
+            <div class="tree-badge-circle dna-root-circle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="#00F5C3" stroke-width="2">
+                <path d="M4.5 10.5C4.5 10.5 6 7.5 12 7.5C18 7.5 19.5 10.5 19.5 10.5M4.5 13.5C4.5 13.5 6 16.5 12 16.5C18 16.5 19.5 13.5 19.5 13.5" />
+                <line x1="8" y1="8.5" x2="8" y2="15.5" stroke-dasharray="1 1" />
+                <line x1="12" y1="7.5" x2="12" y2="16.5" stroke-dasharray="1 1" />
+                <line x1="16" y1="8.5" x2="16" y2="15.5" stroke-dasharray="1 1" />
+              </svg>
+            </div>
+          </div>
+
+          <!-- Item 1: 2024 (Right Branch) -->
+          <div class="timeline-item timeline-right">
             <div class="timeline-node-container">
               <div class="timeline-node"></div>
               <div class="timeline-year">2024</div>
             </div>
-            <div class="timeline-card">
+            <div class="timeline-card tree-card">
+              <!-- Botanical Vine Corner Decoration -->
+              <div class="card-vine-corner top-right-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M0,0 Q30,5 50,30 T55,60" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,10 Q40,5 45,15 Z" fill="#64FFD6" />
+                  <path d="M45,25 Q55,20 58,35 Z" fill="#12E7B8" />
+                </svg>
+              </div>
+              <div class="card-vine-corner bottom-left-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M60,60 Q30,55 10,30 T5,0" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,50 Q20,55 15,45 Z" fill="#64FFD6" />
+                  <path d="M15,35 Q5,40 2,25 Z" fill="#12E7B8" />
+                </svg>
+              </div>
               <div class="card-image inner-carousel-container"
                 data-images="./image/2024-btech.jpg/img_1.png,./image/2024-btech.jpg/img_2.png,./image/2024-btech.jpg/img_3.png"
                 tabindex="0" role="button" aria-label="Zoom images for 2024 The Origin">
@@ -912,13 +949,27 @@
             </div>
           </div>
 
-          <!-- Item 2: 2025 -->
-          <div class="timeline-item">
+          <!-- Item 2: 2025 (Left Branch) -->
+          <div class="timeline-item timeline-left">
             <div class="timeline-node-container">
               <div class="timeline-node"></div>
               <div class="timeline-year">2025</div>
             </div>
-            <div class="timeline-card">
+            <div class="timeline-card tree-card">
+              <div class="card-vine-corner top-left-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M60,0 Q30,5 10,30 T5,60" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,10 Q20,5 15,15 Z" fill="#64FFD6" />
+                  <path d="M15,25 Q5,20 2,35 Z" fill="#12E7B8" />
+                </svg>
+              </div>
+              <div class="card-vine-corner bottom-right-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M0,60 Q30,55 50,30 T55,0" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,50 Q40,55 45,45 Z" fill="#64FFD6" />
+                  <path d="M45,35 Q55,40 58,25 Z" fill="#12E7B8" />
+                </svg>
+              </div>
               <div class="card-image inner-carousel-container"
                 data-images="./image/2025-foundations.jpg/img_1.png,./image/2025-foundations.jpg/img_2.png,./image/2025-foundations.jpg/img_3.png"
                 tabindex="0" role="button" aria-label="Zoom images for 2025 Building Foundations">
@@ -930,7 +981,7 @@
               <div class="card-content">
                 <div class="card-header-icon">🔬</div>
                 <h3 class="card-title">Building Foundations</h3>
-                <div class="card-subtitle">Laboratory Learning & Academic Growth</div>
+                <div class="card-subtitle">Laboratory Learning &amp; Academic Growth</div>
                 <p class="card-description">
                   Strengthened my understanding of genetics, molecular biology, microbiology, biochemistry, and laboratory concepts through academic coursework.
                 </p>
@@ -941,13 +992,27 @@
             </div>
           </div>
 
-          <!-- Item 3: 2026 -->
-          <div class="timeline-item">
+          <!-- Item 3: 2026 (Right Branch) -->
+          <div class="timeline-item timeline-right">
             <div class="timeline-node-container">
               <div class="timeline-node"></div>
               <div class="timeline-year">2026</div>
             </div>
-            <div class="timeline-card">
+            <div class="timeline-card tree-card">
+              <div class="card-vine-corner top-right-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M0,0 Q30,5 50,30 T55,60" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,10 Q40,5 45,15 Z" fill="#64FFD6" />
+                  <path d="M45,25 Q55,20 58,35 Z" fill="#12E7B8" />
+                </svg>
+              </div>
+              <div class="card-vine-corner bottom-left-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M60,60 Q30,55 10,30 T5,0" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,50 Q20,55 15,45 Z" fill="#64FFD6" />
+                  <path d="M15,35 Q5,40 2,25 Z" fill="#12E7B8" />
+                </svg>
+              </div>
               <div class="card-image inner-carousel-container"
                 data-images="./image/2026-bioinformatics.jpg/img_1.png,./image/2026-bioinformatics.jpg/img_2.png"
                 tabindex="0" role="button" aria-label="Zoom images for 2026 Exploring Bioinformatics">
@@ -964,19 +1029,33 @@
                   Started exploring bioinformatics, sequence analysis, biological databases, and computational tools while connecting biology with technology.
                 </p>
                 <div class="card-footer-tag">
-                  <span>💻 Bioinformatics & Python</span>
+                  <span>💻 Bioinformatics &amp; Python</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Item 4: Future -->
-          <div class="timeline-item">
+          <!-- Item 4: Future (Left Branch) -->
+          <div class="timeline-item timeline-left">
             <div class="timeline-node-container">
               <div class="timeline-node"></div>
               <div class="timeline-year">Future</div>
             </div>
-            <div class="timeline-card">
+            <div class="timeline-card tree-card">
+              <div class="card-vine-corner top-left-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M60,0 Q30,5 10,30 T5,60" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,10 Q20,5 15,15 Z" fill="#64FFD6" />
+                  <path d="M15,25 Q5,20 2,35 Z" fill="#12E7B8" />
+                </svg>
+              </div>
+              <div class="card-vine-corner bottom-right-vine" aria-hidden="true">
+                <svg viewBox="0 0 60 60" fill="none">
+                  <path d="M0,60 Q30,55 50,30 T55,0" stroke="#00F5C3" stroke-width="1.5" />
+                  <path d="M30,50 Q40,55 45,45 Z" fill="#64FFD6" />
+                  <path d="M45,35 Q55,40 58,25 Z" fill="#12E7B8" />
+                </svg>
+              </div>
               <div class="card-image inner-carousel-container"
                 data-images="./image/2027-research.jpg"
                 tabindex="0" role="button" aria-label="Zoom image for Future Vision">
@@ -988,12 +1067,12 @@
               <div class="card-content">
                 <div class="card-header-icon">🚀</div>
                 <h3 class="card-title">Future Vision</h3>
-                <div class="card-subtitle">Research & Innovation</div>
+                <div class="card-subtitle">Research &amp; Innovation</div>
                 <p class="card-description">
                   Aiming to pursue higher studies and research in advanced biotechnology, structural biology, and computational genomics.
                 </p>
                 <div class="card-footer-tag">
-                  <span>🚀 Research & Innovation</span>
+                  <span>🚀 Research &amp; Innovation</span>
                 </div>
               </div>
             </div>

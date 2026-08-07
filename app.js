@@ -1147,4 +1147,74 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initTreeOfKnowledge();
+
+  // ── 11. TREE OF SCIENTIFIC GROWTH SCROLL ANIMATION ──
+  function initTreeOfGrowth() {
+    const journeySec = document.getElementById('journey');
+    const trunkPath = document.querySelector('.tree-trunk-path');
+    const branchPaths = document.querySelectorAll('.tree-branch-path');
+    const rootStrands = document.querySelectorAll('.root-strand');
+    if (!journeySec || !trunkPath) return;
+
+    // Set initial dash offsets
+    const trunkLen = trunkPath.getTotalLength();
+    trunkPath.style.strokeDasharray = trunkLen;
+    trunkPath.style.strokeDashoffset = trunkLen;
+
+    branchPaths.forEach(b => {
+      const len = b.getTotalLength();
+      b.style.strokeDasharray = len;
+      b.style.strokeDashoffset = len;
+    });
+
+    rootStrands.forEach(r => {
+      const len = r.getTotalLength();
+      r.style.strokeDasharray = len;
+      r.style.strokeDashoffset = len;
+    });
+
+    let grown = false;
+
+    function animateGrowth() {
+      if (grown) return;
+
+      // 1. Roots grow first
+      rootStrands.forEach(r => {
+        r.style.transition = 'stroke-dashoffset 1.0s ease-out';
+        r.style.strokeDashoffset = '0';
+      });
+
+      // 2. Trunk grows upward
+      setTimeout(() => {
+        trunkPath.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1)';
+        trunkPath.style.strokeDashoffset = '0';
+      }, 500);
+
+      // 3. Branches grow outwards
+      setTimeout(() => {
+        branchPaths.forEach(b => {
+          b.style.transition = 'stroke-dashoffset 0.8s ease-out';
+          b.style.strokeDashoffset = '0';
+        });
+      }, 1400);
+
+      grown = true;
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateGrowth();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.12 });
+      observer.observe(journeySec);
+    } else {
+      animateGrowth();
+    }
+  }
+
+  initTreeOfGrowth();
 });
