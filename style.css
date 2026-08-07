@@ -435,16 +435,18 @@ img {
 .hero-canvas-container {
   position: absolute;
   top: 0;
+  left: 0;
   right: 0;
-  width: 50%;
+  width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 1;
   pointer-events: none;
 }
 
 #dnaCanvas {
   width: 100%;
   height: 100%;
+  display: block;
   filter: blur(2.5px);
   opacity: 0.88;
 }
@@ -452,6 +454,8 @@ img {
 .hero-container {
   display: flex;
   align-items: center;
+  position: relative;
+  z-index: 2;
 }
 
 .hero-content {
@@ -2254,8 +2258,12 @@ section[id],
   }
 
   .hero-canvas-container {
-    width: 60%;
-    opacity: 0.7;
+    width: 100%;
+    left: 0;
+    right: 0;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.85;
   }
 }
 
@@ -2321,8 +2329,10 @@ section[id],
     width: 100%;
     left: 0;
     right: 0;
+    top: 0;
     height: 100%;
-    opacity: 0.75;
+    z-index: 1;
+    opacity: 0.9;
   }
 
   .hero-title {
