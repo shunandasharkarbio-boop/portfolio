@@ -4827,3 +4827,114 @@ section[id],
     padding: 1.75rem !important;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   ACHIEVEMENTS — SINGLE-ROW INFINITE CAROUSEL
+   No Grid! No Flex-Wrap! 100% Single Row!
+   ═══════════════════════════════════════════════════════ */
+
+.achievements-section {
+  position: relative !important;
+  z-index: 5 !important;
+  display: block !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+  width: 100% !important;
+  scroll-margin-top: 5rem;
+}
+
+.ach-carousel-outer {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0 2.5rem;
+  margin-top: 2.5rem;
+}
+
+/* Gradient Fade Overlays on left & right edges */
+.ach-fade-left,
+.ach-fade-right {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 120px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.ach-fade-left {
+  left: 0;
+  background: linear-gradient(90deg, #040914 0%, rgba(4, 9, 20, 0) 100%);
+}
+
+.ach-fade-right {
+  right: 0;
+  background: linear-gradient(-90deg, #040914 0%, rgba(4, 9, 20, 0) 100%);
+}
+
+/* Single-row horizontal flex track — strict no-wrap! */
+.ach-track {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: stretch !important;
+  gap: 2rem !important;
+  width: max-content !important;
+  will-change: transform;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.ach-track:active {
+  cursor: grabbing;
+}
+
+/* Card sizing: 3 cards visible on desktop, 2 on tablet, 1 on mobile */
+.ach-carousel-card {
+  flex: 0 0 380px !important;
+  width: 380px !important;
+  max-width: 85vw !important;
+  flex-shrink: 0 !important;
+  transform: translateY(0) scale(1);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+              border-color 0.3s ease,
+              box-shadow 0.3s ease;
+}
+
+/* Apple-style hover lift, scale & cyan glow */
+.ach-carousel-card:hover {
+  transform: translateY(-8px) scale(1.025) !important;
+  border-color: rgba(0, 245, 155, 0.75) !important;
+  box-shadow: 0 20px 45px rgba(0, 245, 155, 0.2),
+              0 0 30px rgba(0, 210, 196, 0.15) !important;
+}
+
+.ach-carousel-card:hover::before {
+  opacity: 1 !important;
+  box-shadow: 0 0 16px var(--color-primary) !important;
+}
+
+/* Responsive card widths */
+@media (max-width: 1024px) {
+  .ach-carousel-card {
+    flex: 0 0 320px !important;
+    width: 320px !important;
+  }
+  .ach-fade-left,
+  .ach-fade-right {
+    width: 70px;
+  }
+}
+
+@media (max-width: 640px) {
+  .ach-carousel-card {
+    flex: 0 0 280px !important;
+    width: 280px !important;
+  }
+  .ach-fade-left,
+  .ach-fade-right {
+    width: 30px;
+  }
+}
