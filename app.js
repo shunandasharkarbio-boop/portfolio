@@ -566,17 +566,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const academicLightboxClose = document.getElementById('academicLightboxClose');
     const academicLightboxOverlay = document.getElementById('academicLightboxOverlay');
 
-    slides.forEach((slide) => {
-      const imgWrap = slide.querySelector('.slide-image-wrapper');
+    const timelineCards = document.querySelectorAll('.timeline-card, .academic-slide');
+    timelineCards.forEach((card) => {
+      const imgWrap = card.querySelector('.card-image, .slide-image-wrapper');
       if (imgWrap) {
-        imgWrap.addEventListener('click', () => {
+        imgWrap.addEventListener('click', (e) => {
+          if (e.target.closest('.inner-carousel-arrow') || e.target.closest('.inner-dot')) return;
           if (!academicLightbox) return;
           
-          let imgEl = slide.querySelector('.inner-carousel-slide.active img');
-          if (!imgEl) imgEl = slide.querySelector('.slide-img'); // Fallback
-          
-          const titleEl = slide.querySelector('.slide-title');
-          const descEl = slide.querySelector('.slide-desc');
+          let imgEl = card.querySelector('.inner-carousel-slide.active img') || card.querySelector('.slide-img') || card.querySelector('img');
+          const titleEl = card.querySelector('.card-title, .slide-title');
+          const descEl = card.querySelector('.card-description, .slide-desc');
 
           if (imgEl && academicLightboxImg) {
             academicLightboxImg.src = imgEl.src;

@@ -1610,21 +1610,111 @@ img {
 .card-image {
   width: 100%;
   aspect-ratio: 16/9;
-  background-size: cover;
-  background-position: center;
   position: relative;
-  transition: transform 0.4s ease;
+  overflow: hidden;
 }
 
-.card-image::after {
-  content: "";
+.card-image.inner-carousel-container {
+  width: 100%;
+  aspect-ratio: 16/9;
+  position: relative;
+  overflow: hidden;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.card-image .inner-carousel-track {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.card-image .inner-carousel-slide {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.35);
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  pointer-events: none;
 }
 
-.timeline-card:hover .card-image {
-  transform: scale(1.05);
+.card-image .inner-carousel-slide.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.card-image .inner-carousel-slide img,
+.card-image .slide-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.card-image .inner-carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(10, 15, 20, 0.75);
+  color: var(--color-primary, #00f59b);
+  border: 1px solid rgba(0, 245, 155, 0.35);
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  cursor: pointer;
+  z-index: 5;
+  opacity: 0;
+  transition: opacity 0.3s ease, background 0.3s ease, transform 0.3s ease;
+}
+
+.timeline-card:hover .inner-carousel-arrow,
+.card-image.inner-carousel-container:hover .inner-carousel-arrow {
+  opacity: 1;
+}
+
+.card-image .inner-carousel-prev {
+  left: 10px;
+}
+
+.card-image .inner-carousel-next {
+  right: 10px;
+}
+
+.card-image .inner-carousel-arrow:hover {
+  background: rgba(0, 245, 155, 0.3);
+  color: #fff;
+  transform: translateY(-50%) scale(1.1);
+}
+
+.card-image .inner-carousel-dots {
+  position: absolute;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 6px;
+  z-index: 5;
+}
+
+.card-image .inner-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.4);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.card-image .inner-dot.active {
+  background: var(--color-primary, #00f59b);
+  width: 18px;
+  border-radius: 4px;
+  box-shadow: 0 0 8px var(--color-primary, #00f59b);
 }
 
 .card-content {

@@ -1032,170 +1032,136 @@
       </div>
     </section>
 
-    <!-- 5. Evolution Timeline Section (Interactive Gallery Slider) -->
+    <!-- 5. Evolution Timeline Section (Vertical Interactive Timeline) -->
     <section class="journey-section py-large" id="journey">
       <div class="container">
         <div class="section-header-center">
           <span class="section-subtitle">MY JOURNEY</span>
           <h2 class="section-title">Academic <span class="glowing-accent-cyan">Evolution</span></h2>
-          <p class="section-description">An interactive visual timeline of my academic evolution, practical laboratory
-            skills, and research aspirations.</p>
+          <p class="section-description">A visual timeline of my academic journey, continuous learning, and research aspirations.</p>
         </div>
 
-        <!-- ACADEMIC GALLERY SLIDER CONTAINER -->
-        <div class="academic-slider-container">
-          <div class="academic-slider-card" id="academicSliderCard">
+        <!-- VERTICAL TIMELINE CONTAINER -->
+        <div class="timeline-wrapper">
+          <div class="timeline-line"></div>
 
-            <!-- Left & Right Arrow Navigation Buttons -->
-            <button class="slider-arrow prev-arrow" id="sliderPrevBtn" aria-label="Previous Slide">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round">
-                <polyline points="15 18 9 12 15 6"></polyline>
-              </svg>
-            </button>
-            <button class="slider-arrow next-arrow" id="sliderNextBtn" aria-label="Next Slide">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
-                stroke-linejoin="round">
-                <polyline points="9 18 15 12 9 6"></polyline>
-              </svg>
-            </button>
-
-            <!-- Slide Track & Slides -->
-            <div class="slider-track-viewport">
-              <div class="slider-track" id="sliderTrack">
-
-                <!-- SLIDE 1 -->
-                <div class="academic-slide active" data-index="0">
-                  <div class="slide-image-wrapper inner-carousel-container"
-                    data-images="./image/2024-btech.jpg/img_1.png,./image/2024-btech.jpg/img_2.png,./image/2024-btech.jpg/img_3.png"
-                    tabindex="0" role="button"
-                    aria-label="Zoom image for B.Tech Journey Begins">
-                    <div class="inner-carousel-track"></div>
-                    <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
-                    <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
-                    <div class="inner-carousel-dots"></div>
-                    <div class="slide-zoom-badge">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        <line x1="11" y1="8" x2="11" y2="14"></line>
-                        <line x1="8" y1="11" x2="14" y2="11"></line>
-                      </svg>
-                      <span>Click to Zoom</span>
-                    </div>
-                    <span class="slide-year-badge">2024 B.Tech</span>
-                  </div>
-                  <div class="slide-body">
-                    <h3 class="slide-title">B.Tech Journey Begins</h3>
-                    <p class="slide-desc">
-                      Started my Biotechnology undergraduate journey, building strong foundations in biology, chemistry,
-                      and laboratory techniques.
-                    </p>
-                    <div class="slide-skills">
-                      <span class="skills-label">Skills:</span>
-                      <div class="skills-tags-wrap">
-                        <span class="skill-tag">Biology</span>
-                        <span class="tag-bullet">•</span>
-                        <span class="skill-tag">Chemistry</span>
-                        <span class="tag-bullet">•</span>
-                        <span class="skill-tag">Laboratory Skills</span>
-                      </div>
-                    </div>
-                  </div>
+          <!-- Item 1: 2024 -->
+          <div class="timeline-item">
+            <div class="timeline-node-container">
+              <div class="timeline-node"></div>
+              <div class="timeline-year">2024</div>
+            </div>
+            <div class="timeline-card">
+              <div class="card-image inner-carousel-container"
+                data-images="./image/2024-btech.jpg/img_1.png,./image/2024-btech.jpg/img_2.png,./image/2024-btech.jpg/img_3.png"
+                tabindex="0" role="button" aria-label="Zoom images for 2024 The Origin">
+                <div class="inner-carousel-track"></div>
+                <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
+                <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
+                <div class="inner-carousel-dots"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-header-icon">🪴</div>
+                <h3 class="card-title">The Origin</h3>
+                <div class="card-subtitle">Began B.Tech in Biotechnology</div>
+                <p class="card-description">
+                  Started my academic journey at Andhra University, building a strong foundation in biology, chemistry, microbiology, and scientific thinking.
+                </p>
+                <div class="card-footer-tag">
+                  <span>📍 Andhra University</span>
                 </div>
-
-                <!-- SLIDE 2 -->
-                <div class="academic-slide" data-index="1">
-                  <div class="slide-image-wrapper inner-carousel-container"
-                    data-images="./image/2025-foundations.jpg/img_1.png,./image/2025-foundations.jpg/img_2.png,./image/2025-foundations.jpg/img_3.png"
-                    tabindex="0" role="button"
-                    aria-label="Zoom image for Biotechnology Foundations">
-                    <div class="inner-carousel-track"></div>
-                    <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
-                    <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
-                    <div class="inner-carousel-dots"></div>
-                    <div class="slide-zoom-badge">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        <line x1="11" y1="8" x2="11" y2="14"></line>
-                        <line x1="8" y1="11" x2="14" y2="11"></line>
-                      </svg>
-                      <span>Click to Zoom</span>
-                    </div>
-                    <span class="slide-year-badge">2025 Foundations</span>
-                  </div>
-                  <div class="slide-body">
-                    <h3 class="slide-title">Biotechnology Foundations</h3>
-                    <p class="slide-desc">
-                      Developed practical laboratory skills through microscopy, plant anatomy, histology, and
-                      biochemical experiments.
-                    </p>
-                    <div class="slide-skills">
-                      <span class="skills-label">Skills:</span>
-                      <div class="skills-tags-wrap">
-                        <span class="skill-tag">Microscopy</span>
-                        <span class="tag-bullet">•</span>
-                        <span class="skill-tag">Histology</span>
-                        <span class="tag-bullet">•</span>
-                        <span class="skill-tag">Plant Anatomy</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- SLIDE 3 -->
-                <div class="academic-slide" data-index="2">
-                  <div class="slide-image-wrapper inner-carousel-container"
-                    data-images="./image/2026-bioinformatics.jpg/img_1.png,./image/2026-bioinformatics.jpg/img_2.png"
-                    tabindex="0" role="button"
-                    aria-label="Zoom image for Bioinformatics & Research">
-                    <div class="inner-carousel-track"></div>
-                    <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
-                    <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
-                    <div class="inner-carousel-dots"></div>
-                    <div class="slide-zoom-badge">
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="11" cy="11" r="8"></circle>
-                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-                        <line x1="11" y1="8" x2="11" y2="14"></line>
-                        <line x1="8" y1="11" x2="14" y2="11"></line>
-                      </svg>
-                      <span>Click to Zoom</span>
-                    </div>
-                    <span class="slide-year-badge">2026 Bioinformatics</span>
-                  </div>
-                  <div class="slide-body">
-                    <h3 class="slide-title">Bioinformatics & Research</h3>
-                    <p class="slide-desc">
-                      Expanded into computational biology using Python, data analysis, and bioinformatics tools for
-                      biological research.
-                    </p>
-                    <div class="slide-skills">
-                      <span class="skills-label">Skills:</span>
-                      <div class="skills-tags-wrap">
-                        <span class="skill-tag">Bioinformatics</span>
-                        <span class="tag-bullet">•</span>
-                        <span class="skill-tag">Python</span>
-                        <span class="tag-bullet">•</span>
-                        <span class="skill-tag">Data Analysis</span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
               </div>
             </div>
-
-            <!-- Pagination Dots at Bottom -->
-            <div class="slider-dots" id="sliderDots">
-              <button class="dot-btn active" data-slide="0" aria-label="Go to Slide 1"></button>
-              <button class="dot-btn" data-slide="1" aria-label="Go to Slide 2"></button>
-              <button class="dot-btn" data-slide="2" aria-label="Go to Slide 3"></button>
-            </div>
-
           </div>
-        </div>
+
+          <!-- Item 2: 2025 -->
+          <div class="timeline-item">
+            <div class="timeline-node-container">
+              <div class="timeline-node"></div>
+              <div class="timeline-year">2025</div>
+            </div>
+            <div class="timeline-card">
+              <div class="card-image inner-carousel-container"
+                data-images="./image/2025-foundations.jpg/img_1.png,./image/2025-foundations.jpg/img_2.png,./image/2025-foundations.jpg/img_3.png"
+                tabindex="0" role="button" aria-label="Zoom images for 2025 Building Foundations">
+                <div class="inner-carousel-track"></div>
+                <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
+                <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
+                <div class="inner-carousel-dots"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-header-icon">🔬</div>
+                <h3 class="card-title">Building Foundations</h3>
+                <div class="card-subtitle">Laboratory Learning & Academic Growth</div>
+                <p class="card-description">
+                  Strengthened my understanding of genetics, molecular biology, microbiology, biochemistry, and laboratory concepts through academic coursework.
+                </p>
+                <div class="card-footer-tag">
+                  <span>🧪 Biotechnology Laboratory</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 3: 2026 -->
+          <div class="timeline-item">
+            <div class="timeline-node-container">
+              <div class="timeline-node"></div>
+              <div class="timeline-year">2026</div>
+            </div>
+            <div class="timeline-card">
+              <div class="card-image inner-carousel-container"
+                data-images="./image/2026-bioinformatics.jpg/img_1.png,./image/2026-bioinformatics.jpg/img_2.png"
+                tabindex="0" role="button" aria-label="Zoom images for 2026 Exploring Bioinformatics">
+                <div class="inner-carousel-track"></div>
+                <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
+                <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
+                <div class="inner-carousel-dots"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-header-icon">💻</div>
+                <h3 class="card-title">Exploring Bioinformatics</h3>
+                <div class="card-subtitle">Computational Biology</div>
+                <p class="card-description">
+                  Started exploring bioinformatics, sequence analysis, biological databases, and computational tools while connecting biology with technology.
+                </p>
+                <div class="card-footer-tag">
+                  <span>💻 Bioinformatics & Python</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Item 4: Future -->
+          <div class="timeline-item">
+            <div class="timeline-node-container">
+              <div class="timeline-node"></div>
+              <div class="timeline-year">Future</div>
+            </div>
+            <div class="timeline-card">
+              <div class="card-image inner-carousel-container"
+                data-images="./image/2027-research.jpg"
+                tabindex="0" role="button" aria-label="Zoom image for Future Vision">
+                <div class="inner-carousel-track"></div>
+                <button class="inner-carousel-arrow inner-carousel-prev" aria-label="Previous image">❮</button>
+                <button class="inner-carousel-arrow inner-carousel-next" aria-label="Next image">❯</button>
+                <div class="inner-carousel-dots"></div>
+              </div>
+              <div class="card-content">
+                <div class="card-header-icon">🚀</div>
+                <h3 class="card-title">Future Vision</h3>
+                <div class="card-subtitle">Research & Innovation</div>
+                <p class="card-description">
+                  Aiming to pursue higher studies and research in advanced biotechnology, structural biology, and computational genomics.
+                </p>
+                <div class="card-footer-tag">
+                  <span>🚀 Research & Innovation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.timeline-wrapper -->
       </div>
     </section>
 
