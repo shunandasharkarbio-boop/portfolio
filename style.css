@@ -5216,3 +5216,107 @@ section[id]::after {
   background: linear-gradient(90deg, transparent 0%, rgba(0, 245, 155, 0.2) 50%, transparent 100%);
   pointer-events: none;
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   ACADEMIC EVOLUTION — TREE OF KNOWLEDGE DESIGN
+   ═══════════════════════════════════════════════════════ */
+
+.journey-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.tree-svg-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* Tree Path Animations */
+.tree-trunk-path,
+.tree-branch-path,
+.tree-roots path {
+  transition: stroke-dashoffset 1.2s ease-out, opacity 0.8s ease;
+}
+
+.tree-particles-wrap {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Floating Fireflies / Pollen */
+.tree-firefly {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #00f59b;
+  box-shadow: 0 0 10px #00f59b, 0 0 20px #00d2c4;
+  animation: floatFirefly 6s infinite ease-in-out alternate;
+}
+
+.f1 { top: 20%; left: 48%; animation-duration: 7s; }
+.f2 { top: 45%; left: 52%; animation-duration: 5s; animation-delay: 1s; }
+.f3 { top: 70%; left: 47%; animation-duration: 8s; animation-delay: 2s; }
+.f4 { top: 30%; left: 42%; animation-duration: 6s; animation-delay: 0.5s; }
+.f5 { top: 85%; left: 53%; animation-duration: 9s; animation-delay: 1.5s; }
+
+@keyframes floatFirefly {
+  0% { transform: translate(0, 0) scale(0.8); opacity: 0.3; }
+  50% { transform: translate(15px, -20px) scale(1.2); opacity: 0.9; }
+  100% { transform: translate(-10px, -35px) scale(0.9); opacity: 0.4; }
+}
+
+/* Blossom Pulsing Glow */
+.top-blossom circle:first-child {
+  animation: blossomPulse 3s infinite ease-in-out alternate;
+}
+
+@keyframes blossomPulse {
+  0% { transform: scale(1); opacity: 0.3; }
+  100% { transform: scale(1.3); opacity: 0.8; }
+}
+
+/* Node Container Position & Styling over Tree */
+.timeline-node-container {
+  z-index: 4;
+}
+
+.timeline-node {
+  background: #040914 !important;
+  border: 3px solid #00f59b !important;
+  box-shadow: 0 0 14px #00f59b, 0 0 25px rgba(0, 245, 155, 0.4) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.timeline-item:hover .timeline-node {
+  transform: scale(1.3);
+  box-shadow: 0 0 20px #00f59b, 0 0 35px rgba(0, 245, 155, 0.7) !important;
+}
+
+/* Card Attachment & Styling */
+.timeline-card {
+  z-index: 3 !important;
+  border-color: rgba(0, 245, 155, 0.35) !important;
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.timeline-card:hover {
+  transform: translateY(-8px) scale(1.02) !important;
+  border-color: rgba(0, 245, 155, 0.75) !important;
+  box-shadow: 0 20px 40px rgba(0, 245, 155, 0.2), 0 0 25px rgba(0, 210, 196, 0.15) !important;
+}
+
+/* Responsive adjustments for Mobile & Tablet */
+@media (max-width: 768px) {
+  .tree-svg-container {
+    opacity: 0.4;
+  }
+}

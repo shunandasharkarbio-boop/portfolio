@@ -1095,4 +1095,56 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initAboutParallaxAndStats();
+
+  // ── 10. TREE OF KNOWLEDGE SCROLL GROWTH ANIMATION ──
+  function initTreeOfKnowledge() {
+    const journeySec = document.getElementById('journey');
+    const trunkPath = document.querySelector('.tree-trunk-path');
+    const branches = document.querySelectorAll('.tree-branch-path');
+    if (!journeySec || !trunkPath) return;
+
+    // Set stroke dash offset for trunk and branches to animate drawing
+    const trunkLen = trunkPath.getTotalLength();
+    trunkPath.style.strokeDasharray = trunkLen;
+    trunkPath.style.strokeDashoffset = trunkLen;
+
+    branches.forEach(b => {
+      const bLen = b.getTotalLength();
+      b.style.strokeDasharray = bLen;
+      b.style.strokeDashoffset = bLen;
+    });
+
+    let hasGrown = false;
+
+    function growTree() {
+      if (hasGrown) return;
+      trunkPath.style.transition = 'stroke-dashoffset 1.8s cubic-bezier(0.4, 0, 0.2, 1)';
+      trunkPath.style.strokeDashoffset = '0';
+
+      setTimeout(() => {
+        branches.forEach(b => {
+          b.style.transition = 'stroke-dashoffset 0.8s ease-out';
+          b.style.strokeDashoffset = '0';
+        });
+      }, 800);
+
+      hasGrown = true;
+    }
+
+    if ('IntersectionObserver' in window) {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            growTree();
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.15 });
+      observer.observe(journeySec);
+    } else {
+      growTree();
+    }
+  }
+
+  initTreeOfKnowledge();
 });

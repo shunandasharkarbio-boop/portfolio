@@ -799,7 +799,89 @@
 
         <!-- VERTICAL TIMELINE CONTAINER -->
         <div class="timeline-wrapper">
-          <div class="timeline-line"></div>
+          <!-- Bioluminescent Tree of Knowledge SVG Trunk & Branches -->
+          <svg class="tree-svg-container" viewBox="0 0 800 1200" preserveAspectRatio="none" aria-hidden="true">
+            <defs>
+              <linearGradient id="trunkGrad" x1="0" y1="100%" x2="0" y2="0%">
+                <stop offset="0%" stop-color="#00d2c4" stop-opacity="0.3" />
+                <stop offset="50%" stop-color="#00f59b" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#00f59b" stop-opacity="1" />
+              </linearGradient>
+
+              <linearGradient id="branchGradLeft" x1="100%" y1="0%" x2="0%" y2="0%">
+                <stop offset="0%" stop-color="#00f59b" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#00d2c4" stop-opacity="0.4" />
+              </linearGradient>
+
+              <linearGradient id="branchGradRight" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00f59b" stop-opacity="0.9" />
+                <stop offset="100%" stop-color="#00d2c4" stop-opacity="0.4" />
+              </linearGradient>
+
+              <filter id="cyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="6" result="blur" />
+                <feMerge>
+                  <feMergeNode in="blur" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+            </defs>
+
+            <!-- Tree Roots at Base -->
+            <g class="tree-roots" filter="url(#cyanGlow)">
+              <path d="M400,1200 C370,1180 320,1190 280,1200" stroke="#00d2c4" stroke-width="3" fill="none" opacity="0.6" />
+              <path d="M400,1200 C430,1180 480,1190 520,1200" stroke="#00d2c4" stroke-width="3" fill="none" opacity="0.6" />
+              <path d="M400,1200 C390,1185 350,1195 310,1200" stroke="#00f59b" stroke-width="2" fill="none" opacity="0.4" />
+            </g>
+
+            <!-- Central Organic Trunk -->
+            <path class="tree-trunk-path" d="M400,1200 Q395,900 400,600 T400,20" stroke="url(#trunkGrad)" stroke-width="8" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
+
+            <!-- Embedded DNA Strand Pattern Inside Trunk -->
+            <path class="tree-dna-strand-1" d="M400,1200 Q415,1050 400,900 Q385,750 400,600 Q415,450 400,300 Q385,150 400,20" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 4" fill="none" opacity="0.5" />
+            <path class="tree-dna-strand-2" d="M400,1200 Q385,1050 400,900 Q415,750 400,600 Q385,450 400,300 Q415,150 400,20" stroke="#00f59b" stroke-width="1.5" stroke-dasharray="4 4" fill="none" opacity="0.7" />
+
+            <!-- Branch 1 (2024 - Right) -->
+            <g class="tree-branch-group" id="branch-2024">
+              <path class="tree-branch-path" d="M400,1050 C440,1040 480,1030 540,1030" stroke="url(#branchGradRight)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
+              <circle cx="530" cy="1025" r="4" fill="#00f59b" />
+              <circle cx="510" cy="1035" r="3" fill="#00d2c4" />
+            </g>
+
+            <!-- Branch 2 (2025 - Left) -->
+            <g class="tree-branch-group" id="branch-2025">
+              <path class="tree-branch-path" d="M400,750 C360,740 320,730 260,730" stroke="url(#branchGradLeft)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
+              <circle cx="270" cy="725" r="4" fill="#00f59b" />
+              <circle cx="290" cy="735" r="3" fill="#00d2c4" />
+            </g>
+
+            <!-- Branch 3 (2026 - Right) -->
+            <g class="tree-branch-group" id="branch-2026">
+              <path class="tree-branch-path" d="M400,450 C440,440 480,430 540,430" stroke="url(#branchGradRight)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
+              <circle cx="530" cy="425" r="4" fill="#00f59b" />
+              <circle cx="510" cy="435" r="3" fill="#00d2c4" />
+            </g>
+
+            <!-- Branch 4 (Future - Top Blossom) -->
+            <g class="tree-branch-group" id="branch-future">
+              <path class="tree-branch-path" d="M400,150 C370,130 330,120 260,120" stroke="url(#branchGradLeft)" stroke-width="4" stroke-linecap="round" fill="none" filter="url(#cyanGlow)" />
+              <!-- Glowing Blossom At Top of Tree -->
+              <g class="top-blossom" transform="translate(400, 20)">
+                <circle cx="0" cy="0" r="16" fill="rgba(0, 245, 155, 0.3)" filter="url(#cyanGlow)" />
+                <circle cx="0" cy="0" r="8" fill="#00f59b" />
+                <circle cx="0" cy="0" r="3.5" fill="#ffffff" />
+              </g>
+            </g>
+          </svg>
+
+          <!-- Floating Fireflies / Pollen Particles -->
+          <div class="tree-particles-wrap" aria-hidden="true">
+            <div class="tree-firefly f1"></div>
+            <div class="tree-firefly f2"></div>
+            <div class="tree-firefly f3"></div>
+            <div class="tree-firefly f4"></div>
+            <div class="tree-firefly f5"></div>
+          </div>
 
           <!-- Item 1: 2024 -->
           <div class="timeline-item">
