@@ -5186,3 +5186,33 @@ section[id],
     gap: 1.25rem;
   }
 }
+
+
+/* ═══════════════════════════════════════════════════════
+   SUBTLE LOW-OPACITY SECTION DIVIDER BORDERS
+   ═══════════════════════════════════════════════════════ */
+
+section[id],
+.hero-section,
+.about-section,
+.skills-dashboard,
+.projects-section,
+.journey-section,
+.achievements-section {
+  border-bottom: 1px solid rgba(0, 210, 196, 0.12) !important;
+  position: relative;
+}
+
+/* Subtle low-opacity gradient accent line centered at bottom of each section */
+section[id]::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  max-width: 800px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(0, 245, 155, 0.2) 50%, transparent 100%);
+  pointer-events: none;
+}
