@@ -791,6 +791,113 @@
     <!-- 5. Evolution Timeline Section (Vertical Interactive Timeline) -->
         <!-- 5. Evolution Timeline Section (Tree of Scientific Growth) -->
     <section class="journey-section py-large" id="journey">
+      <style>
+        /* Journey Specific Animations */
+        @keyframes journeyTreeGrow {
+          from { stroke-dashoffset: 3000; opacity: 0; }
+          to { stroke-dashoffset: 0; opacity: 1; }
+        }
+        @keyframes journeyBranchAppear {
+          from { opacity: 0; transform: scaleX(0); }
+          to { opacity: 1; transform: scaleX(1); }
+        }
+        @keyframes journeyLeafSway {
+          0%, 100% { transform: rotate(-4deg); }
+          50% { transform: rotate(4deg); }
+        }
+        @keyframes journeyParticleFloat {
+          0%, 100% { transform: translateY(0); }
+          50% { transform: translateY(-15px); }
+        }
+        @keyframes journeyCardFadeIn {
+          from { opacity: 0; transform: translateY(30px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Applying the Animations */
+        #journey .tree-trunk-path, #journey .root-strand {
+          stroke-dasharray: 3000;
+          animation: journeyTreeGrow 2.5s ease-out forwards;
+        }
+        #journey .tree-branch-group {
+          opacity: 0;
+          transform-origin: center;
+          transform-box: fill-box;
+          animation: journeyBranchAppear 1.5s ease-out forwards 1.5s;
+        }
+        #journey .tree-branch-group path[fill] {
+          transform-origin: bottom center;
+          transform-box: fill-box;
+          animation: journeyLeafSway 3.5s ease-in-out infinite;
+        }
+        #journey .journey-decorations circle, #journey .tree-firefly {
+          animation: journeyParticleFloat 5s ease-in-out infinite;
+        }
+        #journey .journey-decorations circle:nth-child(even) {
+          animation-duration: 7s;
+          animation-direction: reverse;
+        }
+        #journey .timeline-card {
+          opacity: 0;
+          animation: journeyCardFadeIn 1.2s ease-out forwards 2s;
+        }
+      </style>
+      <!-- Subtle Background Decorations (DNA, Molecules, Glow, Particles) -->
+      <div class="journey-decorations" aria-hidden="true" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; overflow: hidden; z-index: 0;">
+        <!-- Biotech Glows -->
+        <div style="position: absolute; top: 10%; left: -10%; width: 50vw; height: 50vw; background: radial-gradient(circle, rgba(0,245,195,0.03) 0%, transparent 70%);"></div>
+        <div style="position: absolute; bottom: 10%; right: -10%; width: 60vw; height: 60vw; background: radial-gradient(circle, rgba(18,231,184,0.03) 0%, transparent 70%);"></div>
+        
+        <!-- Faded DNA SVG -->
+        <svg style="position: absolute; top: 15%; left: -5%; width: 400px; height: 800px; opacity: 0.03; transform: rotate(15deg);" viewBox="0 0 100 300" fill="none" stroke="#00F5C3" stroke-width="2">
+          <!-- Backbones -->
+          <path d="M20,0 Q50,30 80,60 T20,120 T80,180 T20,240 T80,300" />
+          <path d="M80,0 Q50,30 20,60 T80,120 T20,180 T80,240 T20,300" />
+          <!-- Rungs -->
+          <line x1="20" y1="0" x2="80" y2="0" />
+          <line x1="35" y1="15" x2="65" y2="15" />
+          <line x1="35" y1="45" x2="65" y2="45" />
+          <line x1="20" y1="60" x2="80" y2="60" />
+          <line x1="35" y1="75" x2="65" y2="75" />
+          <line x1="35" y1="105" x2="65" y2="105" />
+          <line x1="20" y1="120" x2="80" y2="120" />
+          <line x1="35" y1="135" x2="65" y2="135" />
+          <line x1="35" y1="165" x2="65" y2="165" />
+          <line x1="20" y1="180" x2="80" y2="180" />
+          <line x1="35" y1="195" x2="65" y2="195" />
+          <line x1="35" y1="225" x2="65" y2="225" />
+          <line x1="20" y1="240" x2="80" y2="240" />
+          <line x1="35" y1="255" x2="65" y2="255" />
+          <line x1="35" y1="285" x2="65" y2="285" />
+          <line x1="20" y1="300" x2="80" y2="300" />
+        </svg>
+
+        <!-- Molecule Outline SVG -->
+        <svg style="position: absolute; top: 40%; right: -2%; width: 350px; height: 350px; opacity: 0.04; transform: rotate(-10deg);" viewBox="0 0 200 200" fill="none" stroke="#64FFD6" stroke-width="1.5">
+          <!-- Hexagon -->
+          <polygon points="100,20 140,40 140,80 100,100 60,80 60,40" />
+          <!-- Connected Hexagon -->
+          <polygon points="140,80 180,100 180,140 140,160 100,140 100,100" />
+          <!-- Bonds -->
+          <line x1="140" y1="40" x2="180" y2="20" stroke-dasharray="4 4"/>
+          <line x1="60" y1="80" x2="20" y2="100" />
+          <line x1="100" y1="140" x2="60" y2="160" />
+          <line x1="110" y1="30" x2="130" y2="40" />
+          <line x1="130" y1="85" x2="110" y2="95" />
+        </svg>
+        
+        <!-- Floating Particles -->
+        <svg style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0.1;" fill="#00F5C3">
+          <circle cx="15%" cy="25%" r="1.5" />
+          <circle cx="85%" cy="15%" r="2" />
+          <circle cx="10%" cy="75%" r="1" />
+          <circle cx="75%" cy="65%" r="2.5" />
+          <circle cx="90%" cy="85%" r="1.5" />
+          <circle cx="20%" cy="95%" r="2" />
+          <circle cx="80%" cy="45%" r="1.5" />
+          <circle cx="5%" cy="50%" r="2" />
+        </svg>
+      </div>
       <div class="container">
         <div class="section-header-center">
           <span class="section-subtitle">MY JOURNEY</span>
@@ -839,16 +946,31 @@
               </filter>
             </defs>
 
-            <!-- Spreading Organic Roots at Bottom -->
+            <!-- Spreading Glowing DNA Roots at Bottom -->
             <g class="tree-roots-group" filter="url(#treeCyanGlow)">
-              <path class="root-strand" d="M400,1230 C350,1250 280,1270 180,1295" stroke="#00F5C3" stroke-width="3" fill="none" opacity="0.6" />
-              <path class="root-strand" d="M400,1230 C330,1265 240,1285 120,1300" stroke="#12E7B8" stroke-width="2.5" fill="none" opacity="0.5" />
-              <path class="root-strand" d="M400,1230 C450,1250 520,1270 620,1295" stroke="#00F5C3" stroke-width="3" fill="none" opacity="0.6" />
-              <path class="root-strand" d="M400,1230 C470,1265 560,1285 680,1300" stroke="#12E7B8" stroke-width="2.5" fill="none" opacity="0.5" />
+              <!-- Left DNA Root 1 -->
+              <path class="root-strand" d="M400,1230 C350,1240 320,1270 250,1280 C180,1290 150,1300 100,1300" stroke="#00F5C3" stroke-width="2.5" fill="none" opacity="0.75" />
+              <path class="root-strand" d="M400,1230 C360,1270 300,1240 250,1280 C200,1320 130,1280 100,1300" stroke="#12E7B8" stroke-width="2.5" fill="none" opacity="0.75" />
+              <path class="root-strand" d="M400,1230 C355,1255 310,1255 250,1280 C190,1305 140,1290 100,1300" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3 4" fill="none" opacity="0.6" />
+
+              <!-- Right DNA Root 1 -->
+              <path class="root-strand" d="M400,1230 C450,1240 480,1270 550,1280 C620,1290 650,1300 700,1300" stroke="#00F5C3" stroke-width="2.5" fill="none" opacity="0.75" />
+              <path class="root-strand" d="M400,1230 C440,1270 500,1240 550,1280 C600,1320 670,1280 700,1300" stroke="#12E7B8" stroke-width="2.5" fill="none" opacity="0.75" />
+              <path class="root-strand" d="M400,1230 C445,1255 490,1255 550,1280 C610,1305 660,1290 700,1300" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3 4" fill="none" opacity="0.6" />
+
+              <!-- Left DNA Root 2 -->
+              <path class="root-strand" d="M400,1230 C370,1250 350,1270 280,1290 C230,1305 200,1315 170,1320" stroke="#00F5C3" stroke-width="2" fill="none" opacity="0.6" />
+              <path class="root-strand" d="M400,1230 C380,1280 320,1260 280,1290 C250,1310 210,1325 170,1320" stroke="#12E7B8" stroke-width="2" fill="none" opacity="0.6" />
+              <path class="root-strand" d="M400,1230 C375,1265 335,1265 280,1290 C240,1307 205,1320 170,1320" stroke="#ffffff" stroke-width="1" stroke-dasharray="2 3" fill="none" opacity="0.5" />
+
+              <!-- Right DNA Root 2 -->
+              <path class="root-strand" d="M400,1230 C430,1250 450,1270 520,1290 C570,1305 600,1315 630,1320" stroke="#00F5C3" stroke-width="2" fill="none" opacity="0.6" />
+              <path class="root-strand" d="M400,1230 C420,1280 480,1260 520,1290 C550,1310 590,1325 630,1320" stroke="#12E7B8" stroke-width="2" fill="none" opacity="0.6" />
+              <path class="root-strand" d="M400,1230 C425,1265 465,1265 520,1290 C560,1307 595,1320 630,1320" stroke="#ffffff" stroke-width="1" stroke-dasharray="2 3" fill="none" opacity="0.5" />
             </g>
 
-            <!-- Central Trunk -->
-            <path class="tree-trunk-path" d="M400,1230 L400,60" stroke="url(#treeTrunkGrad)" stroke-width="6" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+            <!-- Central Trunk (Glowing Biotechnology Tree Trunk) -->
+            <path class="tree-trunk-path" d="M400,1230 Q350,1140 400,1050 Q450,910 400,770 Q350,630 400,490 Q450,350 400,210 Q360,135 400,60" stroke="url(#treeTrunkGrad)" stroke-width="10" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
 
             <!-- Embedded DNA Strand Animation inside Trunk -->
             <path class="tree-dna-core-1" d="M400,1230 Q415,1080 400,930 Q385,780 400,630 Q415,480 400,330 Q385,180 400,60" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="3 4" fill="none" opacity="0.45" />
@@ -857,28 +979,76 @@
             <!-- Curved Organic Branches to Cards -->
             <!-- 2024 (Right) -->
             <g class="tree-branch-group" id="branch-2024">
-              <path class="tree-branch-path" d="M400,1050 C450,1050 490,1035 560,1035" stroke="url(#branchRightGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Main branch -->
+              <path class="tree-branch-path" d="M400,1050 C440,1080 510,1000 560,1035" stroke="url(#branchRightGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Organic twigs -->
+              <path class="tree-branch-path" d="M445,1065 Q470,1030 490,1020" stroke="url(#branchRightGrad)" stroke-width="2" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <path class="tree-branch-path" d="M500,1035 Q520,1070 540,1060" stroke="url(#branchRightGrad)" stroke-width="1.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Twig & Branch Leaves -->
+              <path d="M490,1020 Q495,1015 500,1020 Q495,1025 490,1020 Z" fill="#00F5C3" />
+              <path d="M540,1060 Q545,1055 550,1060 Q545,1065 540,1060 Z" fill="#12E7B8" />
+              <path d="M420,1060 Q425,1053 430,1058 Q425,1065 420,1060 Z" fill="#00F5C3" opacity="0.8" />
+              <path d="M450,1070 Q455,1075 460,1070 Q455,1065 450,1070 Z" fill="#12E7B8" opacity="0.9" />
+              <path d="M480,1035 Q485,1030 490,1035 Q485,1040 480,1035 Z" fill="#00F5C3" opacity="0.7" />
+              <path d="M520,1008 Q525,1003 530,1008 Q525,1013 520,1008 Z" fill="#12E7B8" opacity="0.85" />
+              <!-- Original Node & Leaf -->
               <circle cx="550" cy="1030" r="4" fill="#64FFD6" />
               <path d="M545,1025 Q550,1020 555,1025 Z" fill="#00F5C3" />
             </g>
 
             <!-- 2025 (Left) -->
             <g class="tree-branch-group" id="branch-2025">
-              <path class="tree-branch-path" d="M400,770 C350,770 310,755 240,755" stroke="url(#branchLeftGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Main branch -->
+              <path class="tree-branch-path" d="M400,770 C360,800 290,720 240,755" stroke="url(#branchLeftGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Organic twigs -->
+              <path class="tree-branch-path" d="M355,785 Q330,750 310,740" stroke="url(#branchLeftGrad)" stroke-width="2" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <path class="tree-branch-path" d="M300,755 Q280,790 260,780" stroke="url(#branchLeftGrad)" stroke-width="1.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Twig & Branch Leaves -->
+              <path d="M310,740 Q305,735 300,740 Q305,745 310,740 Z" fill="#00F5C3" />
+              <path d="M260,780 Q255,775 250,780 Q255,785 260,780 Z" fill="#12E7B8" />
+              <path d="M380,780 Q375,773 370,778 Q375,785 380,780 Z" fill="#00F5C3" opacity="0.8" />
+              <path d="M340,775 Q335,780 330,775 Q335,770 340,775 Z" fill="#12E7B8" opacity="0.9" />
+              <path d="M300,740 Q295,735 290,740 Q295,745 300,740 Z" fill="#00F5C3" opacity="0.7" />
+              <path d="M260,735 Q255,730 250,735 Q255,740 260,735 Z" fill="#12E7B8" opacity="0.85" />
+              <!-- Original Node & Leaf -->
               <circle cx="250" cy="750" r="4" fill="#64FFD6" />
               <path d="M245,745 Q250,740 255,745 Z" fill="#00F5C3" />
             </g>
 
             <!-- 2026 (Right) -->
             <g class="tree-branch-group" id="branch-2026">
-              <path class="tree-branch-path" d="M400,490 C450,490 490,475 560,475" stroke="url(#branchRightGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Main branch -->
+              <path class="tree-branch-path" d="M400,490 C440,520 510,440 560,475" stroke="url(#branchRightGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Organic twigs -->
+              <path class="tree-branch-path" d="M445,505 Q470,470 490,460" stroke="url(#branchRightGrad)" stroke-width="2" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <path class="tree-branch-path" d="M500,475 Q520,510 540,500" stroke="url(#branchRightGrad)" stroke-width="1.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Twig & Branch Leaves -->
+              <path d="M490,460 Q495,455 500,460 Q495,465 490,460 Z" fill="#00F5C3" />
+              <path d="M540,500 Q545,495 550,500 Q545,505 540,500 Z" fill="#12E7B8" />
+              <path d="M420,500 Q425,493 430,498 Q425,505 420,500 Z" fill="#00F5C3" opacity="0.8" />
+              <path d="M450,510 Q455,515 460,510 Q455,505 450,510 Z" fill="#12E7B8" opacity="0.9" />
+              <path d="M480,475 Q485,470 490,475 Q485,480 480,475 Z" fill="#00F5C3" opacity="0.7" />
+              <path d="M520,448 Q525,443 530,448 Q525,453 520,448 Z" fill="#12E7B8" opacity="0.85" />
+              <!-- Original Node & Leaf -->
               <circle cx="550" cy="470" r="4" fill="#64FFD6" />
               <path d="M545,465 Q550,460 555,465 Z" fill="#00F5C3" />
             </g>
 
             <!-- Future (Left) -->
             <g class="tree-branch-group" id="branch-future">
-              <path class="tree-branch-path" d="M400,210 C350,210 310,195 240,195" stroke="url(#branchLeftGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Main branch -->
+              <path class="tree-branch-path" d="M400,210 C360,240 290,160 240,195" stroke="url(#branchLeftGrad)" stroke-width="3.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Organic twigs -->
+              <path class="tree-branch-path" d="M355,225 Q330,190 310,180" stroke="url(#branchLeftGrad)" stroke-width="2" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <path class="tree-branch-path" d="M300,195 Q280,230 260,220" stroke="url(#branchLeftGrad)" stroke-width="1.5" stroke-linecap="round" fill="none" filter="url(#treeCyanGlow)" />
+              <!-- Twig & Branch Leaves -->
+              <path d="M310,180 Q305,175 300,180 Q305,185 310,180 Z" fill="#00F5C3" />
+              <path d="M260,220 Q255,215 250,220 Q255,225 260,220 Z" fill="#12E7B8" />
+              <path d="M380,220 Q375,213 370,218 Q375,225 380,220 Z" fill="#00F5C3" opacity="0.8" />
+              <path d="M340,215 Q335,220 330,215 Q335,210 340,215 Z" fill="#12E7B8" opacity="0.9" />
+              <path d="M300,180 Q295,175 290,180 Q295,185 300,180 Z" fill="#00F5C3" opacity="0.7" />
+              <path d="M260,175 Q255,170 250,175 Q255,180 260,175 Z" fill="#12E7B8" opacity="0.85" />
+              <!-- Original Node & Leaf -->
               <circle cx="250" cy="190" r="4" fill="#64FFD6" />
               <path d="M245,185 Q250,180 255,185 Z" fill="#00F5C3" />
             </g>
