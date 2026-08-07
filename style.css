@@ -2319,8 +2319,10 @@ section[id],
 
   .hero-canvas-container {
     width: 100%;
+    left: 0;
+    right: 0;
     height: 100%;
-    opacity: 0.35;
+    opacity: 0.75;
   }
 
   .hero-title {

@@ -164,13 +164,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.restore();
       });
 
-      // Draw 3D Rotating DNA Strand across background right side
-      const centerX = canvas.width * 0.75;
+      // Draw 3D Rotating DNA Strand across background (right side on desktop, center on mobile)
+      const centerX = canvas.width > 768 ? canvas.width * 0.75 : canvas.width * 0.5;
       const startY = canvas.height * 0.1;
       const endY = canvas.height * 0.9;
       const numNodes = 28;
       const nodeSpacing = (endY - startY) / numNodes;
-      const amplitude = Math.min(75, canvas.width * 0.09);
+      const amplitude = canvas.width > 768 ? Math.min(75, canvas.width * 0.09) : Math.min(65, canvas.width * 0.18);
 
       for (let i = 0; i < numNodes; i++) {
         const y = startY + i * nodeSpacing;
