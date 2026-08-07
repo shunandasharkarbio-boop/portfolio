@@ -2468,7 +2468,7 @@ section[id],
    SKILLS DASHBOARD — Complete Premium Redesign
    ========================================================================== */
 .skills-dashboard {
-  background-color: #00060f;
+  background-color: #020408;
   padding: 0 0 5rem 0;
   color: #e2e8f0;
   font-family: 'Inter', sans-serif;
@@ -2485,9 +2485,12 @@ section[id],
   right: 0;
   bottom: 0;
   background:
-    radial-gradient(ellipse 60% 40% at 50% 20%, rgba(0, 40, 80, 0.55) 0%, transparent 70%),
-    radial-gradient(ellipse 40% 30% at 80% 30%, rgba(0, 10, 40, 0.4) 0%, transparent 60%),
-    radial-gradient(ellipse 30% 25% at 20% 60%, rgba(0, 20, 40, 0.3) 0%, transparent 55%);
+    radial-gradient(ellipse 60% 40% at 50% 20%, rgba(0, 210, 196, 0.15) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 30% at 80% 30%, rgba(0, 245, 155, 0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 30% 25% at 20% 60%, rgba(59, 130, 246, 0.1) 0%, transparent 55%),
+    linear-gradient(rgba(0, 245, 155, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 245, 155, 0.03) 1px, transparent 1px);
+  background-size: 100% 100%, 100% 100%, 100% 100%, 30px 30px, 30px 30px;
   pointer-events: none;
   z-index: 0;
 }
@@ -2657,7 +2660,7 @@ section[id],
   width: 320px;
   height: 320px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 210, 196, 0.25) 0%, rgba(0, 210, 196, 0.05) 55%, transparent 75%);
+  background: radial-gradient(circle, rgba(0, 210, 196, 0.35) 0%, rgba(0, 210, 196, 0.1) 55%, transparent 75%);
   filter: blur(40px);
   top: 50%;
   left: 50%;
@@ -2671,7 +2674,7 @@ section[id],
   width: 260px;
   height: 260px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.3) 0%, rgba(59, 130, 246, 0.05) 55%, transparent 75%);
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.1) 55%, transparent 75%);
   filter: blur(45px);
   top: 45%;
   left: 50%;
@@ -2710,26 +2713,34 @@ section[id],
   height: 100%;
   object-fit: contain;
   mix-blend-mode: screen;
-  filter: drop-shadow(0 0 20px rgba(0, 210, 196, 0.45)) drop-shadow(0 0 40px rgba(59, 130, 246, 0.3));
+  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
+  mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
+  filter: drop-shadow(0 0 25px rgba(0, 210, 196, 0.6)) drop-shadow(0 0 45px rgba(59, 130, 246, 0.4));
   position: relative;
   z-index: 2;
-  animation: dnaHelixFloat 6s cubic-bezier(0.45, 0, 0.55, 1) infinite alternate;
+  animation: dnaHelixFloatAndRotate 30s linear infinite;
 }
 
-@keyframes dnaHelixFloat {
+@keyframes dnaHelixFloatAndRotate {
   0% {
     transform: translateY(0px) rotate(0deg);
-    filter: drop-shadow(0 0 18px rgba(0, 210, 196, 0.4)) drop-shadow(0 0 35px rgba(59, 130, 246, 0.25));
+    filter: drop-shadow(0 0 18px rgba(0, 210, 196, 0.5)) drop-shadow(0 0 35px rgba(59, 130, 246, 0.3));
   }
-
+  25% {
+    transform: translateY(-12px) rotate(90deg);
+    filter: drop-shadow(0 0 28px rgba(0, 210, 196, 0.7)) drop-shadow(0 0 50px rgba(59, 130, 246, 0.5));
+  }
   50% {
-    transform: translateY(-12px) rotate(1deg);
-    filter: drop-shadow(0 0 28px rgba(0, 210, 196, 0.65)) drop-shadow(0 0 50px rgba(59, 130, 246, 0.45));
+    transform: translateY(0px) rotate(180deg);
+    filter: drop-shadow(0 0 18px rgba(0, 210, 196, 0.5)) drop-shadow(0 0 35px rgba(59, 130, 246, 0.3));
   }
-
+  75% {
+    transform: translateY(12px) rotate(270deg);
+    filter: drop-shadow(0 0 28px rgba(0, 210, 196, 0.7)) drop-shadow(0 0 50px rgba(59, 130, 246, 0.5));
+  }
   100% {
-    transform: translateY(-6px) rotate(-1deg);
-    filter: drop-shadow(0 0 20px rgba(0, 210, 196, 0.5)) drop-shadow(0 0 40px rgba(59, 130, 246, 0.35));
+    transform: translateY(0px) rotate(360deg);
+    filter: drop-shadow(0 0 18px rgba(0, 210, 196, 0.5)) drop-shadow(0 0 35px rgba(59, 130, 246, 0.3));
   }
 }
 
