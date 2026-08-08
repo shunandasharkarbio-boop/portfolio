@@ -1512,6 +1512,7 @@ img {
   width: 100%;
   max-width: 900px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .timeline-line {
@@ -1544,7 +1545,7 @@ img {
 .timeline-item {
   display: flex;
   position: relative;
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
   width: 100%;
   opacity: 0;
   transform: translateY(30px);
@@ -1606,7 +1607,7 @@ img {
 .timeline-card {
   display: flex;
   flex-direction: column;
-  width: 45%;
+  width: 40%;
   background: rgba(10, 15, 20, 0.65);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
@@ -1742,7 +1743,7 @@ img {
 }
 
 .card-content {
-  padding: 1.8rem;
+  padding: 1.2rem;
   position: relative;
   z-index: 2;
   background: linear-gradient(to bottom, transparent 0%, rgba(8, 13, 11, 0.95) 25%);
