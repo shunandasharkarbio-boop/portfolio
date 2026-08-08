@@ -5330,3 +5330,9 @@ section[id]::after {
     width: 30px;
   }
 }
+
+/* Override for vines visibility */
+#journey .timeline-card.tree-card {
+    overflow: visible !important;
+}
+
