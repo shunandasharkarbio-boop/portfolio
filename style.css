@@ -56,7 +56,6 @@
   margin: 0;
   padding: 0;
 }
-
 html {
   font-size: 13.5px;
   scroll-behavior: smooth;
@@ -1527,6 +1526,21 @@ img {
   z-index: 1;
 }
 
+/* Hide small horizontal rung lines from the faded DNA decoration inside the Journey section */
+.journey-decorations svg[viewBox="0 0 100 300"] line {
+  display: none;
+}
+
+/* Hide two small vertical dashed lines in the tree bottom DNA badge (targeted) */
+.tree-bottom-node-badge svg line[x1="8"], .tree-bottom-node-badge svg line[x1="16"] {
+  display: none;
+}
+
+/* Hide center dashed line as requested */
+.tree-bottom-node-badge svg line[x1="12"] {
+  display: none;
+}
+
 .timeline-item {
   display: flex;
   position: relative;
@@ -1626,24 +1640,31 @@ img {
   border-top-right-radius: 16px;
 }
 
+/* Allow vertical page pan while still supporting horizontal swipe on the carousel */
+.card-image.inner-carousel-container {
+  touch-action: pan-y;
+}
+
 .card-image .inner-carousel-track {
   display: flex;
   width: 100%;
   height: 100%;
   position: relative;
+  transition: transform 700ms cubic-bezier(0.2,0.7,0.2,1);
+  will-change: transform;
 }
 
 .card-image .inner-carousel-slide {
-  position: absolute;
-  inset: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-  pointer-events: none;
+  position: relative;
+  flex: 0 0 100%;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  opacity: 1; /* visual handled by sliding transform */
 }
 
-.card-image .inner-carousel-slide.active {
-  opacity: 1;
-  pointer-events: auto;
+.card-image .inner-carousel-slide img {
+  display: block;
 }
 
 .card-image .inner-carousel-slide img,
@@ -2461,6 +2482,50 @@ section[id],
   .contact-cards-horizontal {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+}
+
+/* Mobile: move/hide large botanical vines/tree decorations to keep timeline cards usable */
+@media (max-width: 768px) {
+  /* On mobile keep a compact vine/tree visual pinned to the left,
+     but hide per-card botanical overlays to avoid overlap. */
+  /* Expose tweakable variables so the vine can be moved inward/outward */
+  .tree-growth-wrapper {
+    --tree-left: 4px;
+    --tree-width: 16%;
+    --tree-max-width: 180px;
+    --tree-padding: 20%;
+  }
+
+  .tree-growth-wrapper .tree-svg-container,
+  .tree-growth-wrapper .tree-bottom-node-badge,
+  .tree-growth-wrapper .tree-top-node-badge {
+    display: block !important;
+    /* Position absolutely inside the timeline wrapper so the vine sits to the left of cards */
+    position: absolute !important;
+    left: 0 !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    width: var(--tree-width, 12%) !important;
+    max-width: var(--tree-max-width, 140px) !important;
+    /* Match desktop: make the vine the full height of the timeline wrapper */
+    height: 100% !important;
+    opacity: 0.45 !important;
+    filter: blur(0.5px) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+  }
+
+  /* hide the decorative vines that overlay individual cards to keep cards legible */
+  .timeline-wrapper .card-botanical-vines {
+    display: none !important;
+  }
+
+  /* ensure timeline content has left spacing so cards are fully visible */
+  .timeline-wrapper {
+    max-width: 100%;
+    padding-left: calc(1rem + var(--tree-padding, 18%));
+    padding-right: 0.5rem;
   }
 }
 
@@ -3937,8 +4002,6 @@ section[id],
 /* Card Hover Lift & Cyan Glow */
 .achievement-card:hover {
   /* translateY managed by carousel */
-  /* was: /* translateY managed by carousel */
-  /* was: transform: translateY(-8px); */ */
   border-color: rgba(0, 210, 196, 0.7);
   box-shadow: 0 15px 35px rgba(0, 210, 196, 0.22), 0 0 20px rgba(0, 210, 196, 0.15), var(--card-shadow);
 }
@@ -4569,7 +4632,6 @@ section[id],
   box-shadow: 0 0 10px var(--color-secondary), 0 0 20px var(--color-secondary);
   z-index: 2;
 }
-
 .v-timeline-card {
   flex: 1;
   margin-left: 50px;
@@ -4768,7 +4830,24 @@ section[id],
   pointer-events: none;
 }
 
-/* Tree Path Animations */
+/* Make the timeline vine more twig-like */
+.tree-trunk-path {
+  stroke-width: 4 !important;
+}
+
+.tree-branch-path {
+  stroke-width: 2 !important;
+}
+
+.tree-branch-path[stroke-dasharray] {
+  stroke-width: 1 !important;
+}
+
+.root-strand {
+  stroke-width: 1.2 !important;
+}
+
+/* Reduce glow thickness for a more delicate twig look */
 .tree-trunk-path,
 .tree-branch-path,
 .root-strand {

@@ -656,9 +656,9 @@ document.addEventListener('DOMContentLoaded', () => {
       this.dotsContainer.innerHTML = '';
 
       this.images.forEach((src, index) => {
-        // Build slide
+        // Build slide as flex child (100% width)
         const slide = document.createElement('div');
-        slide.className = 'inner-carousel-slide' + (index === 0 ? ' active' : '');
+        slide.className = 'inner-carousel-slide';
         const img = document.createElement('img');
         img.src = src;
         img.alt = '';
@@ -684,6 +684,9 @@ document.addEventListener('DOMContentLoaded', () => {
       // Cache NodeLists
       this.slides = this.track.querySelectorAll('.inner-carousel-slide');
       this.dots   = this.dotsContainer.querySelectorAll('.inner-dot');
+
+      // Ensure track starts at current index (supports responsive width)
+      this.updateTrackPosition();
 
       // Hide controls when only one image
       if (this.images.length <= 1) {
@@ -725,7 +728,7 @@ document.addEventListener('DOMContentLoaded', () => {
         this.startAutoplay();
       });
 
-      // Swipe support (mobile)
+      // Swipe support (mobile) retained for simple flick; pointer events below handle drag+momentum
       this.container.addEventListener('touchstart', (e) => {
         this.touchStartX = e.changedTouches[0].screenX;
       }, { passive: true });
@@ -738,6 +741,30 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, { passive: true });
 
+      // Pointer drag with momentum (desktop & touch via pointer events)
+      this._onPointerDown = this._onPointerDown.bind(this);
+      this._onPointerMove = this._onPointerMove.bind(this);
+      this._onPointerUp = this._onPointerUp.bind(this);
+      this.container.addEventListener('pointerdown', this._onPointerDown, { passive: true });
+
+      // Wheel handling: only intercept horizontal wheel/pad gestures, allow vertical scrolling
+      this._lastWheelTime = 0;
+      this._onWheel = (e) => {
+        const now = Date.now();
+        const absX = Math.abs(e.deltaX || 0);
+        const absY = Math.abs(e.deltaY || 0);
+        // If horizontal movement dominates, treat as carousel navigation; otherwise allow page scroll
+        if (absX > absY && absX > 4) {
+          // throttle to avoid many rapid steps
+          if (now - this._lastWheelTime < 220) return e.preventDefault();
+          e.preventDefault();
+          this._lastWheelTime = now;
+          if (e.deltaX > 0) this.next(); else this.prev();
+          this.resetAutoplay();
+        }
+      };
+      this.container.addEventListener('wheel', this._onWheel, { passive: false });
+
       // Keyboard navigation (Left/Right arrows)
       this.container.addEventListener('keydown', (e) => {
         if (this.images.length > 1) {
@@ -745,19 +772,94 @@ document.addEventListener('DOMContentLoaded', () => {
           if (e.key === 'ArrowRight') { e.stopPropagation(); this.next(); this.resetAutoplay(); }
         }
       });
+
+      // Recompute track position on resize to keep slide aligned
+      this._resizeHandler = () => this.updateTrackPosition();
+      window.addEventListener('resize', this._resizeHandler);
+    }
+
+    // cleanup (if ever needed)
+    destroy() {
+      window.removeEventListener('resize', this._resizeHandler);
+      this.container.removeEventListener('pointerdown', this._onPointerDown);
+      this.container.removeEventListener('wheel', this._onWheel);
+    }
+
+    _onPointerDown(e) {
+      if (this.images.length <= 1) return;
+      this.isPointerDown = true;
+      this.pointerStartX = e.clientX;
+      this.pointerLastX = e.clientX;
+      this.pointerStartTime = performance.now();
+      this.pointerLastTime = this.pointerStartTime;
+      this.startPct = this.currentIndex * 100;
+      this.container.setPointerCapture && this.container.setPointerCapture(e.pointerId);
+      window.addEventListener('pointermove', this._onPointerMove, { passive: true });
+      window.addEventListener('pointerup', this._onPointerUp, { passive: true });
+      // pause autoplay while dragging
+      this.stopAutoplay();
+    }
+
+    _onPointerMove(e) {
+      if (!this.isPointerDown) return;
+      const curX = e.clientX;
+      const dx = this.pointerStartX - curX; // positive when dragging left
+      const width = this.container.clientWidth || 1;
+      const deltaPct = (dx / width) * 100;
+      const pct = this.startPct + deltaPct;
+      this.track.style.transition = 'none';
+      this.track.style.transform = `translate3d(-${pct}%,0,0)`;
+      // store last for velocity
+      this.pointerLastX = curX;
+      this.pointerLastTime = performance.now();
+    }
+
+    _onPointerUp(e) {
+      if (!this.isPointerDown) return;
+      this.isPointerDown = false;
+      const endX = e.clientX;
+      const endTime = performance.now();
+      const dt = Math.max(1, endTime - this.pointerStartTime);
+      const velocityPxPerMs = (this.pointerStartX - endX) / dt; // px per ms
+      const width = this.container.clientWidth || 1;
+      // predict momentum (simple) and compute target index
+      const momentumMs = 220; // how far momentum carries in ms
+      const momentumPx = velocityPxPerMs * momentumMs;
+      const momentumPct = (momentumPx / width) * 100;
+      // current percent position
+      const curDx = this.pointerStartX - endX;
+      const curPct = this.startPct + (curDx / width) * 100 + momentumPct;
+      let targetIndex = Math.round(curPct / 100);
+      // clamp
+      targetIndex = Math.max(0, Math.min(this.images.length - 1, targetIndex));
+      // restore transition and animate
+      this.track.style.transition = '';
+      this.goTo(targetIndex);
+      this.resetAutoplay();
+      try { this.container.releasePointerCapture && this.container.releasePointerCapture(e.pointerId); } catch (err) {}
+      window.removeEventListener('pointermove', this._onPointerMove);
+      window.removeEventListener('pointerup', this._onPointerUp);
     }
 
     goTo(index) {
       if (!this.slides || this.images.length <= 1) return;
-      this.slides[this.currentIndex].classList.remove('active');
+      if (!this.slides || this.images.length <= 1) return;
+      // Update dots
       if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.remove('active');
       this.currentIndex = (index + this.images.length) % this.images.length;
-      this.slides[this.currentIndex].classList.add('active');
       if (this.dots[this.currentIndex]) this.dots[this.currentIndex].classList.add('active');
+      // Animate track to show requested slide
+      this.updateTrackPosition();
     }
 
     next() { this.goTo(this.currentIndex + 1); }
     prev() { this.goTo(this.currentIndex - 1); }
+
+    updateTrackPosition() {
+      // Use percentage translate for responsiveness
+      const pct = this.currentIndex * 100;
+      this.track.style.transform = `translate3d(-${pct}%, 0, 0)`;
+    }
 
     startAutoplay() {
       if (this.images.length > 1 && !this.autoplayTimer) {
