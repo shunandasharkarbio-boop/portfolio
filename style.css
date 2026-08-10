@@ -2500,26 +2500,22 @@ section[id],
   position: relative;
   overflow: hidden;
   width: 100%;
-  background-image: linear-gradient(90deg, rgba(5, 10, 8, 0.85) 0%, rgba(5, 10, 8, 0.45) 55%, rgba(5, 10, 8, 0.25) 100%), url('./image/skills_lab_bg.jpg?v=1') !important;
-  background-size: cover !important;
-  background-position: center center !important;
-  background-repeat: no-repeat !important;
 }
 
 /* ==========================================================================
-   SKILLS HERO SECTION (Section Background Layout)
+   SKILLS HERO SECTION (2-Column Layout: MY FOCUS + Lab Image)
    ========================================================================== */
 .skills-hero-wrapper {
-  display: flex;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
   align-items: center;
+  gap: 2rem;
   max-width: 1240px;
   margin: 0 auto 3rem;
-  padding: 2.5rem 1.5rem 0;
+  padding: 1.5rem 1.5rem 0;
   position: relative;
   z-index: 2;
   box-sizing: border-box;
-  min-height: 520px;
 }
 
 /* Left: Focus Text & High-Contrast Backdrop Container */
@@ -2638,15 +2634,48 @@ section[id],
   line-height: 1.25;
 }
 
+/* Right: Lab Microscope Photo (Beside MY FOCUS, No Border) */
+.skills-hero-visual {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 400px;
+  border-radius: 20px;
+  overflow: hidden;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+.skills-lab-hero-img {
+  width: 100%;
+  height: 100%;
+  max-height: 480px;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 /* Responsive Breakpoints for Skills Hero */
 @media (max-width: 1024px) {
   .skills-hero-wrapper {
-    padding-top: 1.5rem;
-    min-height: auto;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding-top: 1rem;
   }
 
   .skills-hero-content {
     max-width: 100%;
+  }
+
+  .skills-hero-visual {
+    min-height: 350px;
   }
 }
 
@@ -2659,6 +2688,10 @@ section[id],
   .skd-stat-row {
     flex-direction: column;
     gap: 0.75rem;
+  }
+
+  .skills-hero-visual {
+    min-height: 260px;
   }
 }
 
