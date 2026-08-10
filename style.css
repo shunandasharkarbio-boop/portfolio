@@ -2634,290 +2634,44 @@ section[id],
   line-height: 1.25;
 }
 
-/* Right: 3D DNA Double Helix Visual Container */
+/* Right: Biotech Laboratory Visual Container */
 .skills-hero-visual {
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 480px;
+  min-height: 440px;
   width: 100%;
 }
 
-.dna-illustration-container {
+.skills-lab-container {
   position: relative;
   width: 100%;
-  max-width: 400px;
-  height: 520px;
+  max-width: 480px;
+  height: 100%;
+  min-height: 400px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 210, 196, 0.25);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 210, 196, 0.2);
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
 }
 
-/* Neon Backglow Lighting */
-.dna-aura-cyan {
-  position: absolute;
-  width: 320px;
-  height: 320px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 210, 196, 0.35) 0%, rgba(0, 210, 196, 0.1) 55%, transparent 75%);
-  filter: blur(40px);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation: auraPulseCyan 6s ease-in-out infinite alternate;
+.skills-lab-container:hover {
+  transform: translateY(-4px);
+  border-color: rgba(0, 210, 196, 0.5);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 210, 196, 0.35);
 }
 
-.dna-aura-blue {
-  position: absolute;
-  width: 260px;
-  height: 260px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(59, 130, 246, 0.4) 0%, rgba(59, 130, 246, 0.1) 55%, transparent 75%);
-  filter: blur(45px);
-  top: 45%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  pointer-events: none;
-  animation: auraPulseBlue 5s ease-in-out infinite alternate-reverse;
-}
-
-@keyframes auraPulseCyan {
-  0% {
-    transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.6;
-  }
-
-  100% {
-    transform: translate(-50%, -50%) scale(1.15);
-    opacity: 0.9;
-  }
-}
-
-@keyframes auraPulseBlue {
-  0% {
-    transform: translate(-50%, -50%) scale(1.1);
-    opacity: 0.5;
-  }
-
-  100% {
-    transform: translate(-50%, -50%) scale(0.85);
-    opacity: 0.85;
-  }
-}
-
-/* Main 3D DNA Helix Image - Seamless Screen Blend (Zero Box/Borders) */
-.dna-helix-hero-img {
+.skills-lab-hero-img {
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  mix-blend-mode: screen;
-  -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
-  mask-image: radial-gradient(circle at center, black 40%, transparent 70%);
-  filter: drop-shadow(0 0 25px rgba(0, 210, 196, 0.6)) drop-shadow(0 0 45px rgba(59, 130, 246, 0.4));
-  position: relative;
-  z-index: 2;
-  animation: dnaHelixFloatAndRotate 30s linear infinite;
-}
-
-@keyframes dnaHelixFloatAndRotate {
-  0% {
-    transform: translateY(0px) rotate(0deg);
-    filter: drop-shadow(0 0 18px rgba(0, 210, 196, 0.5)) drop-shadow(0 0 35px rgba(59, 130, 246, 0.3));
-  }
-  25% {
-    transform: translateY(-12px) rotate(90deg);
-    filter: drop-shadow(0 0 28px rgba(0, 210, 196, 0.7)) drop-shadow(0 0 50px rgba(59, 130, 246, 0.5));
-  }
-  50% {
-    transform: translateY(0px) rotate(180deg);
-    filter: drop-shadow(0 0 18px rgba(0, 210, 196, 0.5)) drop-shadow(0 0 35px rgba(59, 130, 246, 0.3));
-  }
-  75% {
-    transform: translateY(12px) rotate(270deg);
-    filter: drop-shadow(0 0 28px rgba(0, 210, 196, 0.7)) drop-shadow(0 0 50px rgba(59, 130, 246, 0.5));
-  }
-  100% {
-    transform: translateY(0px) rotate(360deg);
-    filter: drop-shadow(0 0 18px rgba(0, 210, 196, 0.5)) drop-shadow(0 0 35px rgba(59, 130, 246, 0.3));
-  }
-}
-
-/* Orbiting Atomic Sparks */
-.dna-atom-orbit {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  border-radius: 50%;
-  border: 1px dashed rgba(0, 210, 196, 0.35);
-  pointer-events: none;
-  z-index: 3;
-}
-
-.orbit-1 {
-  width: 260px;
-  height: 110px;
-  transform: translate(-50%, -60%) rotateX(68deg) rotateZ(-25deg);
-  animation: spinAtomOrbit1 9s linear infinite;
-}
-
-.orbit-2 {
-  width: 240px;
-  height: 100px;
-  transform: translate(-50%, -40%) rotateX(68deg) rotateZ(35deg);
-  animation: spinAtomOrbit2 11s linear infinite reverse;
-}
-
-@keyframes spinAtomOrbit1 {
-  to {
-    transform: translate(-50%, -60%) rotateX(68deg) rotateZ(335deg);
-  }
-}
-
-@keyframes spinAtomOrbit2 {
-  to {
-    transform: translate(-50%, -40%) rotateX(68deg) rotateZ(-325deg);
-  }
-}
-
-.atom-spark {
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  background: var(--color-primary);
-  border-radius: 50%;
-  box-shadow: 0 0 12px var(--color-primary), 0 0 25px var(--color-secondary);
-}
-
-/* Floating Molecular Particles */
-.bio-particle {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 3;
-  animation: floatBioParticle linear infinite;
-}
-
-.bio-particle.p1 {
-  width: 5px;
-  height: 5px;
-  background: #00d2c4;
-  left: 15%;
-  top: 75%;
-  animation-duration: 5s;
-  animation-delay: 0s;
-  box-shadow: 0 0 8px #00d2c4;
-}
-
-.bio-particle.p2 {
-  width: 4px;
-  height: 4px;
-  background: #3b82f6;
-  left: 80%;
-  top: 60%;
-  animation-duration: 6s;
-  animation-delay: 1s;
-  box-shadow: 0 0 8px #3b82f6;
-}
-
-.bio-particle.p3 {
-  width: 6px;
-  height: 6px;
-  background: #00f59b;
-  left: 25%;
-  top: 35%;
-  animation-duration: 4.5s;
-  animation-delay: 1.5s;
-  box-shadow: 0 0 10px #00f59b;
-}
-
-.bio-particle.p4 {
-  width: 4px;
-  height: 4px;
-  background: #a855f7;
-  left: 70%;
-  top: 85%;
-  animation-duration: 5.5s;
-  animation-delay: 0.5s;
-  box-shadow: 0 0 8px #a855f7;
-}
-
-.bio-particle.p5 {
-  width: 5px;
-  height: 5px;
-  background: #00d2c4;
-  left: 85%;
-  top: 30%;
-  animation-duration: 4s;
-  animation-delay: 2s;
-  box-shadow: 0 0 8px #00d2c4;
-}
-
-@keyframes floatBioParticle {
-  0% {
-    transform: translateY(0) scale(0.8);
-    opacity: 0;
-  }
-
-  25% {
-    opacity: 0.85;
-  }
-
-  75% {
-    opacity: 0.85;
-  }
-
-  100% {
-    transform: translateY(-70px) scale(1.2);
-    opacity: 0;
-  }
-}
-
-/* Soft Holographic Base Rings */
-.holo-base-rings {
-  position: absolute;
-  bottom: -10px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 260px;
-  height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.holo-ring {
-  position: absolute;
-  border-radius: 50%;
-  transform: rotateX(75deg);
-}
-
-.holo-ring.h1 {
-  width: 140px;
-  height: 140px;
-  border: 1.5px solid rgba(0, 210, 196, 0.65);
-  box-shadow: 0 0 15px rgba(0, 210, 196, 0.4), inset 0 0 15px rgba(0, 210, 196, 0.2);
-  animation: pulseHoloRing1 4s ease-in-out infinite alternate;
-}
-
-.holo-ring.h2 {
-  width: 200px;
-  height: 200px;
-  border: 1px dashed rgba(59, 130, 246, 0.45);
-  animation: spinHoloRing2 14s linear infinite reverse;
-}
-
-.holo-ring.h3 {
-  width: 250px;
-  height: 250px;
-  border: 1px solid rgba(0, 245, 155, 0.25);
-  box-shadow: 0 0 20px rgba(0, 245, 155, 0.15);
-  animation: pulseHoloRing3 6s ease-in-out infinite alternate-reverse;
+  object-fit: cover;
+  display: block;
+  border-radius: 20px;
 }
 
 @keyframes pulseHoloRing1 {
@@ -2963,12 +2717,12 @@ section[id],
   }
 
   .skills-hero-visual {
-    min-height: 400px;
+    min-height: 360px;
   }
 
-  .dna-illustration-container {
-    height: 420px;
-    max-width: 350px;
+  .skills-lab-container {
+    height: 380px;
+    max-width: 100%;
   }
 }
 
@@ -2984,12 +2738,12 @@ section[id],
   }
 
   .skills-hero-visual {
-    min-height: 320px;
+    min-height: 280px;
   }
 
-  .dna-illustration-container {
-    height: 340px;
-    max-width: 280px;
+  .skills-lab-container {
+    height: 300px;
+    max-width: 100%;
   }
 }
 
