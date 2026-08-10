@@ -2503,11 +2503,11 @@ section[id],
 }
 
 /* ==========================================================================
-   SKILLS HERO SECTION (2-Column Layout: MY FOCUS + Lab Image)
+   SKILLS HERO SECTION (Borderless Laboratory Image Beside MY FOCUS)
    ========================================================================== */
 .skills-hero-wrapper {
   display: grid;
-  grid-template-columns: 1.05fr 0.95fr;
+  grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
   gap: 2rem;
   max-width: 1240px;
@@ -2634,7 +2634,7 @@ section[id],
   line-height: 1.25;
 }
 
-/* Right: Lab Microscope Photo (Beside MY FOCUS, No Border) */
+/* Right: Laboratory Image beside MY FOCUS (No Border) */
 .skills-hero-visual {
   position: relative;
   display: flex;
@@ -2642,23 +2642,28 @@ section[id],
   justify-content: center;
   width: 100%;
   height: 100%;
-  min-height: 400px;
+}
+
+.skills-lab-container {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  height: 100%;
+  min-height: 420px;
   border-radius: 20px;
   overflow: hidden;
   border: none !important;
-  outline: none !important;
   box-shadow: none !important;
+  background: transparent !important;
 }
 
 .skills-lab-hero-img {
   width: 100%;
   height: 100%;
-  max-height: 480px;
   object-fit: cover;
   display: block;
   border-radius: 20px;
   border: none !important;
-  outline: none !important;
   box-shadow: none !important;
 }
 
@@ -2666,16 +2671,15 @@ section[id],
 @media (max-width: 1024px) {
   .skills-hero-wrapper {
     grid-template-columns: 1fr;
-    gap: 2rem;
-    padding-top: 1rem;
+    gap: 2.5rem;
   }
 
   .skills-hero-content {
     max-width: 100%;
   }
 
-  .skills-hero-visual {
-    min-height: 350px;
+  .skills-lab-container {
+    min-height: 360px;
   }
 }
 
@@ -2690,7 +2694,7 @@ section[id],
     gap: 0.75rem;
   }
 
-  .skills-hero-visual {
+  .skills-lab-container {
     min-height: 260px;
   }
 }
