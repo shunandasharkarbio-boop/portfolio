@@ -2503,12 +2503,12 @@ section[id],
 }
 
 /* ==========================================================================
-   SKILLS HERO SECTION (Borderless Laboratory Image Beside MY FOCUS)
+   SKILLS HERO SECTION (Balanced 50/50 Layout: MY FOCUS + Borderless Lab Image)
    ========================================================================== */
 .skills-hero-wrapper {
   display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  align-items: stretch;
   gap: 2rem;
   max-width: 1240px;
   margin: 0 auto 3rem;
@@ -2634,7 +2634,7 @@ section[id],
   line-height: 1.25;
 }
 
-/* Right: Laboratory Image beside MY FOCUS (No Border) */
+/* Right: Laboratory Image beside MY FOCUS (No Border, Balanced Height) */
 .skills-hero-visual {
   position: relative;
   display: flex;
@@ -2647,9 +2647,8 @@ section[id],
 .skills-lab-container {
   position: relative;
   width: 100%;
-  max-width: 500px;
+  max-width: 100%;
   height: 100%;
-  min-height: 420px;
   border-radius: 20px;
   overflow: hidden;
   border: none !important;
@@ -2661,6 +2660,7 @@ section[id],
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
   display: block;
   border-radius: 20px;
   border: none !important;
