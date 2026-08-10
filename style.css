@@ -2500,22 +2500,26 @@ section[id],
   position: relative;
   overflow: hidden;
   width: 100%;
+  background-image: linear-gradient(90deg, rgba(5, 10, 8, 0.85) 0%, rgba(5, 10, 8, 0.45) 55%, rgba(5, 10, 8, 0.25) 100%), url('./image/skills_lab_bg.jpg?v=1') !important;
+  background-size: cover !important;
+  background-position: center center !important;
+  background-repeat: no-repeat !important;
 }
 
 /* ==========================================================================
-   NEW REDESIGNED SKILLS HERO SECTION (Seamless 3D DNA Double Helix)
+   SKILLS HERO SECTION (Section Background Layout)
    ========================================================================== */
 .skills-hero-wrapper {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
+  display: flex;
+  justify-content: flex-start;
   align-items: center;
-  gap: 2rem;
   max-width: 1240px;
   margin: 0 auto 3rem;
-  padding: 1.5rem 1.5rem 0;
+  padding: 2.5rem 1.5rem 0;
   position: relative;
   z-index: 2;
   box-sizing: border-box;
+  min-height: 520px;
 }
 
 /* Left: Focus Text & High-Contrast Backdrop Container */
@@ -2634,95 +2638,14 @@ section[id],
   line-height: 1.25;
 }
 
-/* Right: Biotech Laboratory Visual Container */
-.skills-hero-visual {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 420px;
-  width: 100%;
-}
-
-.skills-lab-container {
-  position: relative;
-  width: 100%;
-  max-width: 480px;
-  min-height: 380px;
-  aspect-ratio: 4 / 3;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 20px;
-  overflow: hidden;
-  border: 1px solid rgba(0, 210, 196, 0.3);
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), 0 0 30px rgba(0, 210, 196, 0.25);
-  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
-}
-
-.skills-lab-container:hover {
-  transform: translateY(-4px);
-  border-color: rgba(0, 210, 196, 0.6);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 40px rgba(0, 210, 196, 0.4);
-}
-
-.skills-lab-hero-img {
-  width: 100%;
-  height: 100%;
-  min-height: 380px;
-  object-fit: cover;
-  display: block;
-  border-radius: 20px;
-}
-
-@keyframes pulseHoloRing1 {
-  0% {
-    transform: rotateX(75deg) scale(0.95);
-    opacity: 0.6;
-  }
-
-  100% {
-    transform: rotateX(75deg) scale(1.08);
-    opacity: 0.95;
-  }
-}
-
-@keyframes spinHoloRing2 {
-  to {
-    transform: rotateX(75deg) rotateZ(360deg);
-  }
-}
-
-@keyframes pulseHoloRing3 {
-  0% {
-    transform: rotateX(75deg) scale(1.05);
-    opacity: 0.3;
-  }
-
-  100% {
-    transform: rotateX(75deg) scale(0.92);
-    opacity: 0.7;
-  }
-}
-
 /* Responsive Breakpoints for Skills Hero */
 @media (max-width: 1024px) {
   .skills-hero-wrapper {
-    grid-template-columns: 1fr;
-    gap: 2.5rem;
-    padding-top: 1rem;
+    padding-top: 1.5rem;
+    min-height: auto;
   }
 
   .skills-hero-content {
-    max-width: 100%;
-  }
-
-  .skills-hero-visual {
-    min-height: 360px;
-  }
-
-  .skills-lab-container {
-    height: 380px;
     max-width: 100%;
   }
 }
@@ -2736,15 +2659,6 @@ section[id],
   .skd-stat-row {
     flex-direction: column;
     gap: 0.75rem;
-  }
-
-  .skills-hero-visual {
-    min-height: 280px;
-  }
-
-  .skills-lab-container {
-    height: 300px;
-    max-width: 100%;
   }
 }
 
