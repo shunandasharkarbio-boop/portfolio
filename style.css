@@ -915,15 +915,15 @@ img {
   border-bottom: 1px solid var(--color-border);
   border-radius: 0 12px 12px 0;
 
-  padding: 0.6rem 1.25rem;
-  min-height: 0;
+  padding: 0.7rem 1.25rem;
+  min-height: 70px;
 
   position: relative;
   backdrop-filter: blur(10px);
   box-shadow: var(--card-shadow);
 
   display: flex;
-  align-items: center;       /* vertical center */
+  align-items: center;
 }
 
 .quote-text {
@@ -936,12 +936,15 @@ img {
   position: relative;
   z-index: 2;
   margin: 0;
+
+  /* space for quote symbol */
+  padding-left: 2.2rem;
 }
 
 .quote-symbol {
   position: absolute;
-  top: 50%;
   left: 0.8rem;
+  top: 50%;
   transform: translateY(-50%);
 
   font-family: var(--font-family-title);
