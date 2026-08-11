@@ -905,7 +905,8 @@ img {
   font-size: 0.65rem;
 }
 
-/* Quote card below dashboard */
+/* Smaller Quote Card */
+
 .dashboard-quote-box {
   background: rgba(12, 18, 15, 0.4);
   border-left: 3px solid var(--color-primary);
@@ -913,31 +914,22 @@ img {
   border-right: 1px solid var(--color-border);
   border-bottom: 1px solid var(--color-border);
   border-radius: 0 12px 12px 0;
-  padding: 1.25rem 1.75rem;
+  padding: 0.7rem 1.25rem;
   position: relative;
   backdrop-filter: blur(10px);
   box-shadow: var(--card-shadow);
 }
 
 .quote-symbol {
-  position: absolute;
-  top: -0.5rem;
-  left: 1rem;
-  font-family: var(--font-family-title);
-  font-size: 3.5rem;
-  font-weight: 800;
-  color: rgba(0, 245, 155, 0.12);
-  line-height: 1;
+  top: -0.4rem;
+  left: 0.8rem;
+  font-size: 2.8rem;
 }
 
 .quote-text {
-  font-family: var(--font-family-body);
-  font-size: 0.95rem;
-  font-style: italic;
-  line-height: 1.6;
-  color: var(--color-text-secondary);
-  position: relative;
-  z-index: 2;
+  font-size: 0.9rem;
+  line-height: 1.35;
+  margin: 0;
 }
 
 /* Right Column: Driven by Curiosity Information panel */
