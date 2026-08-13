@@ -783,119 +783,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ═══════════════════════════════════════════════════════════
   // 8. ACHIEVEMENTS INFINITE HORIZONTAL CAROUSEL
-  // Single row, CSS-transform based, requestAnimationFrame
+  // Single-row, continuous right-to-left smooth movement (requestAnimationFrame + delta-time)
   // ═══════════════════════════════════════════════════════════
-  (function initAchCarousel() {
-    const track = document.getElementById('achTrack');
-    if (!track) return;
-
-    // Speed: pixels per frame (at ~60fps → 40s for 5 cards × ~380px = ~1900px set)
-    const SPEED = 0.5; // ~30px/s
-
-    let offset     = 0;
-    let paused     = false;
-    let isDragging = false;
-    let dragStartX = 0;
-    let dragStartOffset = 0;
-
-    // ── Measure one full set of original cards ──────────────
-    const originalCards = Array.from(track.querySelectorAll('.ach-carousel-card:not([aria-hidden])'));
-    const gap = 28; // matches CSS 1.75rem gap at 16px base
-
-    function getSetWidth() {
-      return originalCards.reduce((acc, card) => acc + card.offsetWidth + gap, 0);
-    }
-
-    // ── Animation loop ──────────────────────────────────────
-    function tick() {
-      if (!paused && !isDragging) {
-        offset += SPEED;
-        const setW = getSetWidth();
-        if (setW > 0 && offset >= setW) {
-          offset -= setW; // seamless jump
-        }
-      }
-      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
-      requestAnimationFrame(tick);
-    }
-
-    // ── Pause on hover ──────────────────────────────────────
-    track.addEventListener('mouseenter', () => { paused = true;  });
-    track.addEventListener('mouseleave', () => { paused = false; isDragging = false; });
-
-    // ── Mouse drag ──────────────────────────────────────────
-    track.addEventListener('mousedown', (e) => {
-      if (e.button !== 0) return;
-      isDragging   = true;
-      paused       = true;
-      dragStartX   = e.clientX;
-      dragStartOffset = offset;
-      track.classList.add('is-dragging');
-      e.preventDefault();
-    });
-
-    document.addEventListener('mousemove', (e) => {
-      if (!isDragging) return;
-      const dx   = dragStartX - e.clientX;
-      const setW = getSetWidth();
-      offset = ((dragStartOffset + dx) % setW + setW) % setW;
-      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
-    });
-
-    document.addEventListener('mouseup', () => {
-      if (!isDragging) return;
-      isDragging = false;
-      paused     = false;
-      track.classList.remove('is-dragging');
-    });
-
-    // ── Touch drag ──────────────────────────────────────────
-    let touchStartX = 0;
-    track.addEventListener('touchstart', (e) => {
-      touchStartX     = e.touches[0].clientX;
-      dragStartOffset = offset;
-      paused = true;
-    }, { passive: true });
-
-    track.addEventListener('touchmove', (e) => {
-      const dx   = touchStartX - e.touches[0].clientX;
-      const setW = getSetWidth();
-      offset = ((dragStartOffset + dx) % setW + setW) % setW;
-      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
-    }, { passive: true });
-
-    track.addEventListener('touchend', () => { paused = false; }, { passive: true });
-
-    // ── Mouse wheel horizontal scroll ───────────────────────
-    track.closest('.ach-carousel-outer') && track.closest('.ach-carousel-outer').addEventListener('wheel', (e) => {
-      if (Math.abs(e.deltaX) < Math.abs(e.deltaY) && Math.abs(e.deltaY) < 5) return;
-      e.preventDefault();
-      const setW = getSetWidth();
-      offset = ((offset + (e.deltaX || e.deltaY) * 0.6) % setW + setW) % setW;
-      track.style.transform = `translate3d(-${offset}px, 0, 0)`;
-    }, { passive: false });
-
-    // ── Lightbox delegation (works on originals + clones) ───
-    // (Already handled by global delegation in section 5 above)
-
-    // Start
-    requestAnimationFrame(tick);
-  })();
-
-
-  // ── 8. ACHIEVEMENTS INFINITE HORIZONTAL CAROUSEL (30-40s FULL LOOP, DRAG, WHEEL, SWIPE) ──
   function initAchievementCarousel() {
     const outer = document.getElementById('achCarouselOuter');
     const track = document.getElementById('achTrack');
     if (!outer || !track) return;
 
-    const originalCards = Array.from(track.children);
+    // Remove any previously cloned cards to ensure clean start
+    const originalCards = Array.from(track.querySelectorAll('.ach-carousel-card:not([data-clone="true"])'));
     if (originalCards.length === 0) return;
 
-    // Clone the 5 original cards 3 times (total 20 cards) to ensure infinite loop seamlessly
-    for (let i = 0; i < 3; i++) {
+    // Clear track and re-add originals cleanly
+    track.innerHTML = '';
+    originalCards.forEach(card => track.appendChild(card));
+
+    // Clone original cards twice (Set 2 & Set 3) for 100% seamless infinite loop
+    for (let i = 0; i < 2; i++) {
       originalCards.forEach(card => {
         const clone = card.cloneNode(true);
+        clone.setAttribute('data-clone', 'true');
         clone.setAttribute('aria-hidden', 'true');
         track.appendChild(clone);
       });
@@ -907,8 +814,12 @@ document.addEventListener('DOMContentLoaded', () => {
     let startX = 0;
     let dragStartPos = 0;
     let hasDraggedFar = false;
+    let lastTime = performance.now();
 
-    // Measure single set width (5 cards + gaps)
+    // Movement speed: ~35 pixels per second for slow, elegant portfolio motion
+    const SPEED = 35; 
+
+    // Calculate exact width of 1 original card set (5 cards + gaps)
     function getSingleSetWidth() {
       const gap = parseFloat(window.getComputedStyle(track).gap) || 32;
       let totalWidth = 0;
@@ -918,34 +829,36 @@ document.addEventListener('DOMContentLoaded', () => {
       return totalWidth;
     }
 
-    // 35 seconds per full loop (60 FPS calculation)
-    function getSpeed() {
-      const singleWidth = getSingleSetWidth();
-      return singleWidth > 0 ? singleWidth / (35 * 60) : 0.5;
-    }
+    // Animation Loop with delta-time smoothing
+    function step(now) {
+      const dt = Math.min((now - lastTime) / 1000, 0.1); // Cap dt at 100ms to prevent huge jumps on tab change
+      lastTime = now;
 
-    // Animation Loop (60 FPS via requestAnimationFrame)
-    function step() {
       if (!isHovered && !isDragging) {
-        position += getSpeed();
         const singleWidth = getSingleSetWidth();
-        if (singleWidth > 0 && position >= singleWidth) {
-          position -= singleWidth;
+        if (singleWidth > 0) {
+          position += SPEED * dt;
+          if (position >= singleWidth) {
+            position -= singleWidth; // Seamless reset to identical position in set 2
+          } else if (position < 0) {
+            position += singleWidth;
+          }
+          track.style.transform = `translate3d(-${position}px, 0, 0)`;
         }
-        track.style.transform = `translateX(-${position}px)`;
       }
       requestAnimationFrame(step);
     }
 
-    // Hover Pause
+    // Hover Pause & Resume
     outer.addEventListener('mouseenter', () => { isHovered = true; });
     outer.addEventListener('mouseleave', () => {
       isHovered = false;
       isDragging = false;
     });
 
-    // Mouse Drag
+    // Mouse Drag (Desktop)
     outer.addEventListener('mousedown', (e) => {
+      if (e.button !== 0) return;
       isDragging = true;
       hasDraggedFar = false;
       startX = e.clientX;
@@ -956,12 +869,14 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isDragging) return;
       const dx = startX - e.clientX;
       if (Math.abs(dx) > 5) hasDraggedFar = true;
-      position = dragStartPos + dx;
+      
       const singleWidth = getSingleSetWidth();
       if (singleWidth > 0) {
-        position = ((position % singleWidth) + singleWidth) % singleWidth;
+        position = dragStartPos + dx;
+        while (position >= singleWidth) position -= singleWidth;
+        while (position < 0) position += singleWidth;
+        track.style.transform = `translate3d(-${position}px, 0, 0)`;
       }
-      track.style.transform = `translateX(-${position}px)`;
     });
 
     window.addEventListener('mouseup', () => {
@@ -982,33 +897,21 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!isDragging) return;
       const dx = startX - e.touches[0].clientX;
       if (Math.abs(dx) > 5) hasDraggedFar = true;
-      position = dragStartPos + dx;
+
       const singleWidth = getSingleSetWidth();
       if (singleWidth > 0) {
-        position = ((position % singleWidth) + singleWidth) % singleWidth;
+        position = dragStartPos + dx;
+        while (position >= singleWidth) position -= singleWidth;
+        while (position < 0) position += singleWidth;
+        track.style.transform = `translate3d(-${position}px, 0, 0)`;
       }
-      track.style.transform = `translateX(-${position}px)`;
     }, { passive: true });
 
     outer.addEventListener('touchend', () => {
       isDragging = false;
     });
 
-    // Mouse Wheel Horizontal Scroll
-    outer.addEventListener('wheel', (e) => {
-      const delta = Math.abs(e.deltaX) > Math.abs(e.deltaY) ? e.deltaX : e.deltaY;
-      if (Math.abs(delta) > 5) {
-        e.preventDefault();
-        position += delta * 0.8;
-        const singleWidth = getSingleSetWidth();
-        if (singleWidth > 0) {
-          position = ((position % singleWidth) + singleWidth) % singleWidth;
-        }
-        track.style.transform = `translateX(-${position}px)`;
-      }
-    }, { passive: false });
-
-    // Prevent click on drag, but allow click on card to open gallery lightbox
+    // Prevent card click when dragging, allow normal click to open gallery lightbox
     track.addEventListener('click', (e) => {
       if (hasDraggedFar) {
         e.preventDefault();
@@ -1016,7 +919,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, true);
 
-    // Start 60 FPS animation loop
+    // Start smooth animation loop
     requestAnimationFrame(step);
   }
 
