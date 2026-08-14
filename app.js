@@ -761,7 +761,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     startAutoplay() {
       if (this.images.length > 1 && !this.autoplayTimer) {
-        this.autoplayTimer = setInterval(() => this.next(), 3000);
+        this.autoplayTimer = setInterval(() => this.next(), 1800);
       }
     }
 

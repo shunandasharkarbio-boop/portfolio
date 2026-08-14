@@ -1552,7 +1552,7 @@ img {
   width: 100%;
   opacity: 0;
   transform: translateY(30px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition: opacity 0.35s ease, transform 0.35s ease;
 }
 
 .timeline-item.visible,
@@ -1655,7 +1655,7 @@ img {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.25s ease-in-out;
   pointer-events: none;
 }
 
