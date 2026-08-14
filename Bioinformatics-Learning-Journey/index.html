@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bioinformatics Learning Journey | Interactive Showcase</title>
+  <meta name="description" content="An interactive showcase of practical bioinformatics workflows, NGS analysis, and genomics training with the Galaxy platform by Shunanda Sarkar.">
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">
+        <span class="logo-icon">🧬</span>
+        <span class="logo-text">Bioinformatics <span class="accent-cyan">Journey</span></span>
+      </a>
+      <ul class="nav-links" id="nav-links">
+        <li><a href="#overview" class="nav-link active">Overview</a></li>
+        <li><a href="#objectives" class="nav-link">Objectives</a></li>
+        <li><a href="#roadmap" class="nav-link">Roadmap</a></li>
+        <li><a href="#skills" class="nav-link">Skills</a></li>
+        <li><a href="#upcoming" class="nav-link">Upcoming</a></li>
+      </ul>
+      <div class="nav-actions">
+        <a href="https://github.com/shunandasharkarbio-boop/Bioinformatics-Learning-Journey" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+          <i class="fab fa-github"></i> GitHub Repo
+        </a>
+      </div>
+      <button class="mobile-toggle" id="mobile-toggle" aria-label="Toggle Navigation">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero-section" id="overview">
+    <div class="hero-bg-glow"></div>
+    <div class="container grid grid-2 hero-grid">
+      <div class="hero-content">
+        <div class="hero-badge">
+          <i class="fas fa-microscope"></i> GALAXY PLATFORM & NGS ANALYSIS
+        </div>
+        <h1 class="hero-title">
+          Bioinformatics <br>
+          <span class="text-gradient">Learning Journey</span>
+        </h1>
+        <p class="hero-description">
+          An organized collection of practical bioinformatics workflows, genomic analyses, and hands-on Next-Generation Sequencing (NGS) training developed using the Galaxy platform.
+        </p>
+
+        <!-- Stats Grid -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-number">10</span>
+            <span class="stat-label">Learning Modules</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">10+</span>
+            <span class="stat-label">Tools Mastered</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number">100%</span>
+            <span class="stat-label">Reproducible</span>
+          </div>
+        </div>
+
+        <div class="hero-cta">
+          <a href="#roadmap" class="btn btn-primary">
+            <i class="fas fa-route"></i> Explore Roadmap
+          </a>
+          <a href="https://github.com/shunandasharkarbio-boop/Bioinformatics-Learning-Journey" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+            <i class="fab fa-github"></i> GitHub Repository
+          </a>
+        </div>
+      </div>
+
+      <!-- Hero Banner Frame -->
+      <div class="hero-visual">
+        <div class="banner-frame">
+          <div class="banner-header">
+            <span class="dot red"></span>
+            <span class="dot yellow"></span>
+            <span class="dot green"></span>
+            <span class="banner-title">banner.png &bull; Bioinformatics Learning Journey</span>
+          </div>
+          <div class="banner-body">
+            <img src="banner.png" alt="Bioinformatics Learning Journey Banner" class="banner-img">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Learning Objectives -->
+  <section class="section" id="objectives">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">GOALS & VISION</span>
+        <h2 class="section-title">Core <span class="text-gradient">Learning Objectives</span></h2>
+        <p class="section-desc">Building a strong foundation in computational biology through practical, project-based milestones.</p>
+      </div>
+
+      <div class="grid grid-3 objectives-grid">
+        <div class="card objective-card">
+          <div class="card-icon cyan"><i class="fas fa-project-diagram"></i></div>
+          <h3>Reproducible Workflows</h3>
+          <p>Constructing standardized, reusable bioinformatics pipelines and workflow automation in Galaxy.</p>
+        </div>
+
+        <div class="card objective-card">
+          <div class="card-icon blue"><i class="fas fa-dna"></i></div>
+          <h3>Practical NGS Analysis</h3>
+          <p>Developing hands-on expertise with raw sequence quality control, read mapping, and peak-to-gene mapping.</p>
+        </div>
+
+        <div class="card objective-card">
+          <div class="card-icon teal"><i class="fas fa-tools"></i></div>
+          <h3>Modern Genomics Tools</h3>
+          <p>Mastering industry-standard tools including FastQC, Bowtie2, Velvet, IGV, and JBrowse.</p>
+        </div>
+
+        <div class="card objective-card">
+          <div class="card-icon purple"><i class="fas fa-laptop-code"></i></div>
+          <h3>Computational Skills</h3>
+          <p>Enhancing biological dataset manipulation, assembly polishing, and data visualization capabilities.</p>
+        </div>
+
+        <div class="card objective-card">
+          <div class="card-icon green"><i class="fas fa-book-medical"></i></div>
+          <h3>Research Documentation</h3>
+          <p>Documenting each project step systematically to build a professional computational biology portfolio.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Interactive 10-Day Learning Roadmap -->
+  <section class="section bg-darker" id="roadmap">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">CURRICULUM</span>
+        <h2 class="section-title">10-Day <span class="text-gradient">Learning Roadmap</span></h2>
+        <p class="section-desc">Explore the hands-on modules developed throughout this bioinformatics training journey.</p>
+      </div>
+
+      <!-- Filter Controls -->
+      <div class="filter-wrapper">
+        <div class="search-box">
+          <i class="fas fa-search search-icon"></i>
+          <input type="text" id="module-search" placeholder="Search modules, topics, or tools (e.g. Bowtie2, Assembly, Galaxy)...">
+        </div>
+        <div class="filter-buttons">
+          <button class="filter-btn active" data-filter="all">All Modules</button>
+          <button class="filter-btn" data-filter="galaxy">Galaxy</button>
+          <button class="filter-btn" data-filter="ngs">NGS / QC</button>
+          <button class="filter-btn" data-filter="assembly">Assembly</button>
+          <button class="filter-btn" data-filter="genomics">Genomics</button>
+        </div>
+      </div>
+
+      <!-- Roadmap Grid -->
+      <div class="grid grid-2 roadmap-grid" id="roadmap-grid">
+        
+        <!-- Day 1 -->
+        <div class="card module-card" data-category="galaxy">
+          <div class="module-header">
+            <span class="day-badge">Day 1</span>
+            <span class="category-tag">Galaxy Intro</span>
+          </div>
+          <h3 class="module-title">🧬 Introduction to Galaxy</h3>
+          <p class="module-desc">Getting started with the Galaxy platform, user interface navigation, data uploading, and history management for reproducible science.</p>
+          <div class="module-tags">
+            <span>Galaxy</span>
+            <span>Intro</span>
+            <span>Cloud Computing</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Module-1-Introduction-to-Galaxy" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 2 -->
+        <div class="card module-card" data-category="ngs">
+          <div class="module-header">
+            <span class="day-badge">Day 2</span>
+            <span class="category-tag">NGS Quality Control</span>
+          </div>
+          <h3 class="module-title">🔬 Quality Control & Preprocessing</h3>
+          <p class="module-desc">Evaluating raw sequencing quality using FastQC, FASTQE, NanoPlot, and PycoQC to trim adapters and filter low-quality reads.</p>
+          <div class="module-tags">
+            <span>FastQC</span>
+            <span>FASTQE</span>
+            <span>NanoPlot</span>
+            <span>PycoQC</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Quality-Control-" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 3 -->
+        <div class="card module-card" data-category="genomics">
+          <div class="module-header">
+            <span class="day-badge">Day 3</span>
+            <span class="category-tag">Read Alignment</span>
+          </div>
+          <h3 class="module-title">🗺️ Read Mapping with Bowtie2</h3>
+          <p class="module-desc">Aligning short sequencing reads against reference genome sequences using Bowtie2 and analyzing alignment metrics.</p>
+          <div class="module-tags">
+            <span>Bowtie2</span>
+            <span>Read Mapping</span>
+            <span>Alignment</span>
+            <span>Genomics</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Mapping" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 4 -->
+        <div class="card module-card" data-category="assembly">
+          <div class="module-header">
+            <span class="day-badge">Day 4</span>
+            <span class="category-tag">De Novo Assembly</span>
+          </div>
+          <h3 class="module-title">🧩 Genome Assembly with Velvet</h3>
+          <p class="module-desc">Performing de novo genome assembly from short reads using the Velvet assembler based on de Bruijn graph algorithms.</p>
+          <div class="module-tags">
+            <span>Velvet</span>
+            <span>Genome Assembly</span>
+            <span>de Bruijn Graph</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Genome-assembly-with-Velvet" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 5 -->
+        <div class="card module-card" data-category="galaxy">
+          <div class="module-header">
+            <span class="day-badge">Day 5</span>
+            <span class="category-tag">Workflow Automation</span>
+          </div>
+          <h3 class="module-title">⚙️ Galaxy Basics & Workflow Automation</h3>
+          <p class="module-desc">Designing multi-step analysis pipelines, extracting automated workflows, and sharing reproducible pipelines across datasets.</p>
+          <div class="module-tags">
+            <span>Galaxy Workflows</span>
+            <span>Automation</span>
+            <span>Pipelines</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Galaxy-basic" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 6 -->
+        <div class="card module-card" data-category="assembly">
+          <div class="module-header">
+            <span class="day-badge">Day 6</span>
+            <span class="category-tag">Organellar Genomics</span>
+          </div>
+          <h3 class="module-title">🌿 Chloroplast Genome Assembly</h3>
+          <p class="module-desc">Assembling organellar genomes from plant sequencing data, resolving repetitive regions, and polishing assembly contigs.</p>
+          <div class="module-tags">
+            <span>Chloroplast</span>
+            <span>Assembly</span>
+            <span>Organelle</span>
+            <span>Plant Biology</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Chloroplast-genome-assembly" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 7 -->
+        <div class="card module-card" data-category="galaxy">
+          <div class="module-header">
+            <span class="day-badge">Day 7</span>
+            <span class="category-tag">Data Exploration</span>
+          </div>
+          <h3 class="module-title">🏅 Olympics Data Analysis</h3>
+          <p class="module-desc">Exploring tabular data filtering, summary statistics, and multi-column operations in Galaxy using non-biological reference datasets.</p>
+          <div class="module-tags">
+            <span>Data Analysis</span>
+            <span>Galaxy Tools</span>
+            <span>Statistics</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Olympics-Data-Analysis" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 8 -->
+        <div class="card module-card" data-category="galaxy">
+          <div class="module-header">
+            <span class="day-badge">Day 8</span>
+            <span class="category-tag">Data Processing</span>
+          </div>
+          <h3 class="module-title">📊 Data Manipulation</h3>
+          <p class="module-desc">Advanced column parsing, joining datasets on keys, reformatting BED/GTF files, and text processing in Galaxy.</p>
+          <div class="module-tags">
+            <span>Data Manipulation</span>
+            <span>Text Parsing</span>
+            <span>BED/GTF</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Olympics-Data-Analysis" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 9 -->
+        <div class="card module-card" data-category="genomics">
+          <div class="module-header">
+            <span class="day-badge">Day 9</span>
+            <span class="category-tag">Epigenomics</span>
+          </div>
+          <h3 class="module-title">🧬 From Peaks to Genes</h3>
+          <p class="module-desc">ChIP-Seq peak calling annotation, finding nearest genes to genomic intervals, and functional enrichment analysis.</p>
+          <div class="module-tags">
+            <span>ChIP-Seq</span>
+            <span>Peaks to Genes</span>
+            <span>Annotation</span>
+            <span>Enrichment</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/From-peaks-to-genes" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Day 10 -->
+        <div class="card module-card" data-category="galaxy">
+          <div class="module-header">
+            <span class="day-badge">Day 10</span>
+            <span class="category-tag">Reproducible Science</span>
+          </div>
+          <h3 class="module-title">📑 Reproducing Published Galaxy Analyses</h3>
+          <p class="module-desc">Replicating published peer-reviewed computational workflows step-by-step to validate benchmark results and reproducibility.</p>
+          <div class="module-tags">
+            <span>Reproducibility</span>
+            <span>Published Workflows</span>
+            <span>Validation</span>
+          </div>
+          <div class="module-footer">
+            <a href="https://github.com/shunandasharkarbio-boop/Reproduce-published-Galaxy-analyses" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              <i class="fab fa-github"></i> Open Module Repo <i class="fas fa-arrow-up-right-from-square icon-right"></i>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills & Technologies -->
+  <section class="section" id="skills">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">TECHNICAL STACK</span>
+        <h2 class="section-title">Skills & <span class="text-gradient">Technologies Mastered</span></h2>
+        <p class="section-desc">Tools, platforms, and methodologies utilized across the learning modules.</p>
+      </div>
+
+      <div class="grid grid-2 skills-grid">
+
+        <!-- Category 1 -->
+        <div class="card skill-category-card">
+          <div class="skill-cat-header">
+            <div class="skill-cat-icon cyan"><i class="fas fa-server"></i></div>
+            <h3>Bioinformatics Platforms</h3>
+          </div>
+          <ul class="skill-list">
+            <li><i class="fas fa-check-circle accent-cyan"></i> <strong>Galaxy Platform</strong> — Cloud pipeline execution & history management</li>
+            <li><i class="fas fa-check-circle accent-cyan"></i> <strong>IGV</strong> — Integrative Genomics Viewer for alignment inspection</li>
+            <li><i class="fas fa-check-circle accent-cyan"></i> <strong>JBrowse</strong> — Web-based genome browser visualization</li>
+          </ul>
+        </div>
+
+        <!-- Category 2 -->
+        <div class="card skill-category-card">
+          <div class="skill-cat-header">
+            <div class="skill-cat-icon blue"><i class="fas fa-dna"></i></div>
+            <h3>NGS & Genomics</h3>
+          </div>
+          <ul class="skill-list">
+            <li><i class="fas fa-check-circle accent-blue"></i> <strong>Next-Generation Sequencing (NGS)</strong> — Illumina & Nanopore workflow processing</li>
+            <li><i class="fas fa-check-circle accent-blue"></i> <strong>Read Mapping & Alignment</strong> — Reference indexing and alignment metrics</li>
+            <li><i class="fas fa-check-circle accent-blue"></i> <strong>Genome Assembly</strong> — De novo short read assembly & contig evaluation</li>
+            <li><i class="fas fa-check-circle accent-blue"></i> <strong>Sequence Quality Control</strong> — Adapter trimming & quality filtering</li>
+            <li><i class="fas fa-check-circle accent-blue"></i> <strong>Peak-to-Gene Analysis</strong> — Epigenomic interval annotation & target identification</li>
+          </ul>
+        </div>
+
+        <!-- Category 3 -->
+        <div class="card skill-category-card">
+          <div class="skill-cat-header">
+            <div class="skill-cat-icon teal"><i class="fas fa-wrench"></i></div>
+            <h3>Bioinformatics Tools</h3>
+          </div>
+          <div class="tool-pills">
+            <span class="tool-pill"><i class="fas fa-terminal"></i> FastQC</span>
+            <span class="tool-pill"><i class="fas fa-terminal"></i> FASTQE</span>
+            <span class="tool-pill"><i class="fas fa-terminal"></i> NanoPlot</span>
+            <span class="tool-pill"><i class="fas fa-terminal"></i> PycoQC</span>
+            <span class="tool-pill"><i class="fas fa-terminal"></i> Bowtie2</span>
+            <span class="tool-pill"><i class="fas fa-terminal"></i> Velvet</span>
+          </div>
+        </div>
+
+        <!-- Category 4 -->
+        <div class="card skill-category-card">
+          <div class="skill-cat-header">
+            <div class="skill-cat-icon purple"><i class="fas fa-code-branch"></i></div>
+            <h3>Technical Skills</h3>
+          </div>
+          <ul class="skill-list">
+            <li><i class="fas fa-check-circle accent-purple"></i> <strong>Workflow Automation</strong> — Constructing automated Galaxy workflows</li>
+            <li><i class="fas fa-check-circle accent-purple"></i> <strong>Data Manipulation</strong> — Filtering, column operations, and BED format parsing</li>
+            <li><i class="fas fa-check-circle accent-purple"></i> <strong>Assembly Polishing</strong> — Contig filtering and assembly metrics</li>
+            <li><i class="fas fa-check-circle accent-purple"></i> <strong>Reproducible Research</strong> — Git, GitHub version control, and data provenance</li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Upcoming Topics -->
+  <section class="section bg-darker" id="upcoming">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-subtitle">FUTURE EXPLORATION</span>
+        <h2 class="section-title">Next <span class="text-gradient">Research Directions</span></h2>
+        <p class="section-desc">Advanced topics planned for upcoming modules and research expansion.</p>
+      </div>
+
+      <div class="grid grid-4 upcoming-grid">
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">🧬</div>
+          <h4>RNA-Seq Analysis</h4>
+          <p>Transcriptome profiling & read quantification</p>
+        </div>
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">🧪</div>
+          <h4>Variant Calling</h4>
+          <p>SNP & Indel identification pipelines</p>
+        </div>
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">📈</div>
+          <h4>Differential Gene Expression</h4>
+          <p>Statistical comparison of expression profiles</p>
+        </div>
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">🦠</div>
+          <h4>Metagenomics</h4>
+          <p>Microbial community profiling & taxonomy</p>
+        </div>
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">🧫</div>
+          <h4>Genome Annotation</h4>
+          <p>Structural & functional gene modeling</p>
+        </div>
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">🌱</div>
+          <h4>Comparative Genomics</h4>
+          <p>Synteny mapping & evolutionary genomics</p>
+        </div>
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">🔍</div>
+          <h4>Functional Genomics</h4>
+          <p>GO term & pathway enrichment analysis</p>
+        </div>
+        <div class="card upcoming-card">
+          <div class="upcoming-icon">📊</div>
+          <h4>Multi-omics Data Integration</h4>
+          <p>Integrating transcriptomics, epigenomics & genomics</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <a href="#" class="nav-logo">
+          <span class="logo-icon">🧬</span>
+          <span class="logo-text">Bioinformatics <span class="accent-cyan">Journey</span></span>
+        </a>
+        <p class="footer-desc">
+          Created by Shunanda Sarkar as a hands-on bioinformatics and computational genomics portfolio showcase.
+        </p>
+      </div>
+      <div class="footer-links">
+        <h4>Navigation</h4>
+        <ul>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#objectives">Objectives</a></li>
+          <li><a href="#roadmap">Roadmap</a></li>
+          <li><a href="#skills">Skills</a></li>
+          <li><a href="https://shunandasharkarbio-boop.github.io/portfolio/" target="_blank">Main Portfolio</a></li>
+        </ul>
+      </div>
+      <div class="footer-social">
+        <h4>Repository & Connect</h4>
+        <a href="https://github.com/shunandasharkarbio-boop/Bioinformatics-Learning-Journey" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm">
+          <i class="fab fa-github"></i> GitHub Repository
+        </a>
+        <a href="https://shunandasharkarbio-boop.github.io/portfolio/" target="_blank" class="btn btn-primary btn-sm" style="margin-top: 0.5rem;">
+          <i class="fas fa-globe"></i> Main Portfolio Website
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Shunanda Sarkar. Built for Bioinformatics & Genomics Research.</p>
+    </div>
+  </footer>
+
+  <!-- Custom JavaScript -->
+  <script src="script.js"></script>
+</body>
+</html>
