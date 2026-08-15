@@ -7,15 +7,15 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-from app.api import auth, repos, files
+from app.api import auth, repos, files, ai
 
 app = FastAPI(
-    title="Mobile Git Workspace Backend",
-    description="Backend service for Mobile Git Workspace app handling GitHub OAuth, API proxying, and file uploads.",
+    title="Portfolio AI Assistant & Mobile Git Workspace Backend",
+    description="Backend service supporting GitHub OAuth, API proxying, Android uploads, and AI repository analysis.",
     version="1.0.0"
 )
 
-# Enable CORS for Mobile web & native apps
+# Enable CORS for Mobile web, native Android apps, and Wi-Fi devices
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -27,12 +27,13 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(repos.router)
 app.include_router(files.router)
+app.include_router(ai.router)
 
 @app.get("/api/health")
 def health_check():
     return {
         "status": "online",
-        "app": "Mobile Git Workspace Backend",
+        "app": "Portfolio AI Assistant Backend",
         "version": "1.0.0"
     }
 
@@ -47,4 +48,6 @@ if os.path.exists(WEB_BUILD_DIR):
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("app.main:app", host="0.0.0.0", port=8000, reload=True)
+    host = os.getenv("HOST", "0.0.0.0")
+    port = int(os.getenv("PORT", 8000))
+    uvicorn.run("app.main:app", host=host, port=port, reload=True)

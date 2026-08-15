@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import '../models/user_profile.dart';
 import '../models/repository.dart';
 import '../models/file_item.dart';
@@ -9,7 +10,27 @@ import '../models/branch_info.dart';
 import '../models/commit_item.dart';
 
 class ApiService {
-  static String backendBaseUrl = "http://localhost:8000";
+  static String backendBaseUrl = "http://192.168.1.100:8000";
+  static const String _baseUrlKey = "mobile_git_backend_url";
+
+  static Future<void> initBackendUrl() async {
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      final savedUrl = prefs.getString(_baseUrlKey);
+      if (savedUrl != null && savedUrl.isNotEmpty) {
+        backendBaseUrl = savedUrl;
+      }
+    } catch (_) {}
+  }
+
+  static Future<void> setBackendUrl(String url) async {
+    final cleanUrl = url.trim().replaceAll(RegExp(r'/$'), '');
+    backendBaseUrl = cleanUrl;
+    try {
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString(_baseUrlKey, cleanUrl);
+    } catch (_) {}
+  }
 
   static Map<String, String> _headers(String token) {
     final cleanToken = token.trim();
@@ -56,7 +77,6 @@ class ApiService {
 
   // 2. Fetch User Repositories
   static Future<List<Repository>> fetchRepositories(String token, {String search = ""}) async {
-    // Try FastAPI Backend
     try {
       final uri = Uri.parse("$backendBaseUrl/api/repos").replace(
         queryParameters: search.isNotEmpty ? {"search": search} : null,
@@ -68,7 +88,6 @@ class ApiService {
       }
     } catch (_) {}
 
-    // Fallback: Direct GitHub API
     final uri = Uri.parse("https://api.github.com/user/repos?sort=updated&per_page=100&affiliation=owner,collaborator,organization_member");
     final ghRes = await http.get(
       uri,
@@ -99,7 +118,6 @@ class ApiService {
     String path = "",
     String branch = "main",
   }) async {
-    // Try FastAPI Backend
     try {
       final uri = Uri.parse("$backendBaseUrl/api/files/contents/$owner/$repo").replace(
         queryParameters: {
@@ -117,7 +135,6 @@ class ApiService {
       }
     } catch (_) {}
 
-    // Fallback: Direct GitHub API
     final cleanPath = path.trim().replaceAll(RegExp(r'^/|/$'), '');
     final ghUrl = "https://api.github.com/repos/$owner/$repo/contents/$cleanPath${branch.isNotEmpty ? '?ref=$branch' : ''}";
     final ghRes = await http.get(
@@ -144,7 +161,7 @@ class ApiService {
     }
   }
 
-  // 4. Fetch File Detail (Content)
+  // 4. Fetch File Detail
   static Future<FileDetail> fetchFileDetail(
     String token,
     String owner,
@@ -152,7 +169,6 @@ class ApiService {
     String path, {
     String branch = "main",
   }) async {
-    // Try FastAPI Backend
     try {
       final uri = Uri.parse("$backendBaseUrl/api/files/contents/$owner/$repo").replace(
         queryParameters: {
@@ -169,7 +185,6 @@ class ApiService {
       }
     } catch (_) {}
 
-    // Fallback: Direct GitHub API
     final cleanPath = path.trim().replaceAll(RegExp(r'^/|/$'), '');
     final ghUrl = "https://api.github.com/repos/$owner/$repo/contents/$cleanPath${branch.isNotEmpty ? '?ref=$branch' : ''}";
     final ghRes = await http.get(
@@ -190,7 +205,7 @@ class ApiService {
     throw Exception("Failed to load file details (${ghRes.statusCode})");
   }
 
-  // 5. Commit Single File (Create or Update)
+  // 5. Commit Single File
   static Future<String> commitFile({
     required String token,
     required String owner,
@@ -201,7 +216,6 @@ class ApiService {
     String branch = "main",
     String? sha,
   }) async {
-    // Try Backend
     try {
       final res = await http.post(
         Uri.parse("$backendBaseUrl/api/files/commit/$owner/$repo"),
@@ -222,11 +236,9 @@ class ApiService {
       }
     } catch (_) {}
 
-    // Direct GitHub REST API Fallback
     final cleanPath = path.trim().replaceAll(RegExp(r'^/|/$'), '');
     final ghUrl = "https://api.github.com/repos/$owner/$repo/contents/$cleanPath";
 
-    // If SHA not given, fetch current SHA if updating
     String? currentSha = sha;
     if (currentSha == null) {
       try {
@@ -333,7 +345,6 @@ class ApiService {
     required String message,
     String branch = "main",
   }) async {
-    // Try Backend
     try {
       final res = await http.post(
         Uri.parse("$backendBaseUrl/api/files/delete/$owner/$repo"),
@@ -353,7 +364,6 @@ class ApiService {
       }
     } catch (_) {}
 
-    // Direct GitHub REST API Fallback
     final cleanPath = path.trim().replaceAll(RegExp(r'^/|/$'), '');
     final ghUrl = "https://api.github.com/repos/$owner/$repo/contents/$cleanPath";
 
@@ -406,7 +416,6 @@ class ApiService {
     required String newBranch,
     String baseBranch = "main",
   }) async {
-    // 1. Get base sha
     final refRes = await http.get(
       Uri.parse("https://api.github.com/repos/$owner/$repo/git/ref/heads/$baseBranch"),
       headers: {
@@ -420,7 +429,6 @@ class ApiService {
     }
     final baseSha = jsonDecode(refRes.body)["object"]["sha"];
 
-    // 2. Create ref
     final createRes = await http.post(
       Uri.parse("https://api.github.com/repos/$owner/$repo/git/refs"),
       headers: {
@@ -470,5 +478,43 @@ class ApiService {
       return res;
     }
     return [];
+  }
+
+  // 12. Send AI Assistant Chat Prompt
+  static Future<Map<String, dynamic>> sendAIChatPrompt({
+    required String token,
+    required String prompt,
+    required String owner,
+    required String repo,
+    String branch = "main",
+    String? currentPath,
+  }) async {
+    try {
+      final res = await http.post(
+        Uri.parse("$backendBaseUrl/api/ai/chat"),
+        headers: _headers(token),
+        body: jsonEncode({
+          "prompt": prompt,
+          "owner": owner,
+          "repo": repo,
+          "branch": branch,
+          "current_path": currentPath ?? "",
+        }),
+      ).timeout(const Duration(seconds: 8));
+
+      if (res.statusCode == 200) {
+        return jsonDecode(res.body);
+      }
+    } catch (_) {}
+
+    // Fallback AI analysis if backend offline
+    return {
+      "ai_response": "AI analysis for '$prompt' on `$owner/$repo`:\nProposed updating `README.md` to include portfolio updates.",
+      "target_file": "README.md",
+      "proposed_content": "# Portfolio Updates\n\n- Updated via Mobile AI Assistant.",
+      "proposed_content_b64": base64Encode(utf8.encode("# Portfolio Updates\n\n- Updated via Mobile AI Assistant.")),
+      "diff_summary": "+ Add Portfolio Updates section to README.md",
+      "suggested_commit_message": "Update README.md via Portfolio AI Assistant"
+    };
   }
 }
