@@ -2537,29 +2537,27 @@ section[id],
 }
 
 /* ==========================================================================
-   SKILLS HERO SECTION (Section Background Layout)
+   SKILLS HERO SECTION (Two-Column Layout & Visual Container)
    ========================================================================== */
 .skills-hero-wrapper {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(420px, 0.9fr);
   align-items: center;
   gap: 3rem;
   max-width: 1240px;
   margin: 0 auto 3rem;
-  padding: 2.5rem 1.5rem 0;
+  padding: 3rem 1.5rem 0;
   position: relative;
   z-index: 2;
   box-sizing: border-box;
-  min-height: 520px;
 }
 
 /* Left: Focus Text & High-Contrast Backdrop Container */
 .skills-hero-content {
   position: relative;
   z-index: 5;
-  flex: 0 1 540px;
-  max-width: 540px;
   width: 100%;
+  max-width: 560px;
   background: linear-gradient(135deg, rgba(5, 10, 8, 0.92) 0%, rgba(8, 14, 11, 0.85) 70%, rgba(5, 10, 8, 0.4) 100%);
   border: 1px solid rgba(0, 210, 196, 0.18);
   border-left: 4px solid var(--color-secondary);
@@ -2570,13 +2568,25 @@ section[id],
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* Right: Premium Biotechnology Research Interface Visualization (Column Container) */
+/* Right: Visualization Column Wrapper */
+.skills-visual-wrapper {
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  overflow: visible;
+}
+
+/* Inner Visual Container */
 .skd-watermark-visual {
   position: relative;
-  flex: 0 0 460px;
-  width: 460px;
+  width: min(100%, 460px);
   height: 460px;
-  max-width: 100%;
+  aspect-ratio: 1 / 1;
+  margin: 0 auto;
   pointer-events: none;
   z-index: 2;
   opacity: 0.92;
@@ -2584,7 +2594,7 @@ section[id],
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  transition: opacity 0.3s ease, transform 0.3s ease;
+  transform: none;
   animation: skdVisualFloat 12s ease-in-out infinite alternate;
 }
 
@@ -2616,10 +2626,10 @@ section[id],
 
 @keyframes skdVisualFloat {
   0% {
-    transform: translateY(-50%) translateY(0px);
+    transform: translateY(0px);
   }
   100% {
-    transform: translateY(-50%) translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
