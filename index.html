@@ -484,144 +484,269 @@
           </div>
         </div>
 
-        <!-- Right: Sophisticated Abstract Biotechnology Research Visualization -->
+        <!-- Right: Premium Futuristic Biotechnology Research Visualization -->
         <div class="skd-watermark-visual" aria-hidden="true">
-          <svg viewBox="0 0 520 520" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
             <defs>
-              <linearGradient id="skdGradCyan" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#00d2c4" stop-opacity="0.9"/>
-                <stop offset="100%" stop-color="#00f59b" stop-opacity="0.4"/>
-              </linearGradient>
-              <linearGradient id="skdGradEmerald" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#00f59b" stop-opacity="0.8"/>
-                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.3"/>
-              </linearGradient>
-              <linearGradient id="skdGradLine" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="rgba(0, 210, 196, 0.6)"/>
-                <stop offset="50%" stop-color="rgba(0, 245, 155, 0.4)"/>
-                <stop offset="100%" stop-color="rgba(59, 130, 246, 0.2)"/>
+              <!-- 3D Spherical Radial Gradients for Molecular Core Atoms -->
+              <radialGradient id="molCyan3D" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#52ece0" />
+                <stop offset="40%" stop-color="#00d2c4" />
+                <stop offset="85%" stop-color="#00635c" />
+                <stop offset="100%" stop-color="#002b28" />
+              </radialGradient>
+
+              <radialGradient id="molEmerald3D" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#7bfad0" />
+                <stop offset="45%" stop-color="#00f59b" />
+                <stop offset="85%" stop-color="#007047" />
+                <stop offset="100%" stop-color="#002d1d" />
+              </radialGradient>
+
+              <radialGradient id="molDark3D" cx="35%" cy="35%" r="65%">
+                <stop offset="0%" stop-color="#416360" />
+                <stop offset="50%" stop-color="#192e2c" />
+                <stop offset="90%" stop-color="#081211" />
+                <stop offset="100%" stop-color="#020706" />
+              </radialGradient>
+
+              <!-- Neon Radial Glow Filters -->
+              <filter id="neonCyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#00d2c4" flood-opacity="0.65" />
+              </filter>
+
+              <filter id="neonEmeraldGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00f59b" flood-opacity="0.6" />
+              </filter>
+
+              <filter id="dnaGlow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00d2c4" flood-opacity="0.45" />
+              </filter>
+
+              <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#00d2c4" stop-opacity="0.8" />
+                <stop offset="50%" stop-color="#00f59b" stop-opacity="0.6" />
+                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.3" />
               </linearGradient>
 
-              <!-- Selective Node Glow Filter (Only key nodes glow, not everything) -->
-              <filter id="skdNodeSelectiveGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feGaussianBlur stdDeviation="4" result="blur" />
-                <feComposite in="SourceGraphic" in2="blur" operator="over" />
-              </filter>
+              <linearGradient id="dnaGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#00f59b" stop-opacity="0.7" />
+                <stop offset="100%" stop-color="#00d2c4" stop-opacity="0.4" />
+              </linearGradient>
             </defs>
 
-            <!-- 1. TECHNICAL INTERFACE GRID & COORDINATE RETICLES -->
-            <g stroke="rgba(0, 210, 196, 0.15)" stroke-width="0.8">
-              <!-- Outer Framing Reticles (+) -->
-              <path d="M 60,60 H 80 M 60,60 V 80" />
-              <path d="M 460,60 H 440 M 460,60 V 80" />
-              <path d="M 60,460 H 80 M 60,460 V 440" />
-              <path d="M 460,460 H 440 M 460,460 V 440" />
+            <!-- 1. ELEGANT BACKGROUND DNA STRAND WAVE (Lower Left to Center) -->
+            <g class="skd-wm-dna-wave">
+              <!-- DNA Backbone Strand 1 -->
+              <path d="M 30,460 C 80,410 130,350 190,380 C 250,410 300,470 360,430 C 410,400 460,340 510,380" fill="none" stroke="url(#dnaGrad1)" stroke-width="2.5" stroke-linecap="round" filter="url(#dnaGlow)" opacity="0.65" />
+              
+              <!-- DNA Backbone Strand 2 -->
+              <path d="M 40,430 C 90,470 140,410 190,370 C 240,330 300,390 350,440 C 400,470 450,410 500,360" fill="none" stroke="url(#dnaGrad2)" stroke-width="2" stroke-dasharray="3 3" opacity="0.55" />
 
-              <!-- Crosshair Grid Data Coordinates -->
-              <path d="M 255,50 V 65 M 265,60 H 250" />
-              <path d="M 255,455 V 470 M 265,460 H 250" />
-              <path d="M 50,255 H 65 M 60,245 V 260" />
-              <path d="M 455,255 H 470 M 460,245 V 260" />
+              <!-- DNA Base-Pair Rungs & Spherical Base Nodes -->
+              <!-- Base Rung 1 -->
+              <line x1="60" y1="445" x2="65" y2="440" stroke="rgba(0, 210, 196, 0.4)" stroke-width="1.5" />
+              <circle cx="60" cy="445" r="2.5" fill="#00d2c4" />
+              <circle cx="65" cy="440" r="2.5" fill="#00f59b" />
+
+              <!-- Base Rung 2 -->
+              <line x1="110" y1="390" x2="115" y2="435" stroke="rgba(0, 245, 155, 0.45)" stroke-width="1.5" />
+              <circle cx="110" cy="390" r="3" fill="#00f59b" />
+              <circle cx="115" cy="435" r="3" fill="#00d2c4" />
+
+              <!-- Base Rung 3 -->
+              <line x1="160" y1="365" x2="165" y2="390" stroke="rgba(0, 210, 196, 0.45)" stroke-width="1.5" />
+              <circle cx="160" cy="365" r="3" fill="#00d2c4" />
+              <circle cx="165" cy="390" r="3" fill="#00f59b" />
+
+              <!-- Base Rung 4 -->
+              <line x1="215" y1="395" x2="220" y2="350" stroke="rgba(0, 245, 155, 0.4)" stroke-width="1.5" />
+              <circle cx="215" cy="395" r="3" fill="#00f59b" />
+              <circle cx="220" cy="350" r="3" fill="#00d2c4" />
+
+              <!-- Base Rung 5 -->
+              <line x1="270" y1="440" x2="275" y2="360" stroke="rgba(0, 210, 196, 0.4)" stroke-width="1.5" />
+              <circle cx="270" cy="440" r="3" fill="#00d2c4" />
+              <circle cx="275" cy="360" r="3" fill="#00f59b" />
+
+              <!-- Base Rung 6 -->
+              <line x1="325" y1="455" x2="330" y2="410" stroke="rgba(0, 245, 155, 0.4)" stroke-width="1.5" />
+              <circle cx="325" cy="455" r="3" fill="#00f59b" />
+              <circle cx="330" cy="410" r="3" fill="#00d2c4" />
+
+              <!-- Base Rung 7 -->
+              <line x1="380" y1="415" x2="385" y2="460" stroke="rgba(0, 210, 196, 0.4)" stroke-width="1.5" />
+              <circle cx="380" cy="415" r="3" fill="#00d2c4" />
+              <circle cx="385" cy="460" r="3" fill="#00f59b" />
+
+              <!-- Base Rung 8 -->
+              <line x1="435" y1="365" x2="440" y2="430" stroke="rgba(0, 245, 155, 0.4)" stroke-width="1.5" />
+              <circle cx="435" cy="365" r="3" fill="#00f59b" />
+              <circle cx="440" cy="430" r="3" fill="#00d2c4" />
             </g>
 
-            <!-- 2. CONCENTRIC GENOMIC & BIOINFORMATICS ORBITAL TRACKS -->
+            <!-- 2. CONCENTRIC CIRCULAR ORBITAL RINGS -->
             <g class="skd-wm-ring-rotate">
-              <!-- Outer Track with Tick Marks -->
-              <circle cx="260" cy="260" r="205" fill="none" stroke="rgba(0, 210, 196, 0.2)" stroke-width="1" stroke-dasharray="4 8" />
-              <circle cx="260" cy="260" r="165" fill="none" stroke="rgba(0, 245, 155, 0.25)" stroke-width="1.2" stroke-dasharray="16 6 2 6" />
-              <circle cx="260" cy="260" r="120" fill="none" stroke="rgba(0, 210, 196, 0.18)" stroke-width="1" stroke-dasharray="24 8 4 8" />
+              <!-- Outer Orbital Ring with Dashed Arc Segments -->
+              <circle cx="300" cy="270" r="225" fill="none" stroke="rgba(0, 210, 196, 0.22)" stroke-width="1" stroke-dasharray="4 10" />
+              <circle cx="300" cy="270" r="175" fill="none" stroke="rgba(0, 245, 155, 0.25)" stroke-width="1.2" stroke-dasharray="18 8 3 8" />
+              <circle cx="300" cy="270" r="125" fill="none" stroke="rgba(0, 210, 196, 0.18)" stroke-width="1" stroke-dasharray="24 6" />
 
-              <!-- Micro Satellite Data Coordinates on Orbit -->
-              <circle cx="425" cy="260" r="2.5" fill="#00f59b" opacity="0.8" />
-              <circle cx="95" cy="260" r="2.5" fill="#00d2c4" opacity="0.8" />
-              <circle cx="260" cy="95" r="2.5" fill="#00d2c4" opacity="0.8" />
-              <circle cx="260" cy="425" r="2.5" fill="#00f59b" opacity="0.8" />
+              <!-- Orbit Marker Nodes -->
+              <circle cx="475" cy="270" r="3" fill="#00f59b" opacity="0.8" />
+              <circle cx="125" cy="270" r="3" fill="#00d2c4" opacity="0.8" />
+              <circle cx="300" cy="95" r="3" fill="#00d2c4" opacity="0.8" />
+              <circle cx="300" cy="445" r="3" fill="#00f59b" opacity="0.8" />
             </g>
 
-            <!-- 3. CENTRAL GLOWING MOLECULAR STRUCTURE & GEOMETRIC BASE -->
-            <!-- Central Molecular Hexagon Nucleotide Ring -->
-            <polygon points="260,175 320,210 320,285 260,320 200,285 200,210" fill="rgba(0, 210, 196, 0.03)" stroke="url(#skdGradLine)" stroke-width="1.5" />
-            <polygon points="260,192 305,218 305,272 260,298 215,272 215,218" fill="none" stroke="rgba(0, 245, 155, 0.3)" stroke-width="1" stroke-dasharray="6 3" />
+            <!-- 3. CENTRAL 3D GLOWING MOLECULAR STRUCTURE -->
+            <!-- Primary Glowing Neon Cyan Orbit Ring Around Molecule -->
+            <circle cx="300" cy="270" r="95" fill="none" stroke="#00d2c4" stroke-width="2" filter="url(#neonCyanGlow)" opacity="0.85" />
+            <circle cx="300" cy="270" r="95" fill="none" stroke="rgba(0, 245, 155, 0.4)" stroke-width="1" stroke-dasharray="8 4" />
 
-            <!-- Secondary Molecular Cluster (Top-Right Complex) -->
-            <polygon points="320,210 380,175 425,215 410,270 355,290 320,285" fill="none" stroke="rgba(0, 245, 155, 0.4)" stroke-width="1.2" />
-            
-            <!-- Tertiary Molecular Cluster (Bottom-Left Complex) -->
-            <polygon points="200,285 145,325 95,305 90,245 140,210 200,210" fill="none" stroke="rgba(0, 210, 196, 0.35)" stroke-width="1.2" />
+            <!-- 3D Molecular Complex Bonds (Cylindrical Connectors) -->
+            <g opacity="0.9">
+              <!-- Central to Top Atom Bond -->
+              <line x1="300" y1="270" x2="300" y2="200" stroke="#00d2c4" stroke-width="4.5" stroke-linecap="round" />
+              <line x1="300" y1="270" x2="300" y2="200" stroke="#7bfad0" stroke-width="1.5" stroke-linecap="round" />
 
-            <!-- 4. MOLECULAR BOND VECTOR RAYS & DATA PATHS -->
-            <line x1="260" y1="175" x2="260" y2="100" stroke="url(#skdGradCyan)" stroke-width="1.3" stroke-dasharray="3 3" />
-            <line x1="320" y1="210" x2="395" y2="135" stroke="url(#skdGradEmerald)" stroke-width="1.3" />
-            <line x1="320" y1="285" x2="415" y2="340" stroke="rgba(0, 210, 196, 0.45)" stroke-width="1.1" />
-            <line x1="260" y1="320" x2="260" y2="400" stroke="url(#skdGradCyan)" stroke-width="1.3" stroke-dasharray="4 4" />
-            <line x1="200" y1="285" x2="120" y2="380" stroke="url(#skdGradEmerald)" stroke-width="1.3" />
-            <line x1="200" y1="210" x2="105" y2="145" stroke="rgba(0, 245, 155, 0.45)" stroke-width="1.1" />
+              <!-- Central to Bottom-Left Atom Bond -->
+              <line x1="300" y1="270" x2="240" y2="315" stroke="#00d2c4" stroke-width="4.5" stroke-linecap="round" />
+              <line x1="300" y1="270" x2="240" y2="315" stroke="#52ece0" stroke-width="1.5" stroke-linecap="round" />
 
-            <!-- Intersecting Data Rays (Abstract Bioinformatics Plot) -->
-            <line x1="140" y1="110" x2="380" y2="390" stroke="rgba(0, 210, 196, 0.15)" stroke-width="0.8" stroke-dasharray="2 4" />
-            <line x1="380" y1="110" x2="140" y2="390" stroke="rgba(0, 245, 155, 0.15)" stroke-width="0.8" stroke-dasharray="2 4" />
+              <!-- Central to Bottom-Right Atom Bond -->
+              <line x1="300" y1="270" x2="365" y2="295" stroke="#00f59b" stroke-width="4.5" stroke-linecap="round" />
+              <line x1="300" y1="270" x2="365" y2="295" stroke="#7bfad0" stroke-width="1.5" stroke-linecap="round" />
 
-            <!-- 5. SELECTIVE GLOWING MOLECULAR NODES (Only key nodes glow) -->
-            <!-- Central Node Core (Pulsing) -->
-            <g class="skd-wm-node-pulse">
-              <circle cx="260" cy="247" r="14" fill="rgba(0, 210, 196, 0.08)" stroke="rgba(0, 210, 196, 0.4)" stroke-width="1" />
-              <circle cx="260" cy="247" r="6" fill="#00d2c4" filter="url(#skdNodeSelectiveGlow)" />
+              <!-- Central to Top-Left Dark Atom Bond -->
+              <line x1="300" y1="270" x2="235" y2="230" stroke="#192e2c" stroke-width="4" stroke-linecap="round" />
+              <line x1="300" y1="270" x2="235" y2="230" stroke="#416360" stroke-width="1" stroke-linecap="round" />
+
+              <!-- Central to Mid-Right Dark Atom Bond -->
+              <line x1="300" y1="270" x2="350" y2="225" stroke="#192e2c" stroke-width="4" stroke-linecap="round" />
+              <line x1="300" y1="270" x2="350" y2="225" stroke="#416360" stroke-width="1" stroke-linecap="round" />
             </g>
 
-            <!-- Key Vertex Nodes with Selective Glow -->
-            <g filter="url(#skdNodeSelectiveGlow)">
-              <circle cx="260" cy="175" r="4.5" fill="#00d2c4" class="skd-wm-node-pulse" />
-              <circle cx="320" cy="210" r="5" fill="#00f59b" class="skd-wm-node-pulse-delay" />
-              <circle cx="320" cy="285" r="4" fill="#00d2c4" class="skd-wm-node-pulse" />
-              <circle cx="260" cy="320" r="5.5" fill="#00f59b" class="skd-wm-node-pulse-delay" />
-              <circle cx="200" cy="285" r="4.5" fill="#00d2c4" class="skd-wm-node-pulse" />
-              <circle cx="200" cy="210" r="4" fill="#00f59b" class="skd-wm-node-pulse-delay" />
+            <!-- 3D Glowing Molecular Spheres (Atoms) -->
+            <g class="skd-wm-mol-pulse">
+              <!-- Central Core Atom -->
+              <circle cx="300" cy="270" r="24" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+              <circle cx="292" cy="262" r="7" fill="#ffffff" opacity="0.4" />
 
-              <!-- Outer Node Vertices -->
-              <circle cx="395" cy="135" r="4" fill="#00f59b" />
-              <circle cx="120" cy="380" r="4" fill="#00d2c4" />
+              <!-- Satellite Atom 1 (Top - Glowing Emerald) -->
+              <circle cx="300" cy="200" r="17" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+              <circle cx="294" cy="194" r="5" fill="#ffffff" opacity="0.45" />
+
+              <!-- Satellite Atom 2 (Bottom Left - Glowing Cyan) -->
+              <circle cx="240" cy="315" r="18" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+              <circle cx="234" cy="309" r="5.5" fill="#ffffff" opacity="0.4" />
+
+              <!-- Satellite Atom 3 (Bottom Right - Glowing Emerald) -->
+              <circle cx="365" cy="295" r="19" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+              <circle cx="359" cy="289" r="6" fill="#ffffff" opacity="0.45" />
+
+              <!-- Dark Contrast Atom 4 (Top Left) -->
+              <circle cx="235" cy="230" r="14" fill="url(#molDark3D)" />
+              <circle cx="231" cy="226" r="4" fill="#ffffff" opacity="0.2" />
+
+              <!-- Dark Contrast Atom 5 (Mid Right) -->
+              <circle cx="350" cy="225" r="15" fill="url(#molDark3D)" />
+              <circle cx="346" cy="221" r="4" fill="#ffffff" opacity="0.2" />
             </g>
 
-            <!-- Secondary Non-Glowing Precise Nodes & Diamonds -->
-            <circle cx="260" cy="100" r="3.5" fill="#00d2c4" opacity="0.8" />
-            <circle cx="415" cy="340" r="3" fill="#3b82f6" opacity="0.7" />
-            <circle cx="260" cy="400" r="3.5" fill="#00d2c4" opacity="0.8" />
-            <circle cx="105" cy="145" r="3" fill="#00f59b" opacity="0.8" />
+            <!-- 4. HEXAGONAL SUB-BADGES (Icon Nodes) -->
+            <!-- Hex Badge 1 (Top-Left: Molecular Icon) -->
+            <g transform="translate(150, 190)">
+              <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00d2c4" stroke-width="1.3" filter="url(#neonCyanGlow)" />
+              <!-- Mini Icon: Molecule -->
+              <circle cx="0" cy="0" r="3.5" fill="#00d2c4" />
+              <circle cx="-9" cy="-6" r="2.5" fill="#00f59b" />
+              <circle cx="9" cy="-6" r="2.5" fill="#00f59b" />
+              <circle cx="-6" cy="8" r="2.5" fill="#00f59b" />
+              <circle cx="6" cy="8" r="2.5" fill="#00f59b" />
+              <line x1="0" y1="0" x2="-9" y2="-6" stroke="#00d2c4" stroke-width="1" />
+              <line x1="0" y1="0" x2="9" y2="-6" stroke="#00d2c4" stroke-width="1" />
+              <line x1="0" y1="0" x2="-6" y2="8" stroke="#00d2c4" stroke-width="1" />
+              <line x1="0" y1="0" x2="6" y2="8" stroke="#00d2c4" stroke-width="1" />
+            </g>
 
-            <polygon points="395,128 402,135 395,142 388,135" fill="rgba(0, 245, 155, 0.25)" stroke="#00f59b" stroke-width="1.2" />
-            <polygon points="120,373 127,380 120,387 113,380" fill="rgba(0, 210, 196, 0.25)" stroke="#00d2c4" stroke-width="1.2" />
+            <!-- Hex Badge 2 (Top-Right: Bioinformatics Bar Graph Icon) -->
+            <g transform="translate(440, 210)">
+              <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00f59b" stroke-width="1.3" filter="url(#neonEmeraldGlow)" />
+              <!-- Mini Icon: Data Bars -->
+              <rect x="-9" y="-2" width="3" height="11" fill="#00f59b" />
+              <rect x="-3" y="-8" width="3" height="17" fill="#00d2c4" />
+              <rect x="3" y="-5" width="3" height="14" fill="#00f59b" />
+              <rect x="7" y="1" width="3" height="8" fill="#00d2c4" />
+            </g>
 
-            <!-- 6. INTEGRATED SCIENTIFIC TECHNICAL INTERFACE LABELS -->
-            <!-- Label 1: GENETIC ENGINEERING (Top Left) -->
+            <!-- Hex Badge 3 (Bottom-Right: Chemical Ring Icon) -->
+            <g transform="translate(435, 360)">
+              <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00d2c4" stroke-width="1.3" filter="url(#neonCyanGlow)" />
+              <!-- Mini Icon: Chemical Hex Ring -->
+              <polygon points="0,-9 8,-4 8,4 0,9 -8,4 -8,-4" fill="none" stroke="#00d2c4" stroke-width="1" />
+              <circle cx="0" cy="-9" r="1.5" fill="#00f59b" />
+              <circle cx="8" cy="-4" r="1.5" fill="#00f59b" />
+              <circle cx="8" cy="4" r="1.5" fill="#00f59b" />
+              <circle cx="0" cy="9" r="1.5" fill="#00f59b" />
+              <circle cx="-8" cy="4" r="1.5" fill="#00f59b" />
+              <circle cx="-8" cy="-4" r="1.5" fill="#00f59b" />
+            </g>
+
+            <!-- 5. SCIENTIFIC LABELS & SUB-CAPTIONS WITH LEADER LINES -->
+            <!-- Label 1: GENETIC ENGINEERING (Top-Left) -->
             <g class="skd-tech-label-group">
-              <polyline points="200,165 140,115 80,115" fill="none" stroke="rgba(0, 210, 196, 0.45)" stroke-width="1" stroke-dasharray="2 2" />
-              <circle cx="80" cy="115" r="2" fill="#00d2c4" />
-              <text x="75" y="105" font-family="'Inter', 'JetBrains Mono', monospace" font-size="8.5" font-weight="700" letter-spacing="1.4px" fill="#00d2c4" opacity="0.9">GENETIC ENGINEERING</text>
-              <text x="75" y="117" font-family="monospace" font-size="7" fill="rgba(0, 245, 155, 0.7)">SEQ // 04.CRISPR.v2</text>
+              <!-- Leader Line -->
+              <polyline points="240,200 190,130 110,130" fill="none" stroke="#00d2c4" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+              <circle cx="110" cy="130" r="3.5" fill="#00d2c4" filter="url(#neonCyanGlow)" />
+
+              <!-- Title Text -->
+              <text x="105" y="115" text-anchor="end" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00d2c4">GENETIC ENGINEERING</text>
+              <!-- Sub-caption -->
+              <text x="105" y="132" text-anchor="end" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Edit. Modify. Innovate.</text>
             </g>
 
-            <!-- Label 2: BIOINFORMATICS (Top Right) -->
+            <!-- Label 2: BIOINFORMATICS (Top-Right) -->
             <g class="skd-tech-label-group">
-              <polyline points="340,185 390,135 440,135" fill="none" stroke="rgba(0, 245, 155, 0.45)" stroke-width="1" stroke-dasharray="2 2" />
-              <circle cx="440" cy="135" r="2" fill="#00f59b" />
-              <text x="365" y="125" font-family="'Inter', 'JetBrains Mono', monospace" font-size="8.5" font-weight="700" letter-spacing="1.4px" fill="#00f59b" opacity="0.9">BIOINFORMATICS</text>
-              <text x="365" y="137" font-family="monospace" font-size="7" fill="rgba(0, 210, 196, 0.7)">DATA // ALIGN.BLAST</text>
+              <!-- Leader Line -->
+              <polyline points="380,200 440,130 490,130" fill="none" stroke="#00f59b" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+              <circle cx="490" cy="130" r="3.5" fill="#00f59b" filter="url(#neonEmeraldGlow)" />
+
+              <!-- Title Text -->
+              <text x="495" y="115" text-anchor="start" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00f59b">BIOINFORMATICS</text>
+              <!-- Sub-caption -->
+              <text x="495" y="132" text-anchor="start" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Data. Analyze. Discover.</text>
             </g>
 
-            <!-- Label 3: MOLECULAR BIOLOGY (Bottom Left) -->
+            <!-- Label 3: MOLECULAR BIOLOGY (Bottom-Left) -->
             <g class="skd-tech-label-group">
-              <polyline points="180,310 130,375 70,375" fill="none" stroke="rgba(0, 210, 196, 0.45)" stroke-width="1" stroke-dasharray="2 2" />
-              <circle cx="70" cy="375" r="2" fill="#00d2c4" />
-              <text x="65" y="365" font-family="'Inter', 'JetBrains Mono', monospace" font-size="8.5" font-weight="700" letter-spacing="1.4px" fill="#00d2c4" opacity="0.9">MOLECULAR BIOLOGY</text>
-              <text x="65" y="377" font-family="monospace" font-size="7" fill="rgba(0, 245, 155, 0.7)">NODE // NUCLEOTIDE.BOND</text>
+              <!-- Leader Line -->
+              <polyline points="230,340 160,450 110,450" fill="none" stroke="#00d2c4" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+              <circle cx="110" cy="450" r="3.5" fill="#00d2c4" filter="url(#neonCyanGlow)" />
+
+              <!-- Title Text -->
+              <text x="105" y="445" text-anchor="end" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00d2c4">MOLECULAR BIOLOGY</text>
+              <!-- Sub-caption -->
+              <text x="105" y="462" text-anchor="end" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Understand. Explore. Advance.</text>
             </g>
 
-            <!-- Label 4: GENOMICS (Bottom Right) -->
+            <!-- Label 4: GENOMICS (Bottom-Right) -->
             <g class="skd-tech-label-group">
-              <polyline points="330,320 380,385 435,385" fill="none" stroke="rgba(0, 245, 155, 0.45)" stroke-width="1" stroke-dasharray="2 2" />
-              <circle cx="435" cy="385" r="2" fill="#00f59b" />
-              <text x="385" y="375" font-family="'Inter', 'JetBrains Mono', monospace" font-size="8.5" font-weight="700" letter-spacing="1.4px" fill="#00f59b" opacity="0.9">GENOMICS</text>
-              <text x="385" y="387" font-family="monospace" font-size="7" fill="rgba(0, 210, 196, 0.7)">ANALYSIS // TARGET.GENE</text>
+              <!-- Leader Line -->
+              <polyline points="370,335 430,440 480,440" fill="none" stroke="#00f59b" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+              <circle cx="480" cy="440" r="3.5" fill="#00f59b" filter="url(#neonEmeraldGlow)" />
+
+              <!-- Title Text -->
+              <text x="485" y="435" text-anchor="start" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00f59b">GENOMICS</text>
+              <!-- Sub-caption -->
+              <text x="485" y="452" text-anchor="start" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Decode. Interpret. Explore.</text>
+            </g>
+
+            <!-- 6. SUBTLE BINARY / DATA STREAM OVERLAY -->
+            <g opacity="0.6" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="9" letter-spacing="1.8px">
+              <text x="325" y="420" fill="#00d2c4">10101 001 10 011</text>
+              <text x="325" y="434" fill="#00f59b">010 101 11001</text>
+              <text x="325" y="448" fill="#00d2c4">101 010 011 010</text>
             </g>
           </svg>
         </div>
