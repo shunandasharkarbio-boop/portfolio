@@ -2568,21 +2568,22 @@ section[id],
   -webkit-backdrop-filter: blur(16px);
 }
 
-/* Right: Small Futuristic Molecular Diagram (Watermark Visual) */
+/* Right: Sophisticated Abstract Biotechnology Research Visualization */
 .skd-watermark-visual {
   position: absolute;
-  right: 6%;
+  right: 4%;
   top: 50%;
   transform: translateY(-50%);
-  width: 380px;
-  height: 380px;
-  max-width: 40vw;
+  width: 480px;
+  height: 480px;
+  max-width: 42vw;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.22;
+  z-index: 2;
+  opacity: 0.32;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: opacity 0.3s ease;
   animation: skdWatermarkFloat 14s ease-in-out infinite;
 }
 
@@ -2590,7 +2591,7 @@ section[id],
   width: 100%;
   height: 100%;
   overflow: visible;
-  filter: drop-shadow(0 0 14px rgba(0, 210, 196, 0.35));
+  filter: drop-shadow(0 0 16px rgba(0, 210, 196, 0.3));
 }
 
 .skd-wm-node-pulse {
@@ -2602,22 +2603,22 @@ section[id],
 }
 
 .skd-wm-ring-rotate {
-  transform-origin: 225px 225px;
-  animation: skdRingRotate 90s linear infinite;
+  transform-origin: 260px 260px;
+  animation: skdRingRotate 100s linear infinite;
 }
 
 @keyframes skdWatermarkFloat {
   0%, 100% {
-    transform: translateY(-50%) translateY(0px) rotate(0deg);
+    transform: translateY(-50%) translateY(0px);
   }
   50% {
-    transform: translateY(-50%) translateY(-8px) rotate(1deg);
+    transform: translateY(-50%) translateY(-8px);
   }
 }
 
 @keyframes skdNodeGlow {
   0% {
-    opacity: 0.45;
+    opacity: 0.5;
   }
   100% {
     opacity: 1;
@@ -2739,9 +2740,9 @@ section[id],
 @media (max-width: 1200px) {
   .skd-watermark-visual {
     right: 2%;
-    width: 360px;
-    height: 360px;
-    opacity: 0.3;
+    width: 420px;
+    height: 420px;
+    opacity: 0.28;
   }
 }
 
@@ -2757,9 +2758,9 @@ section[id],
 
   .skd-watermark-visual {
     right: 1%;
-    width: 300px;
-    height: 300px;
-    opacity: 0.2;
+    width: 340px;
+    height: 340px;
+    opacity: 0.22;
     z-index: 0;
   }
 }
@@ -2780,9 +2781,9 @@ section[id],
     right: 50%;
     top: 50%;
     transform: translate(50%, -50%);
-    width: 220px;
-    height: 220px;
-    opacity: 0.12;
+    width: 260px;
+    height: 260px;
+    opacity: 0.16;
     z-index: 0;
   }
 
@@ -2791,7 +2792,7 @@ section[id],
       transform: translate(50%, -50%) translateY(0px);
     }
     50% {
-      transform: translate(50%, -50%) translateY(-6px);
+      transform: translate(50%, -50%) translateY(-5px);
     }
   }
 }
