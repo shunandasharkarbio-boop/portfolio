@@ -1,6 +1,6 @@
 # Mobile Git Workspace
 
-A mobile-first application designed to allow developers to manage GitHub repositories, edit code, and **upload files directly from a smartphone** when away from a laptop.
+A mobile -first application designed to allow developers to manage GitHub repositories, edit code, and **upload files directly from a smartphone** when away from a laptop.
 
 ---
 
