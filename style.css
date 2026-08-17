@@ -2538,13 +2538,17 @@ section[id],
 
 /* ==========================================================================
    SKILLS HERO SECTION (Two-Column Layout & Visual Container)
-   ========================================================================== */
-/* ═══════════════════════════════════════════════════════════════════════════
-   MY FOCUS CARD — Single Container with Background Watermark Layer
+   ═══════════════════════════════════════════════════════════════════════════
+   SKILLS HERO / MY FOCUS SECTION (Responsive Desktop 2-Col / Mobile 1-Col Layer)
    ═══════════════════════════════════════════════════════════════════════════ */
-.skills-hero-wrapper {
-  display: block;
-  width: 100%;
+
+/* DESKTOP LAYOUT: Two-Column Composition (Card on Left, Visual on Right) */
+.skills-hero-wrapper,
+.skills-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(420px, 0.9fr);
+  align-items: center;
+  gap: 3rem;
   max-width: 1240px;
   margin: 0 auto 3rem;
   padding: 3rem 1.5rem 0;
@@ -2553,70 +2557,68 @@ section[id],
   box-sizing: border-box;
 }
 
-/* MY FOCUS Card Container (Positioning Parent) */
-.skills-focus-card,
-.skills-hero-content {
+.skills-hero-content,
+.skills-focus-card {
   position: relative;
-  overflow: hidden;
-  width: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  background: linear-gradient(
-    90deg,
-    rgba(4, 10, 8, 0.96) 0%,
-    rgba(5, 12, 10, 0.88) 55%,
-    rgba(5, 12, 10, 0.55) 100%
-  );
-  border: 1px solid rgba(0, 210, 196, 0.2);
-  border-left: 4px solid var(--color-secondary);
-  border-radius: 24px;
-  padding: 3.25rem 3rem;
-  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.65), inset 0 1px 1px rgba(0, 210, 196, 0.18);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
   z-index: 5;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-/* 1. Background Layer: Molecular Visual (Inside Card, Absolute Positioning) */
-.skills-focus-background,
+/* Left Column: MY FOCUS Card Box (Desktop) */
+.skills-focus-content,
+.skd-focus-body {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  max-width: 560px;
+  background: linear-gradient(135deg, rgba(5, 10, 8, 0.92) 0%, rgba(8, 14, 11, 0.85) 70%, rgba(5, 10, 8, 0.4) 100%);
+  border: 1px solid rgba(0, 210, 196, 0.18);
+  border-left: 4px solid var(--color-secondary);
+  border-radius: 20px;
+  padding: 2.75rem 2.5rem;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(0, 210, 196, 0.15);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-sizing: border-box;
+}
+
+/* Right Column: Standalone Scientific Visualization (Desktop) */
+.skills-visual-wrapper,
+.skills-visual {
+  width: 100%;
+  min-height: 480px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  overflow: visible;
+  z-index: 2;
+}
+
 .skd-watermark-visual {
-  position: absolute;
-  right: -40px;
-  bottom: -50px;
-  width: 520px;
-  height: 520px;
-  max-width: 75%;
-  max-height: 90%;
+  position: relative;
+  width: min(100%, 460px);
+  height: 460px;
   aspect-ratio: 1 / 1;
+  margin: 0 auto;
   pointer-events: none;
-  z-index: 0;
-  opacity: 0.14;
+  z-index: 2;
+  opacity: 0.92;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
-  margin: 0;
   transform: none;
   animation: skdVisualFloat 12s ease-in-out infinite alternate;
 }
 
-.skills-focus-background svg,
 .skd-watermark-visual svg {
   width: 100%;
   height: 100%;
   display: block;
   overflow: visible;
-  object-fit: contain;
-}
-
-/* 2. Foreground Layer: Text & Content (Above Background Layer) */
-.skills-focus-content,
-.skd-focus-body {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 640px;
-  box-sizing: border-box;
 }
 
 /* Animations for Biotechnology Research Visual */
@@ -2712,7 +2714,7 @@ section[id],
   font-size: 0.95rem;
   line-height: 1.65;
   margin-bottom: 2rem;
-  max-width: 580px;
+  max-width: 520px;
   width: 100%;
   word-wrap: break-word;
   overflow-wrap: break-word;
@@ -2795,28 +2797,30 @@ section[id],
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   RESPONSIVE BREAKPOINTS FOR MY FOCUS CARD
+   RESPONSIVE BREAKPOINTS FOR SKILLS SECTION
    ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 1100px) {
-  .skills-focus-background,
+  .skills-hero-wrapper,
+  .skills-layout {
+    gap: 1.5rem;
+  }
+
+  .skills-focus-content,
+  .skd-focus-body {
+    flex: 0 1 500px;
+    max-width: 500px;
+  }
+
   .skd-watermark-visual {
-    width: 440px;
-    height: 440px;
-    right: -40px;
-    bottom: -40px;
-    opacity: 0.14;
+    width: 400px;
+    height: 400px;
   }
 }
 
 @media (max-width: 960px) {
-  .skills-hero-wrapper {
-    padding-top: 1.5rem;
-  }
-
-  .skills-focus-card,
-  .skills-hero-content {
-    padding: 2.5rem 2rem;
-    border-radius: 20px;
+  .skills-hero-wrapper,
+  .skills-layout {
+    gap: 2rem;
   }
 
   .skills-focus-content,
@@ -2824,64 +2828,45 @@ section[id],
     max-width: 100%;
   }
 
-  .skills-focus-background,
   .skd-watermark-visual {
     width: 380px;
     height: 380px;
-    right: -50px;
-    bottom: -40px;
-    opacity: 0.10;
   }
 }
 
 /* MOBILE RESPONSIVE LAYOUT (768px and below) */
 @media (max-width: 768px) {
-  .skills-hero-wrapper {
+  /* Layout becomes ONE column on mobile */
+  .skills-hero-wrapper,
+  .skills-layout {
     display: block !important;
+    position: relative !important;
     width: 100% !important;
     padding: 1.25rem 0.75rem 0 !important;
     box-sizing: border-box !important;
   }
 
-  .skills-focus-card,
-  .skills-hero-content {
-    width: 100% !important;
-    max-width: 100% !important;
+  .skills-hero-content,
+  .skills-focus-card {
+    display: block !important;
     position: relative !important;
     overflow: hidden !important;
-    padding: 2rem 1.25rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
     border-radius: 16px !important;
     box-sizing: border-box !important;
+    z-index: 1 !important;
   }
 
-  /* Background visual is 100% absolute inside card behind content */
-  .skills-focus-background,
-  .skd-watermark-visual {
-    position: absolute !important;
-    right: -80px !important;
-    bottom: -40px !important;
-    width: 85% !important;
-    height: 70% !important;
-    max-width: 340px !important;
-    max-height: 340px !important;
-    opacity: 0.07 !important;
-    filter: blur(6px) !important;
-    transform: scale(0.9) !important;
-    pointer-events: none !important;
-    z-index: 0 !important;
-    animation: none !important;
-    top: auto !important;
-    left: auto !important;
-    margin: 0 !important;
-  }
-
-  /* Content spans FULL available width inside card */
+  /* My Focus Content is the 100% full-width foreground card on mobile */
   .skills-focus-content,
   .skd-focus-body {
     position: relative !important;
     z-index: 2 !important;
     width: 100% !important;
     max-width: 100% !important;
+    padding: 2rem 1.25rem !important;
+    border-radius: 16px !important;
     box-sizing: border-box !important;
   }
 
@@ -2908,6 +2893,40 @@ section[id],
 
   .skd-stat-card {
     width: 100% !important;
+  }
+
+  /* On mobile: Scientific visualization is NO LONGER a layout column.
+     It moves BEHIND the My Focus card as a blurred, low-opacity background watermark! */
+  .skills-visual-wrapper,
+  .skills-visual {
+    position: absolute !important;
+    right: -70px !important;
+    bottom: -30px !important;
+    width: 320px !important;
+    height: 320px !important;
+    max-width: 80% !important;
+    max-height: 70% !important;
+    min-height: 0 !important;
+    z-index: 0 !important;
+    pointer-events: none !important;
+    opacity: 0.08 !important;
+    filter: blur(5px) !important;
+    transform: scale(0.9) !important;
+    animation: none !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 0 !important;
+    top: auto !important;
+    left: auto !important;
+  }
+
+  .skd-watermark-visual {
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+    opacity: 1 !important;
+    animation: none !important;
   }
 }
 

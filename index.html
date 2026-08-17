@@ -438,360 +438,12 @@
     <!-- 3. Skills Dashboard Section -->
     <section class="skills-dashboard" id="skills">
       <!-- HERO ROW: Minimal, Premium Biotech 3D DNA Illustration & Focus Content -->
-      <div class="skills-hero-wrapper">
+      <div class="skills-hero-wrapper skills-layout">
 
-        <!-- MY FOCUS / Biotechnology & Bioinformatics Card Container -->
+        <!-- MY FOCUS / Biotechnology & Bioinformatics Container -->
         <div class="skills-hero-content skills-focus-card">
 
-          <!-- 1. Background Element: Molecular Visualization SVG inside Card -->
-          <div class="skills-focus-background skd-watermark-visual" aria-hidden="true">
-          <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-              <!-- 3D Spherical Radial Gradients for Molecular Core Atoms -->
-              <radialGradient id="molCyan3D" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stop-color="#52ece0" />
-                <stop offset="40%" stop-color="#00d2c4" />
-                <stop offset="85%" stop-color="#00635c" />
-                <stop offset="100%" stop-color="#002b28" />
-              </radialGradient>
-
-              <radialGradient id="molEmerald3D" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stop-color="#7bfad0" />
-                <stop offset="45%" stop-color="#00f59b" />
-                <stop offset="85%" stop-color="#007047" />
-                <stop offset="100%" stop-color="#002d1d" />
-              </radialGradient>
-
-              <radialGradient id="molDark3D" cx="35%" cy="35%" r="65%">
-                <stop offset="0%" stop-color="#416360" />
-                <stop offset="50%" stop-color="#192e2c" />
-                <stop offset="90%" stop-color="#081211" />
-                <stop offset="100%" stop-color="#020706" />
-              </radialGradient>
-
-              <!-- Neon Radial Glow Filters -->
-              <filter id="neonCyanGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#00d2c4" flood-opacity="0.65" />
-              </filter>
-
-              <filter id="neonEmeraldGlow" x="-30%" y="-30%" width="160%" height="160%">
-                <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00f59b" flood-opacity="0.6" />
-              </filter>
-
-              <filter id="dnaGlow" x="-20%" y="-20%" width="140%" height="140%">
-                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00d2c4" flood-opacity="0.45" />
-              </filter>
-
-              <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#00d2c4" stop-opacity="0.8" />
-                <stop offset="50%" stop-color="#00f59b" stop-opacity="0.6" />
-                <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.3" />
-              </linearGradient>
-
-              <linearGradient id="dnaGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
-                <stop offset="0%" stop-color="#00f59b" stop-opacity="0.7" />
-                <stop offset="100%" stop-color="#00d2c4" stop-opacity="0.4" />
-              </linearGradient>
-            </defs>
-
-            <!-- 1. REALISTIC 3D DNA DOUBLE HELIX MOLECULE (Lower Left to Center Right) -->
-            <g class="skd-wm-dna-wave">
-              <!-- DNA Backbone Helical Ribbon Strand 1 -->
-              <path d="M 20,490 C 70,410 130,340 190,370 C 250,400 300,470 360,430 C 410,395 460,345 510,380" fill="none" stroke="url(#dnaGrad1)" stroke-width="2.8" stroke-linecap="round" filter="url(#dnaGlow)" opacity="0.75" />
-              
-              <!-- DNA Backbone Helical Ribbon Strand 2 -->
-              <path d="M 35,460 C 85,500 135,430 185,350 C 235,310 295,380 345,460 C 395,490 445,420 495,350" fill="none" stroke="url(#dnaGrad2)" stroke-width="2.2" stroke-linecap="round" opacity="0.65" />
-
-              <!-- Base-Pair Rungs & 3D Nucleotide Spheres Along the Helix Curve -->
-              <!-- Step 1 -->
-              <line x1="22" y1="488" x2="33" y2="462" stroke="rgba(0, 210, 196, 0.45)" stroke-width="1.2" />
-              <circle cx="22" cy="488" r="3.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="33" cy="462" r="2.5" fill="url(#molDark3D)" opacity="0.6" />
-
-              <!-- Step 2 -->
-              <line x1="42" y1="458" x2="52" y2="476" stroke="rgba(0, 245, 155, 0.45)" stroke-width="1.2" />
-              <circle cx="42" cy="458" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="52" cy="476" r="2.8" fill="url(#molDark3D)" opacity="0.6" />
-
-              <!-- Step 3 -->
-              <line x1="62" y1="432" x2="72" y2="488" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="62" cy="432" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="72" cy="488" r="3" fill="url(#molEmerald3D)" opacity="0.7" />
-
-              <!-- Step 4 -->
-              <line x1="82" y1="410" x2="92" y2="492" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="82" cy="410" r="4.5" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="92" cy="492" r="3.2" fill="url(#molCyan3D)" opacity="0.75" />
-
-              <!-- Step 5 -->
-              <line x1="102" y1="388" x2="112" y2="480" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="102" cy="388" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="112" cy="480" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
-
-              <!-- Step 6 -->
-              <line x1="122" y1="368" x2="132" y2="455" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="122" cy="368" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="132" cy="455" r="3.8" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-
-              <!-- Step 7 -->
-              <line x1="142" y1="355" x2="152" y2="422" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="142" cy="355" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
-              <circle cx="152" cy="422" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-
-              <!-- Step 8 -->
-              <line x1="162" y1="350" x2="172" y2="388" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="162" cy="350" r="3" fill="#00d2c4" opacity="0.7" />
-              <circle cx="172" cy="388" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-
-              <!-- Step 9 -->
-              <line x1="182" y1="358" x2="192" y2="368" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="182" cy="358" r="3.5" fill="url(#molEmerald3D)" opacity="0.7" />
-              <circle cx="192" cy="368" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-
-              <!-- Step 10 -->
-              <line x1="202" y1="375" x2="212" y2="348" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="202" cy="375" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="212" cy="348" r="3.2" fill="url(#molDark3D)" opacity="0.7" />
-
-              <!-- Step 11 -->
-              <line x1="222" y1="395" x2="232" y2="332" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="222" cy="395" r="4.5" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="232" cy="332" r="3" fill="#00d2c4" opacity="0.7" />
-
-              <!-- Step 12 -->
-              <line x1="242" y1="412" x2="252" y2="325" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="242" cy="412" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="252" cy="325" r="3.2" fill="url(#molEmerald3D)" opacity="0.75" />
-
-              <!-- Step 13 -->
-              <line x1="262" y1="430" x2="272" y2="332" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="262" cy="430" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="272" cy="332" r="3.8" fill="url(#molCyan3D)" opacity="0.8" />
-
-              <!-- Step 14 -->
-              <line x1="282" y1="445" x2="292" y2="352" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="282" cy="445" r="3.8" fill="url(#molDark3D)" opacity="0.7" />
-              <circle cx="292" cy="352" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-
-              <!-- Step 15 -->
-              <line x1="302" y1="455" x2="312" y2="382" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="302" cy="455" r="3.2" fill="#00d2c4" opacity="0.75" />
-              <circle cx="312" cy="382" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-
-              <!-- Step 16 -->
-              <line x1="322" y1="458" x2="332" y2="418" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="322" cy="458" r="3" fill="url(#molEmerald3D)" opacity="0.7" />
-              <circle cx="332" cy="418" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-
-              <!-- Step 17 -->
-              <line x1="342" y1="450" x2="352" y2="452" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="342" cy="450" r="3.5" fill="url(#molCyan3D)" opacity="0.75" />
-              <circle cx="352" cy="452" r="4" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-
-              <!-- Step 18 -->
-              <line x1="362" y1="432" x2="372" y2="475" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="362" cy="432" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="372" cy="475" r="3" fill="url(#molDark3D)" opacity="0.65" />
-
-              <!-- Step 19 -->
-              <line x1="382" y1="412" x2="392" y2="485" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="382" cy="412" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="392" cy="485" r="2.8" fill="#00d2c4" opacity="0.6" />
-
-              <!-- Step 20 -->
-              <line x1="402" y1="398" x2="412" y2="480" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="402" cy="398" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="412" cy="480" r="3.2" fill="url(#molEmerald3D)" opacity="0.7" />
-
-              <!-- Step 21 -->
-              <line x1="422" y1="385" x2="432" y2="460" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="422" cy="385" r="4" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="432" cy="460" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
-
-              <!-- Step 22 -->
-              <line x1="442" y1="375" x2="452" y2="430" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="442" cy="375" r="3.8" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="452" cy="430" r="3.8" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-
-              <!-- Step 23 -->
-              <line x1="462" y1="370" x2="472" y2="398" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
-              <circle cx="462" cy="370" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
-              <circle cx="472" cy="398" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-
-              <!-- Step 24 -->
-              <line x1="482" y1="372" x2="492" y2="365" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
-              <circle cx="482" cy="372" r="3" fill="#00d2c4" opacity="0.75" />
-              <circle cx="492" cy="365" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-            </g>
-
-            <!-- 2. CONCENTRIC CIRCULAR ORBITAL RINGS -->
-            <g class="skd-wm-ring-rotate">
-              <!-- Outer Orbital Ring with Dashed Arc Segments -->
-              <circle cx="300" cy="270" r="225" fill="none" stroke="rgba(0, 210, 196, 0.22)" stroke-width="1" stroke-dasharray="4 10" />
-              <circle cx="300" cy="270" r="175" fill="none" stroke="rgba(0, 245, 155, 0.25)" stroke-width="1.2" stroke-dasharray="18 8 3 8" />
-              <circle cx="300" cy="270" r="125" fill="none" stroke="rgba(0, 210, 196, 0.18)" stroke-width="1" stroke-dasharray="24 6" />
-
-              <!-- Orbit Marker Nodes -->
-              <circle cx="475" cy="270" r="3" fill="#00f59b" opacity="0.8" />
-              <circle cx="125" cy="270" r="3" fill="#00d2c4" opacity="0.8" />
-              <circle cx="300" cy="95" r="3" fill="#00d2c4" opacity="0.8" />
-              <circle cx="300" cy="445" r="3" fill="#00f59b" opacity="0.8" />
-            </g>
-
-            <!-- 3. CENTRAL 3D GLOWING MOLECULAR STRUCTURE -->
-            <!-- Primary Glowing Neon Cyan Orbit Ring Around Molecule -->
-            <circle cx="300" cy="270" r="95" fill="none" stroke="#00d2c4" stroke-width="2" filter="url(#neonCyanGlow)" opacity="0.85" />
-            <circle cx="300" cy="270" r="95" fill="none" stroke="rgba(0, 245, 155, 0.4)" stroke-width="1" stroke-dasharray="8 4" />
-
-            <!-- 3D Molecular Complex Bonds (Cylindrical Connectors) -->
-            <g opacity="0.9">
-              <!-- Central to Top Atom Bond -->
-              <line x1="300" y1="270" x2="300" y2="200" stroke="#00d2c4" stroke-width="4.5" stroke-linecap="round" />
-              <line x1="300" y1="270" x2="300" y2="200" stroke="#7bfad0" stroke-width="1.5" stroke-linecap="round" />
-
-              <!-- Central to Bottom-Left Atom Bond -->
-              <line x1="300" y1="270" x2="240" y2="315" stroke="#00d2c4" stroke-width="4.5" stroke-linecap="round" />
-              <line x1="300" y1="270" x2="240" y2="315" stroke="#52ece0" stroke-width="1.5" stroke-linecap="round" />
-
-              <!-- Central to Bottom-Right Atom Bond -->
-              <line x1="300" y1="270" x2="365" y2="295" stroke="#00f59b" stroke-width="4.5" stroke-linecap="round" />
-              <line x1="300" y1="270" x2="365" y2="295" stroke="#7bfad0" stroke-width="1.5" stroke-linecap="round" />
-
-              <!-- Central to Top-Left Dark Atom Bond -->
-              <line x1="300" y1="270" x2="235" y2="230" stroke="#192e2c" stroke-width="4" stroke-linecap="round" />
-              <line x1="300" y1="270" x2="235" y2="230" stroke="#416360" stroke-width="1" stroke-linecap="round" />
-
-              <!-- Central to Mid-Right Dark Atom Bond -->
-              <line x1="300" y1="270" x2="350" y2="225" stroke="#192e2c" stroke-width="4" stroke-linecap="round" />
-              <line x1="300" y1="270" x2="350" y2="225" stroke="#416360" stroke-width="1" stroke-linecap="round" />
-            </g>
-
-            <!-- 3D Glowing Molecular Spheres (Atoms) -->
-            <g class="skd-wm-mol-pulse">
-              <!-- Central Core Atom -->
-              <circle cx="300" cy="270" r="24" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="292" cy="262" r="7" fill="#ffffff" opacity="0.4" />
-
-              <!-- Satellite Atom 1 (Top - Glowing Emerald) -->
-              <circle cx="300" cy="200" r="17" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="294" cy="194" r="5" fill="#ffffff" opacity="0.45" />
-
-              <!-- Satellite Atom 2 (Bottom Left - Glowing Cyan) -->
-              <circle cx="240" cy="315" r="18" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
-              <circle cx="234" cy="309" r="5.5" fill="#ffffff" opacity="0.4" />
-
-              <!-- Satellite Atom 3 (Bottom Right - Glowing Emerald) -->
-              <circle cx="365" cy="295" r="19" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
-              <circle cx="359" cy="289" r="6" fill="#ffffff" opacity="0.45" />
-
-              <!-- Dark Contrast Atom 4 (Top Left) -->
-              <circle cx="235" cy="230" r="14" fill="url(#molDark3D)" />
-              <circle cx="231" cy="226" r="4" fill="#ffffff" opacity="0.2" />
-
-              <!-- Dark Contrast Atom 5 (Mid Right) -->
-              <circle cx="350" cy="225" r="15" fill="url(#molDark3D)" />
-              <circle cx="346" cy="221" r="4" fill="#ffffff" opacity="0.2" />
-            </g>
-
-            <!-- 4. HEXAGONAL SUB-BADGES (Icon Nodes) -->
-            <!-- Hex Badge 1 (Top-Left: Molecular Icon) -->
-            <g transform="translate(150, 190)">
-              <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00d2c4" stroke-width="1.3" filter="url(#neonCyanGlow)" />
-              <!-- Mini Icon: Molecule -->
-              <circle cx="0" cy="0" r="3.5" fill="#00d2c4" />
-              <circle cx="-9" cy="-6" r="2.5" fill="#00f59b" />
-              <circle cx="9" cy="-6" r="2.5" fill="#00f59b" />
-              <circle cx="-6" cy="8" r="2.5" fill="#00f59b" />
-              <circle cx="6" cy="8" r="2.5" fill="#00f59b" />
-              <line x1="0" y1="0" x2="-9" y2="-6" stroke="#00d2c4" stroke-width="1" />
-              <line x1="0" y1="0" x2="9" y2="-6" stroke="#00d2c4" stroke-width="1" />
-              <line x1="0" y1="0" x2="-6" y2="8" stroke="#00d2c4" stroke-width="1" />
-              <line x1="0" y1="0" x2="6" y2="8" stroke="#00d2c4" stroke-width="1" />
-            </g>
-
-            <!-- Hex Badge 2 (Top-Right: Bioinformatics Bar Graph Icon) -->
-            <g transform="translate(440, 210)">
-              <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00f59b" stroke-width="1.3" filter="url(#neonEmeraldGlow)" />
-              <!-- Mini Icon: Data Bars -->
-              <rect x="-9" y="-2" width="3" height="11" fill="#00f59b" />
-              <rect x="-3" y="-8" width="3" height="17" fill="#00d2c4" />
-              <rect x="3" y="-5" width="3" height="14" fill="#00f59b" />
-              <rect x="7" y="1" width="3" height="8" fill="#00d2c4" />
-            </g>
-
-            <!-- Hex Badge 3 (Bottom-Right: Chemical Ring Icon) -->
-            <g transform="translate(435, 360)">
-              <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00d2c4" stroke-width="1.3" filter="url(#neonCyanGlow)" />
-              <!-- Mini Icon: Chemical Hex Ring -->
-              <polygon points="0,-9 8,-4 8,4 0,9 -8,4 -8,-4" fill="none" stroke="#00d2c4" stroke-width="1" />
-              <circle cx="0" cy="-9" r="1.5" fill="#00f59b" />
-              <circle cx="8" cy="-4" r="1.5" fill="#00f59b" />
-              <circle cx="8" cy="4" r="1.5" fill="#00f59b" />
-              <circle cx="0" cy="9" r="1.5" fill="#00f59b" />
-              <circle cx="-8" cy="4" r="1.5" fill="#00f59b" />
-              <circle cx="-8" cy="-4" r="1.5" fill="#00f59b" />
-            </g>
-
-            <!-- 5. SCIENTIFIC LABELS & SUB-CAPTIONS WITH LEADER LINES -->
-            <!-- Label 1: GENETIC ENGINEERING (Top-Left) -->
-            <g class="skd-tech-label-group">
-              <!-- Leader Line -->
-              <polyline points="240,200 190,130 110,130" fill="none" stroke="#00d2c4" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
-              <circle cx="110" cy="130" r="3.5" fill="#00d2c4" filter="url(#neonCyanGlow)" />
-
-              <!-- Title Text -->
-              <text x="105" y="115" text-anchor="end" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00d2c4">GENETIC ENGINEERING</text>
-              <!-- Sub-caption -->
-              <text x="105" y="132" text-anchor="end" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Edit. Modify. Innovate.</text>
-            </g>
-
-            <!-- Label 2: BIOINFORMATICS (Top-Right) -->
-            <g class="skd-tech-label-group">
-              <!-- Leader Line -->
-              <polyline points="380,200 440,130 490,130" fill="none" stroke="#00f59b" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
-              <circle cx="490" cy="130" r="3.5" fill="#00f59b" filter="url(#neonEmeraldGlow)" />
-
-              <!-- Title Text -->
-              <text x="495" y="115" text-anchor="start" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00f59b">BIOINFORMATICS</text>
-              <!-- Sub-caption -->
-              <text x="495" y="132" text-anchor="start" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Data. Analyze. Discover.</text>
-            </g>
-
-            <!-- Label 3: MOLECULAR BIOLOGY (Bottom-Left) -->
-            <g class="skd-tech-label-group">
-              <!-- Leader Line -->
-              <polyline points="230,340 160,450 110,450" fill="none" stroke="#00d2c4" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
-              <circle cx="110" cy="450" r="3.5" fill="#00d2c4" filter="url(#neonCyanGlow)" />
-
-              <!-- Title Text -->
-              <text x="105" y="445" text-anchor="end" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00d2c4">MOLECULAR BIOLOGY</text>
-              <!-- Sub-caption -->
-              <text x="105" y="462" text-anchor="end" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Understand. Explore. Advance.</text>
-            </g>
-
-            <!-- Label 4: GENOMICS (Bottom-Right) -->
-            <g class="skd-tech-label-group">
-              <!-- Leader Line -->
-              <polyline points="370,335 430,440 480,440" fill="none" stroke="#00f59b" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
-              <circle cx="480" cy="440" r="3.5" fill="#00f59b" filter="url(#neonEmeraldGlow)" />
-
-              <!-- Title Text -->
-              <text x="485" y="435" text-anchor="start" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00f59b">GENOMICS</text>
-              <!-- Sub-caption -->
-              <text x="485" y="452" text-anchor="start" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Decode. Interpret. Explore.</text>
-            </g>
-
-            <!-- 6. SUBTLE BINARY / DATA STREAM OVERLAY -->
-            <g opacity="0.6" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="9" letter-spacing="1.8px">
-              <text x="325" y="420" fill="#00d2c4">10101 001 10 011</text>
-              <text x="325" y="434" fill="#00f59b">010 101 11001</text>
-              <text x="325" y="448" fill="#00d2c4">101 010 011 010</text>
-            </g>
-          </svg>
-          </div>
-          <!-- END Background Visualization -->
-
-          <!-- 2. Foreground Content: Text & Statistics inside Card -->
+          <!-- Left Column on Desktop / Main Foreground Content on Mobile -->
           <div class="skills-focus-content skd-focus-body">
             <h4 class="skd-focus-label">MY FOCUS</h4>
             <h2 class="skd-focus-heading">
@@ -835,8 +487,288 @@
             </div>
           </div>
 
+          <!-- Right Column on Desktop / Background Layer on Mobile: Scientific Visualization SVG -->
+          <div class="skills-visual-wrapper skills-visual">
+            <div class="skd-watermark-visual" aria-hidden="true">
+            <svg viewBox="0 0 600 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <!-- 3D Spherical Radial Gradients for Molecular Core Atoms -->
+                <radialGradient id="molCyan3D" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#52ece0" />
+                  <stop offset="40%" stop-color="#00d2c4" />
+                  <stop offset="85%" stop-color="#00635c" />
+                  <stop offset="100%" stop-color="#002b28" />
+                </radialGradient>
+
+                <radialGradient id="molEmerald3D" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#7bfad0" />
+                  <stop offset="45%" stop-color="#00f59b" />
+                  <stop offset="85%" stop-color="#007047" />
+                  <stop offset="100%" stop-color="#002d1d" />
+                </radialGradient>
+
+                <radialGradient id="molDark3D" cx="35%" cy="35%" r="65%">
+                  <stop offset="0%" stop-color="#416360" />
+                  <stop offset="50%" stop-color="#192e2c" />
+                  <stop offset="90%" stop-color="#081211" />
+                  <stop offset="100%" stop-color="#020706" />
+                </radialGradient>
+
+                <!-- Neon Radial Glow Filters -->
+                <filter id="neonCyanGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="#00d2c4" flood-opacity="0.65" />
+                </filter>
+
+                <filter id="neonEmeraldGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="6" flood-color="#00f59b" flood-opacity="0.6" />
+                </filter>
+
+                <filter id="dnaGlow" x="-20%" y="-20%" width="140%" height="140%">
+                  <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#00d2c4" flood-opacity="0.45" />
+                </filter>
+
+                <linearGradient id="dnaGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#00d2c4" stop-opacity="0.8" />
+                  <stop offset="50%" stop-color="#00f59b" stop-opacity="0.6" />
+                  <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.3" />
+                </linearGradient>
+
+                <linearGradient id="dnaGrad2" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#00f59b" stop-opacity="0.7" />
+                  <stop offset="100%" stop-color="#00d2c4" stop-opacity="0.4" />
+                </linearGradient>
+              </defs>
+
+              <!-- 1. REALISTIC 3D DNA DOUBLE HELIX MOLECULE -->
+              <g class="skd-wm-dna-wave">
+                <path d="M 20,490 C 70,410 130,340 190,370 C 250,400 300,470 360,430 C 410,395 460,345 510,380" fill="none" stroke="url(#dnaGrad1)" stroke-width="2.8" stroke-linecap="round" filter="url(#dnaGlow)" opacity="0.75" />
+                <path d="M 35,460 C 85,500 135,430 185,350 C 235,310 295,380 345,460 C 395,490 445,420 495,350" fill="none" stroke="url(#dnaGrad2)" stroke-width="2.2" stroke-linecap="round" opacity="0.65" />
+
+                <!-- Base-Pair Rungs & Nucleotide Spheres -->
+                <line x1="22" y1="488" x2="33" y2="462" stroke="rgba(0, 210, 196, 0.45)" stroke-width="1.2" />
+                <circle cx="22" cy="488" r="3.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="33" cy="462" r="2.5" fill="url(#molDark3D)" opacity="0.6" />
+
+                <line x1="42" y1="458" x2="52" y2="476" stroke="rgba(0, 245, 155, 0.45)" stroke-width="1.2" />
+                <circle cx="42" cy="458" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="52" cy="476" r="2.8" fill="url(#molDark3D)" opacity="0.6" />
+
+                <line x1="62" y1="432" x2="72" y2="488" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="62" cy="432" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="72" cy="488" r="3" fill="url(#molEmerald3D)" opacity="0.7" />
+
+                <line x1="82" y1="410" x2="92" y2="492" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="82" cy="410" r="4.5" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="92" cy="492" r="3.2" fill="url(#molCyan3D)" opacity="0.75" />
+
+                <line x1="102" y1="388" x2="112" y2="480" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="102" cy="388" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="112" cy="480" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
+
+                <line x1="122" y1="368" x2="132" y2="455" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="122" cy="368" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="132" cy="455" r="3.8" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+
+                <line x1="142" y1="355" x2="152" y2="422" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="142" cy="355" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
+                <circle cx="152" cy="422" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+
+                <line x1="162" y1="350" x2="172" y2="388" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="162" cy="350" r="3" fill="#00d2c4" opacity="0.7" />
+                <circle cx="172" cy="388" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+
+                <line x1="182" y1="358" x2="192" y2="368" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="182" cy="358" r="3.5" fill="url(#molEmerald3D)" opacity="0.7" />
+                <circle cx="192" cy="368" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+
+                <line x1="202" y1="375" x2="212" y2="348" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="202" cy="375" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="212" cy="348" r="3.2" fill="url(#molDark3D)" opacity="0.7" />
+
+                <line x1="222" y1="395" x2="232" y2="332" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="222" cy="395" r="4.5" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="232" cy="332" r="3" fill="#00d2c4" opacity="0.7" />
+
+                <line x1="242" y1="412" x2="252" y2="325" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="242" cy="412" r="4.2" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="252" cy="325" r="3.2" fill="url(#molEmerald3D)" opacity="0.75" />
+
+                <line x1="262" y1="430" x2="272" y2="332" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="262" cy="430" r="4" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="272" cy="332" r="3.8" fill="url(#molCyan3D)" opacity="0.8" />
+
+                <line x1="282" y1="445" x2="292" y2="352" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="282" cy="445" r="3.8" fill="url(#molDark3D)" opacity="0.7" />
+                <circle cx="292" cy="352" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+
+                <line x1="302" y1="455" x2="312" y2="382" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="302" cy="455" r="3.2" fill="#00d2c4" opacity="0.75" />
+                <circle cx="312" cy="382" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+
+                <line x1="322" y1="458" x2="332" y2="418" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="322" cy="458" r="3" fill="url(#molEmerald3D)" opacity="0.7" />
+                <circle cx="332" cy="418" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+
+                <line x1="342" y1="450" x2="352" y2="452" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="342" cy="450" r="3.5" fill="url(#molCyan3D)" opacity="0.75" />
+                <circle cx="352" cy="452" r="4" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+
+                <line x1="362" y1="432" x2="372" y2="475" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="362" cy="432" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="372" cy="475" r="3" fill="url(#molDark3D)" opacity="0.65" />
+
+                <line x1="382" y1="412" x2="392" y2="485" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="382" cy="412" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="392" cy="485" r="2.8" fill="#00d2c4" opacity="0.6" />
+
+                <line x1="402" y1="398" x2="412" y2="480" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="402" cy="398" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="412" cy="480" r="3.2" fill="url(#molEmerald3D)" opacity="0.7" />
+
+                <line x1="422" y1="385" x2="432" y2="460" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="422" cy="385" r="4" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="432" cy="460" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
+
+                <line x1="442" y1="375" x2="452" y2="430" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="442" cy="375" r="3.8" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="452" cy="430" r="3.8" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+
+                <line x1="462" y1="370" x2="472" y2="398" stroke="rgba(0, 210, 196, 0.5)" stroke-width="1.2" />
+                <circle cx="462" cy="370" r="3.5" fill="url(#molDark3D)" opacity="0.7" />
+                <circle cx="472" cy="398" r="4.2" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+
+                <line x1="482" y1="372" x2="492" y2="365" stroke="rgba(0, 245, 155, 0.5)" stroke-width="1.2" />
+                <circle cx="482" cy="372" r="3" fill="#00d2c4" opacity="0.75" />
+                <circle cx="492" cy="365" r="4.5" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+              </g>
+
+              <!-- 2. CONCENTRIC CIRCULAR ORBITAL RINGS -->
+              <g class="skd-wm-ring-rotate">
+                <circle cx="300" cy="270" r="225" fill="none" stroke="rgba(0, 210, 196, 0.22)" stroke-width="1" stroke-dasharray="4 10" />
+                <circle cx="300" cy="270" r="175" fill="none" stroke="rgba(0, 245, 155, 0.25)" stroke-width="1.2" stroke-dasharray="18 8 3 8" />
+                <circle cx="300" cy="270" r="125" fill="none" stroke="rgba(0, 210, 196, 0.18)" stroke-width="1" stroke-dasharray="24 6" />
+
+                <circle cx="475" cy="270" r="3" fill="#00f59b" opacity="0.8" />
+                <circle cx="125" cy="270" r="3" fill="#00d2c4" opacity="0.8" />
+                <circle cx="300" cy="95" r="3" fill="#00d2c4" opacity="0.8" />
+                <circle cx="300" cy="445" r="3" fill="#00f59b" opacity="0.8" />
+              </g>
+
+              <!-- 3. CENTRAL 3D GLOWING MOLECULAR STRUCTURE -->
+              <circle cx="300" cy="270" r="95" fill="none" stroke="#00d2c4" stroke-width="2" filter="url(#neonCyanGlow)" opacity="0.85" />
+              <circle cx="300" cy="270" r="95" fill="none" stroke="rgba(0, 245, 155, 0.4)" stroke-width="1" stroke-dasharray="8 4" />
+
+              <g opacity="0.9">
+                <line x1="300" y1="270" x2="300" y2="200" stroke="#00d2c4" stroke-width="4.5" stroke-linecap="round" />
+                <line x1="300" y1="270" x2="300" y2="200" stroke="#7bfad0" stroke-width="1.5" stroke-linecap="round" />
+
+                <line x1="300" y1="270" x2="240" y2="315" stroke="#00d2c4" stroke-width="4.5" stroke-linecap="round" />
+                <line x1="300" y1="270" x2="240" y2="315" stroke="#52ece0" stroke-width="1.5" stroke-linecap="round" />
+
+                <line x1="300" y1="270" x2="365" y2="295" stroke="#00f59b" stroke-width="4.5" stroke-linecap="round" />
+                <line x1="300" y1="270" x2="365" y2="295" stroke="#7bfad0" stroke-width="1.5" stroke-linecap="round" />
+
+                <line x1="300" y1="270" x2="235" y2="230" stroke="#192e2c" stroke-width="4" stroke-linecap="round" />
+                <line x1="300" y1="270" x2="235" y2="230" stroke="#416360" stroke-width="1" stroke-linecap="round" />
+
+                <line x1="300" y1="270" x2="350" y2="225" stroke="#192e2c" stroke-width="4" stroke-linecap="round" />
+                <line x1="300" y1="270" x2="350" y2="225" stroke="#416360" stroke-width="1" stroke-linecap="round" />
+              </g>
+
+              <g class="skd-wm-mol-pulse">
+                <circle cx="300" cy="270" r="24" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="292" cy="262" r="7" fill="#ffffff" opacity="0.4" />
+
+                <circle cx="300" cy="200" r="17" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="294" cy="194" r="5" fill="#ffffff" opacity="0.45" />
+
+                <circle cx="240" cy="315" r="18" fill="url(#molCyan3D)" filter="url(#neonCyanGlow)" />
+                <circle cx="234" cy="309" r="5.5" fill="#ffffff" opacity="0.4" />
+
+                <circle cx="365" cy="295" r="19" fill="url(#molEmerald3D)" filter="url(#neonEmeraldGlow)" />
+                <circle cx="359" cy="289" r="6" fill="#ffffff" opacity="0.45" />
+
+                <circle cx="235" cy="230" r="14" fill="url(#molDark3D)" />
+                <circle cx="231" cy="226" r="4" fill="#ffffff" opacity="0.2" />
+
+                <circle cx="350" cy="225" r="15" fill="url(#molDark3D)" />
+                <circle cx="346" cy="221" r="4" fill="#ffffff" opacity="0.2" />
+              </g>
+
+              <!-- 4. HEXAGONAL SUB-BADGES -->
+              <g transform="translate(150, 190)">
+                <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00d2c4" stroke-width="1.3" filter="url(#neonCyanGlow)" />
+                <circle cx="0" cy="0" r="3.5" fill="#00d2c4" />
+                <circle cx="-9" cy="-6" r="2.5" fill="#00f59b" />
+                <circle cx="9" cy="-6" r="2.5" fill="#00f59b" />
+                <circle cx="-6" cy="8" r="2.5" fill="#00f59b" />
+                <circle cx="6" cy="8" r="2.5" fill="#00f59b" />
+                <line x1="0" y1="0" x2="-9" y2="-6" stroke="#00d2c4" stroke-width="1" />
+                <line x1="0" y1="0" x2="9" y2="-6" stroke="#00d2c4" stroke-width="1" />
+                <line x1="0" y1="0" x2="-6" y2="8" stroke="#00d2c4" stroke-width="1" />
+                <line x1="0" y1="0" x2="6" y2="8" stroke="#00d2c4" stroke-width="1" />
+              </g>
+
+              <g transform="translate(440, 210)">
+                <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00f59b" stroke-width="1.3" filter="url(#neonEmeraldGlow)" />
+                <rect x="-9" y="-2" width="3" height="11" fill="#00f59b" />
+                <rect x="-3" y="-8" width="3" height="17" fill="#00d2c4" />
+                <rect x="3" y="-5" width="3" height="14" fill="#00f59b" />
+                <rect x="7" y="1" width="3" height="8" fill="#00d2c4" />
+              </g>
+
+              <g transform="translate(435, 360)">
+                <polygon points="0,-22 19,-11 19,11 0,22 -19,11 -19,-11" fill="rgba(5, 15, 12, 0.85)" stroke="#00d2c4" stroke-width="1.3" filter="url(#neonCyanGlow)" />
+                <polygon points="0,-9 8,-4 8,4 0,9 -8,4 -8,-4" fill="none" stroke="#00d2c4" stroke-width="1" />
+                <circle cx="0" cy="-9" r="1.5" fill="#00f59b" />
+                <circle cx="8" cy="-4" r="1.5" fill="#00f59b" />
+                <circle cx="8" cy="4" r="1.5" fill="#00f59b" />
+                <circle cx="0" cy="9" r="1.5" fill="#00f59b" />
+                <circle cx="-8" cy="4" r="1.5" fill="#00f59b" />
+                <circle cx="-8" cy="-4" r="1.5" fill="#00f59b" />
+              </g>
+
+              <!-- 5. SCIENTIFIC LABELS -->
+              <g class="skd-tech-label-group">
+                <polyline points="240,200 190,130 110,130" fill="none" stroke="#00d2c4" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+                <circle cx="110" cy="130" r="3.5" fill="#00d2c4" filter="url(#neonCyanGlow)" />
+                <text x="105" y="115" text-anchor="end" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00d2c4">GENETIC ENGINEERING</text>
+                <text x="105" y="132" text-anchor="end" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Edit. Modify. Innovate.</text>
+              </g>
+
+              <g class="skd-tech-label-group">
+                <polyline points="380,200 440,130 490,130" fill="none" stroke="#00f59b" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+                <circle cx="490" cy="130" r="3.5" fill="#00f59b" filter="url(#neonEmeraldGlow)" />
+                <text x="495" y="115" text-anchor="start" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00f59b">BIOINFORMATICS</text>
+                <text x="495" y="132" text-anchor="start" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Data. Analyze. Discover.</text>
+              </g>
+
+              <g class="skd-tech-label-group">
+                <polyline points="230,340 160,450 110,450" fill="none" stroke="#00d2c4" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+                <circle cx="110" cy="450" r="3.5" fill="#00d2c4" filter="url(#neonCyanGlow)" />
+                <text x="105" y="445" text-anchor="end" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00d2c4">MOLECULAR BIOLOGY</text>
+                <text x="105" y="462" text-anchor="end" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Understand. Explore. Advance.</text>
+              </g>
+
+              <g class="skd-tech-label-group">
+                <polyline points="370,335 430,440 480,440" fill="none" stroke="#00f59b" stroke-width="1.2" stroke-dasharray="3 3" opacity="0.85" />
+                <circle cx="480" cy="440" r="3.5" fill="#00f59b" filter="url(#neonEmeraldGlow)" />
+                <text x="485" y="435" text-anchor="start" font-family="'Inter', sans-serif" font-size="12" font-weight="700" letter-spacing="1.5px" fill="#00f59b">GENOMICS</text>
+                <text x="485" y="452" text-anchor="start" font-family="'Inter', sans-serif" font-size="9.5" font-weight="400" fill="rgba(226, 232, 240, 0.8)">Decode. Interpret. Explore.</text>
+              </g>
+
+              <!-- 6. SUBTLE BINARY STREAM -->
+              <g opacity="0.6" font-family="'JetBrains Mono', 'Fira Code', monospace" font-size="9" letter-spacing="1.8px">
+                <text x="325" y="420" fill="#00d2c4">10101 001 10 011</text>
+                <text x="325" y="434" fill="#00f59b">010 101 11001</text>
+                <text x="325" y="448" fill="#00d2c4">101 010 011 010</text>
+              </g>
+            </svg>
+            </div>
+          </div>
+
         </div>
-        <!-- END MY FOCUS CARD -->
+        <!-- END MY FOCUS CONTAINER -->
 
       </div>
       <!-- END HERO ROW -->
