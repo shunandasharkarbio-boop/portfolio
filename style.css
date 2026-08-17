@@ -2914,17 +2914,17 @@ section[id],
   .skills-mobile-visual {
     position: absolute !important;
     right: -80px !important;
-    bottom: -60px !important;
-    width: 340px !important;
-    height: 340px !important;
+    bottom: -50px !important;
+    width: 320px !important;
+    height: 320px !important;
     max-width: 85% !important;
     max-height: 75% !important;
     min-height: 0 !important;
     z-index: 0 !important;
     pointer-events: none !important;
-    opacity: 0.08 !important;
-    filter: blur(5px) !important;
-    transform: scale(0.9) !important;
+    opacity: 0.05 !important;
+    filter: blur(7px) !important;
+    transform: scale(0.85) !important;
     animation: none !important;
     display: flex !important;
     align-items: center !important;
