@@ -2539,10 +2539,12 @@ section[id],
 /* ==========================================================================
    SKILLS HERO SECTION (Two-Column Layout & Visual Container)
    ========================================================================== */
+/* ═══════════════════════════════════════════════════════════════════════════
+   MY FOCUS CARD — Single Container with Background Watermark Layer
+   ═══════════════════════════════════════════════════════════════════════════ */
 .skills-hero-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  display: block;
+  width: 100%;
   max-width: 1240px;
   margin: 0 auto 3rem;
   padding: 3rem 1.5rem 0;
@@ -2551,16 +2553,17 @@ section[id],
   box-sizing: border-box;
 }
 
-/* MY FOCUS / Biotechnology & Bioinformatics Card Container */
-.skills-hero-content,
-.skills-focus-card {
+/* MY FOCUS Card Container (Positioning Parent) */
+.skills-focus-card,
+.skills-hero-content {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 1240px;
+  max-width: 100%;
+  box-sizing: border-box;
   background: linear-gradient(
     90deg,
-    rgba(4, 10, 8, 0.95) 0%,
+    rgba(4, 10, 8, 0.96) 0%,
     rgba(5, 12, 10, 0.88) 55%,
     rgba(5, 12, 10, 0.55) 100%
   );
@@ -2572,40 +2575,48 @@ section[id],
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   z-index: 5;
-  box-sizing: border-box;
 }
 
-/* Foreground Content inside Card */
-.skd-focus-body {
-  position: relative;
-  z-index: 2;
-  max-width: 620px;
-}
-
-/* Background Element: Molecular Visualization inside Card */
+/* 1. Background Layer: Molecular Visual (Inside Card, Absolute Positioning) */
+.skills-focus-background,
 .skd-watermark-visual {
   position: absolute;
-  right: -30px;
+  right: -40px;
   bottom: -50px;
-  width: 500px;
-  height: 500px;
+  width: 520px;
+  height: 520px;
+  max-width: 75%;
+  max-height: 90%;
   aspect-ratio: 1 / 1;
   pointer-events: none;
-  z-index: 1;
-  opacity: 0.22;
+  z-index: 0;
+  opacity: 0.14;
   display: flex;
   align-items: center;
   justify-content: center;
   box-sizing: border-box;
+  margin: 0;
   transform: none;
   animation: skdVisualFloat 12s ease-in-out infinite alternate;
 }
 
+.skills-focus-background svg,
 .skd-watermark-visual svg {
   width: 100%;
   height: 100%;
   display: block;
   overflow: visible;
+  object-fit: contain;
+}
+
+/* 2. Foreground Layer: Text & Content (Above Background Layer) */
+.skills-focus-content,
+.skd-focus-body {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 640px;
+  box-sizing: border-box;
 }
 
 /* Animations for Biotechnology Research Visual */
@@ -2676,7 +2687,7 @@ section[id],
   }
 }
 
-.skills-hero-content .skd-focus-label {
+.skd-focus-label {
   color: var(--color-secondary);
   font-size: 0.8rem;
   letter-spacing: 0.2em;
@@ -2685,7 +2696,7 @@ section[id],
   margin-bottom: 0.85rem;
 }
 
-.skills-hero-content .skd-focus-heading {
+.skd-focus-heading {
   font-family: var(--font-family-title);
   font-size: clamp(2rem, 3vw, 2.75rem);
   font-weight: 800;
@@ -2693,20 +2704,25 @@ section[id],
   margin-bottom: 1.1rem;
   color: #ffffff;
   letter-spacing: -0.02em;
+  word-wrap: break-word;
 }
 
-.skills-hero-content .skd-focus-desc {
+.skd-focus-desc {
   color: var(--color-text-secondary);
   font-size: 0.95rem;
   line-height: 1.65;
   margin-bottom: 2rem;
-  max-width: 520px;
+  max-width: 580px;
+  width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 /* Stat Cards */
 .skd-stat-row {
   display: flex;
   gap: 1.25rem;
+  width: 100%;
 }
 
 .skd-stat-card {
@@ -2778,14 +2794,17 @@ section[id],
   line-height: 1.25;
 }
 
-/* Responsive Breakpoints for Focus Card & Background Visualization */
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS FOR MY FOCUS CARD
+   ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 1100px) {
+  .skills-focus-background,
   .skd-watermark-visual {
     width: 440px;
     height: 440px;
     right: -40px;
     bottom: -40px;
-    opacity: 0.18;
+    opacity: 0.14;
   }
 }
 
@@ -2794,60 +2813,101 @@ section[id],
     padding-top: 1.5rem;
   }
 
+  .skills-focus-card,
   .skills-hero-content {
     padding: 2.5rem 2rem;
     border-radius: 20px;
   }
 
+  .skills-focus-content,
   .skd-focus-body {
     max-width: 100%;
   }
 
+  .skills-focus-background,
   .skd-watermark-visual {
-    width: 400px;
-    height: 400px;
-    right: -40px;
-    bottom: -50px;
-    opacity: 0.14;
+    width: 380px;
+    height: 380px;
+    right: -50px;
+    bottom: -40px;
+    opacity: 0.10;
   }
 }
 
+/* MOBILE RESPONSIVE LAYOUT (768px and below) */
 @media (max-width: 768px) {
+  .skills-hero-wrapper {
+    display: block !important;
+    width: 100% !important;
+    padding: 1.25rem 0.75rem 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .skills-focus-card,
   .skills-hero-content {
-    padding: 2rem 1.5rem;
-    border-radius: 16px;
+    width: 100% !important;
+    max-width: 100% !important;
+    position: relative !important;
+    overflow: hidden !important;
+    padding: 2rem 1.25rem !important;
+    border-radius: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Background visual is 100% absolute inside card behind content */
+  .skills-focus-background,
+  .skd-watermark-visual {
+    position: absolute !important;
+    right: -80px !important;
+    bottom: -40px !important;
+    width: 85% !important;
+    height: 70% !important;
+    max-width: 340px !important;
+    max-height: 340px !important;
+    opacity: 0.07 !important;
+    filter: blur(6px) !important;
+    transform: scale(0.9) !important;
+    pointer-events: none !important;
+    z-index: 0 !important;
+    animation: none !important;
+    top: auto !important;
+    left: auto !important;
+    margin: 0 !important;
+  }
+
+  /* Content spans FULL available width inside card */
+  .skills-focus-content,
+  .skd-focus-body {
+    position: relative !important;
+    z-index: 2 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .skd-focus-heading {
+    font-size: 1.85rem !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .skd-focus-desc {
+    width: 100% !important;
+    max-width: 100% !important;
+    font-size: 0.95rem !important;
+    line-height: 1.65 !important;
+    word-wrap: break-word !important;
+    overflow-wrap: break-word !important;
   }
 
   .skd-stat-row {
-    flex-direction: column;
-    gap: 0.75rem;
+    flex-direction: column !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
   }
 
-  .skd-watermark-visual {
-    width: 350px;
-    height: 350px;
-    right: -50px;
-    bottom: -50px;
-    opacity: 0.07;
-    filter: blur(5px);
-    transform: scale(0.9);
-    animation: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .skills-hero-content {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .skd-watermark-visual {
-    width: 300px;
-    height: 300px;
-    right: -60px;
-    bottom: -50px;
-    opacity: 0.06;
-    filter: blur(6px);
-    transform: scale(0.85);
+  .skd-stat-card {
+    width: 100% !important;
   }
 }
 
