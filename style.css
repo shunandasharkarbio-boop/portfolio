@@ -2534,21 +2534,15 @@ section[id],
   width: 100%;
   background: #020408 !important;
   background-image: none !important;
-}
-
-/* ==========================================================================
-   SKILLS HERO SECTION (Two-Column Layout & Visual Container)
-   ═══════════════════════════════════════════════════════════════════════════
+}/* ═══════════════════════════════════════════════════════════════════════════
    SKILLS HERO / MY FOCUS SECTION (Responsive Desktop 2-Col / Mobile 1-Col Layer)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* DESKTOP LAYOUT: Two-Column Composition (Card on Left, Visual on Right) */
 .skills-hero-wrapper,
 .skills-layout {
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(420px, 0.9fr);
-  align-items: center;
-  gap: 3rem;
+  display: block;
+  width: 100%;
   max-width: 1240px;
   margin: 0 auto 3rem;
   padding: 3rem 1.5rem 0;
@@ -2559,9 +2553,17 @@ section[id],
 
 .skills-hero-content,
 .skills-focus-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(400px, 0.9fr);
+  align-items: center;
+  gap: 2rem;
   position: relative;
   z-index: 5;
   width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
   box-sizing: border-box;
 }
 
@@ -2587,7 +2589,7 @@ section[id],
 .skills-visual-wrapper,
 .skills-visual {
   width: 100%;
-  min-height: 480px;
+  min-height: 450px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2800,8 +2802,8 @@ section[id],
    RESPONSIVE BREAKPOINTS FOR SKILLS SECTION
    ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 1100px) {
-  .skills-hero-wrapper,
-  .skills-layout {
+  .skills-hero-content,
+  .skills-focus-card {
     gap: 1.5rem;
   }
 
@@ -2818,8 +2820,9 @@ section[id],
 }
 
 @media (max-width: 960px) {
-  .skills-hero-wrapper,
-  .skills-layout {
+  .skills-hero-content,
+  .skills-focus-card {
+    grid-template-columns: 1fr;
     gap: 2rem;
   }
 
@@ -2836,7 +2839,7 @@ section[id],
 
 /* MOBILE RESPONSIVE LAYOUT (768px and below) */
 @media (max-width: 768px) {
-  /* Layout becomes ONE column on mobile */
+  /* Layout container is a simple 100% block */
   .skills-hero-wrapper,
   .skills-layout {
     display: block !important;
@@ -2846,6 +2849,7 @@ section[id],
     box-sizing: border-box !important;
   }
 
+  /* My Focus Card becomes the 100% relative container for the entire card & background */
   .skills-hero-content,
   .skills-focus-card {
     display: block !important;
@@ -2853,21 +2857,29 @@ section[id],
     overflow: hidden !important;
     width: 100% !important;
     max-width: 100% !important;
+    background: linear-gradient(135deg, rgba(5, 10, 8, 0.95) 0%, rgba(8, 14, 11, 0.9) 70%, rgba(5, 10, 8, 0.6) 100%) !important;
+    border: 1px solid rgba(0, 210, 196, 0.18) !important;
+    border-left: 4px solid var(--color-secondary) !important;
     border-radius: 16px !important;
+    padding: 2rem 1.25rem !important;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6), inset 0 1px 1px rgba(0, 210, 196, 0.15) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
     box-sizing: border-box !important;
     z-index: 1 !important;
   }
 
-  /* My Focus Content is the 100% full-width foreground card on mobile */
+  /* Foreground Content inside Card */
   .skills-focus-content,
   .skd-focus-body {
     position: relative !important;
     z-index: 2 !important;
     width: 100% !important;
     max-width: 100% !important;
-    padding: 2rem 1.25rem !important;
-    border-radius: 16px !important;
-    box-sizing: border-box !important;
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    box-shadow: none !important;
   }
 
   .skd-focus-heading {
@@ -2895,17 +2907,18 @@ section[id],
     width: 100% !important;
   }
 
-  /* On mobile: Scientific visualization is NO LONGER a layout column.
-     It moves BEHIND the My Focus card as a blurred, low-opacity background watermark! */
+  /* On mobile: Scientific visualization is NO LONGER a layout column or page element below the card.
+     It becomes an ABSOLUTE BACKGROUND LAYER inside .skills-focus-card behind content! */
   .skills-visual-wrapper,
-  .skills-visual {
+  .skills-visual,
+  .skills-mobile-visual {
     position: absolute !important;
-    right: -70px !important;
-    bottom: -30px !important;
-    width: 320px !important;
-    height: 320px !important;
-    max-width: 80% !important;
-    max-height: 70% !important;
+    right: -80px !important;
+    bottom: -60px !important;
+    width: 340px !important;
+    height: 340px !important;
+    max-width: 85% !important;
+    max-height: 75% !important;
     min-height: 0 !important;
     z-index: 0 !important;
     pointer-events: none !important;
