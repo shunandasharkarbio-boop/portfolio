@@ -816,8 +816,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let hasDraggedFar = false;
     let lastTime = performance.now();
 
-    // Movement speed: ~35 pixels per second for slow, elegant portfolio motion
-    const SPEED = 35; 
+    // Movement speed: pixels per second (~60 for a lively, smooth motion)
+    const SPEED = 60; 
 
     // Calculate exact width of 1 original card set (5 cards + gaps)
     function getSingleSetWidth() {
