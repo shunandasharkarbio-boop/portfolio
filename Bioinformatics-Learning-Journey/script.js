@@ -14,10 +14,24 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Close mobile nav on click link
-  document.querySelectorAll('.nav-link').forEach(link => {
+  // Close mobile nav on click link or button
+  document.querySelectorAll('#nav-links a').forEach(link => {
     link.addEventListener('click', () => {
       if (navLinks && navLinks.classList.contains('active')) {
+        navLinks.classList.remove('active');
+        const icon = mobileToggle ? mobileToggle.querySelector('i') : null;
+        if (icon) {
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      }
+    });
+  });
+
+  // Close mobile menu on clicking outside
+  document.addEventListener('click', (e) => {
+    if (navLinks && navLinks.classList.contains('active')) {
+      if (!navLinks.contains(e.target) && !mobileToggle.contains(e.target)) {
         navLinks.classList.remove('active');
         const icon = mobileToggle.querySelector('i');
         if (icon) {
@@ -25,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
           icon.classList.remove('fa-times');
         }
       }
-    });
+    }
   });
 
   // Active link scroll spy
