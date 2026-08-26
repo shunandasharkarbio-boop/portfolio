@@ -3973,6 +3973,24 @@ section[id],
   filter: none !important;
 }
 
+/* Precise vertical positioning for ICCR Scholar card to show full flags & people */
+[data-title*="ICCR Scholar"] .achievement-img {
+  object-position: center 42% !important;
+}
+
+[data-title*="ICCR Scholar"] .achievement-img-aspect::after {
+  display: none !important;
+}
+
+/* Precise vertical positioning for Centennial card to show 100-year centennial emblem & banner */
+[data-title="Andhra University Centennial Celebrations"] .achievement-img {
+  object-position: center 9% !important;
+}
+
+[data-title="Andhra University Centennial Celebrations"] .achievement-img-aspect::after {
+  display: none !important;
+}
+
 /* 16:9 Image Placeholder Styling */
 .achievement-img-placeholder {
   position: absolute;
