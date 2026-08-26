@@ -4812,8 +4812,8 @@ section[id],
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 1.5rem 0 2.5rem;
-  margin-top: 2.5rem;
+  padding: 2rem 0 2.5rem;
+  margin-top: 2rem;
 }
 
 /* Gradient Fade Overlays on left & right edges */
@@ -4867,9 +4867,23 @@ section[id],
               box-shadow 0.3s ease;
 }
 
+/* Upward shift for ICCR Scholar & Centennial Celebrations cards */
+.ach-carousel-card[data-title*="ICCR Scholar"],
+.ach-carousel-card[data-title="Andhra University Centennial Celebrations"] {
+  transform: translateY(-12px) scale(1) !important;
+}
+
 /* Apple-style hover lift, scale & cyan glow */
 .ach-carousel-card:hover {
   transform: translateY(-8px) scale(1.025) !important;
+  border-color: rgba(0, 245, 155, 0.75) !important;
+  box-shadow: 0 20px 45px rgba(0, 245, 155, 0.2),
+              0 0 30px rgba(0, 210, 196, 0.15) !important;
+}
+
+.ach-carousel-card[data-title*="ICCR Scholar"]:hover,
+.ach-carousel-card[data-title="Andhra University Centennial Celebrations"]:hover {
+  transform: translateY(-20px) scale(1.025) !important;
   border-color: rgba(0, 245, 155, 0.75) !important;
   box-shadow: 0 20px 45px rgba(0, 245, 155, 0.2),
               0 0 30px rgba(0, 210, 196, 0.15) !important;
