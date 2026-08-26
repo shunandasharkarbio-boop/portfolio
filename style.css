@@ -3920,18 +3920,40 @@ section[id],
   align-items: center;
   justify-content: center;
   overflow: hidden;
+  background: #060c0a;
+}
+
+/* Subtle gradient blend overlay: smooth transition from photo into dark glass card */
+.achievement-img-aspect::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    180deg,
+    rgba(0, 0, 0, 0.1) 0%,
+    transparent 45%,
+    rgba(12, 18, 15, 0.45) 75%,
+    rgba(12, 18, 15, 0.95) 100%
+  );
+  pointer-events: none;
+  transition: opacity 0.35s ease;
 }
 
 .achievement-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  object-position: center 22%;
+  filter: contrast(1.06) saturate(1.08) brightness(1.02);
+  image-rendering: -webkit-optimize-contrast;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
   display: block;
 }
 
 .achievement-img-container:hover .achievement-img {
-  transform: scale(1.08);
+  transform: scale(1.06);
+  filter: contrast(1.09) saturate(1.15) brightness(1.06);
 }
 
 /* 16:9 Image Placeholder Styling */
