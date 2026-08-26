@@ -3982,9 +3982,9 @@ section[id],
   display: none !important;
 }
 
-/* Center image positioning for Centennial card to show middle of picture */
+/* Downward framing for Centennial card to show more of the downside */
 [data-title="Andhra University Centennial Celebrations"] .achievement-img {
-  object-position: center center !important;
+  object-position: center 27% !important;
 }
 
 [data-title="Andhra University Centennial Celebrations"] .achievement-img-aspect::after {
