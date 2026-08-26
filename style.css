@@ -3956,6 +3956,23 @@ section[id],
   filter: contrast(1.09) saturate(1.15) brightness(1.06);
 }
 
+/* Original unpolished styling for College Handball Team card picture */
+[data-title="College Handball Team"] .achievement-img-aspect::after {
+  display: none !important;
+}
+
+[data-title="College Handball Team"] .achievement-img {
+  object-position: center center !important;
+  filter: none !important;
+  image-rendering: auto !important;
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+[data-title="College Handball Team"] .achievement-img-container:hover .achievement-img {
+  transform: scale(1.08) !important;
+  filter: none !important;
+}
+
 /* 16:9 Image Placeholder Styling */
 .achievement-img-placeholder {
   position: absolute;
