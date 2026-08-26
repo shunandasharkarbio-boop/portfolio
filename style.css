@@ -4816,10 +4816,10 @@ section[id],
   cursor: grabbing;
 }
 
-/* Card sizing: 3 cards visible on desktop, 2 on tablet, 1 on mobile */
+/* Card sizing: reduced width for balanced, elegant display */
 .ach-carousel-card {
-  flex: 0 0 380px !important;
-  width: 380px !important;
+  flex: 0 0 325px !important;
+  width: 325px !important;
   max-width: 85vw !important;
   flex-shrink: 0 !important;
   transform: translateY(0) scale(1);
@@ -4844,8 +4844,8 @@ section[id],
 /* Responsive card widths */
 @media (max-width: 1024px) {
   .ach-carousel-card {
-    flex: 0 0 320px !important;
-    width: 320px !important;
+    flex: 0 0 280px !important;
+    width: 280px !important;
   }
   .ach-fade-left,
   .ach-fade-right {
@@ -4855,8 +4855,8 @@ section[id],
 
 @media (max-width: 640px) {
   .ach-carousel-card {
-    flex: 0 0 280px !important;
-    width: 280px !important;
+    flex: 0 0 260px !important;
+    width: 260px !important;
   }
   .ach-fade-left,
   .ach-fade-right {
