@@ -3973,18 +3973,18 @@ section[id],
   filter: none !important;
 }
 
-/* Precise vertical positioning for ICCR Scholar card to show full flags & people */
+/* Center image positioning for ICCR Scholar card to show middle of picture */
 [data-title*="ICCR Scholar"] .achievement-img {
-  object-position: center 42% !important;
+  object-position: center center !important;
 }
 
 [data-title*="ICCR Scholar"] .achievement-img-aspect::after {
   display: none !important;
 }
 
-/* Precise vertical positioning for Centennial card to show 100-year centennial emblem & banner */
+/* Center image positioning for Centennial card to show middle of picture */
 [data-title="Andhra University Centennial Celebrations"] .achievement-img {
-  object-position: center 9% !important;
+  object-position: center center !important;
 }
 
 [data-title="Andhra University Centennial Celebrations"] .achievement-img-aspect::after {
@@ -4873,7 +4873,7 @@ section[id],
   cursor: grabbing;
 }
 
-/* Card sizing: reduced width for balanced, elegant display */
+/* Card sizing: uniform size and alignment for all cards */
 .ach-carousel-card {
   flex: 0 0 325px !important;
   width: 325px !important;
@@ -4885,23 +4885,9 @@ section[id],
               box-shadow 0.3s ease;
 }
 
-/* Downward shift for ICCR Scholar & Centennial Celebrations cards */
-.ach-carousel-card[data-title*="ICCR Scholar"],
-.ach-carousel-card[data-title="Andhra University Centennial Celebrations"] {
-  transform: translateY(12px) scale(1) !important;
-}
-
 /* Apple-style hover lift, scale & cyan glow */
 .ach-carousel-card:hover {
   transform: translateY(-8px) scale(1.025) !important;
-  border-color: rgba(0, 245, 155, 0.75) !important;
-  box-shadow: 0 20px 45px rgba(0, 245, 155, 0.2),
-              0 0 30px rgba(0, 210, 196, 0.15) !important;
-}
-
-.ach-carousel-card[data-title*="ICCR Scholar"]:hover,
-.ach-carousel-card[data-title="Andhra University Centennial Celebrations"]:hover {
-  transform: translateY(4px) scale(1.025) !important;
   border-color: rgba(0, 245, 155, 0.75) !important;
   box-shadow: 0 20px 45px rgba(0, 245, 155, 0.2),
               0 0 30px rgba(0, 210, 196, 0.15) !important;
