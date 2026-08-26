@@ -3973,9 +3973,9 @@ section[id],
   filter: none !important;
 }
 
-/* Center image positioning for ICCR Scholar card to show middle of picture */
+/* Upward framing for ICCR Scholar card to show upper area and bottom of flags */
 [data-title*="ICCR Scholar"] .achievement-img {
-  object-position: center center !important;
+  object-position: center 22% !important;
 }
 
 [data-title*="ICCR Scholar"] .achievement-img-aspect::after {
