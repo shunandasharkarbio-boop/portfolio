@@ -5339,8 +5339,10 @@ section[id]::after {
 
 .avatar-character-layer {
   z-index: 1;
-  transform-origin: 50% 36%;
+  transform-origin: 50% 38%;
   will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
@@ -5352,26 +5354,8 @@ section[id]::after {
   object-fit: contain;
   display: block;
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.55));
-}
-
-.avatar-blink-img {
-  opacity: 0;
-  transition: opacity 0.05s ease;
-  pointer-events: none;
-}
-
-.avatar-blink-img.blinking {
-  opacity: 1;
-}
-
-.avatar-happy-img {
-  opacity: 0;
-  transition: opacity 0.2s ease;
-  pointer-events: none;
-}
-
-.avatar-happy-img.happy-active {
-  opacity: 1;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 /* ── Section Hand Prop Layer ── */
@@ -5382,12 +5366,14 @@ section[id]::after {
 
 .avatar-prop-img {
   opacity: 0;
+  display: none;
   transform: translateY(6px) scale(0.95);
-  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
 }
 
 .avatar-prop-img.prop-active {
+  display: block;
   opacity: 1;
   transform: translateY(0) scale(1);
 }

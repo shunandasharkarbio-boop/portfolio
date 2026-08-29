@@ -1000,15 +1000,13 @@ document.addEventListener('DOMContentLoaded', () => {
   initAboutParallaxAndStats();
 
   /* ==========================================================================
-     AUTONOMOUS LIVING SCIENTIST AVATAR (SELF-MOVING RIG & SECTION STATES)
+     SINGLE PERSISTENT LIVING SCIENTIST AVATAR CONTROLLER
      ========================================================================== */
   function initCornerAvatar() {
     const widget = document.getElementById('cornerAvatarWidget');
     const stage = document.getElementById('avatarStage');
-    const characterLayer = document.getElementById('avatarCharacterLayer') || document.getElementById('avatarHeadLayer');
+    const characterLayer = document.getElementById('avatarCharacterLayer');
     const fullImg = document.getElementById('avatarFullImg');
-    const blinkImg = document.getElementById('avatarBlinkImg');
-    const happyImg = document.getElementById('avatarHappyImg');
     const propImg = document.getElementById('avatarPropImg');
     const speechBubble = document.getElementById('avatarSpeechBubble');
     const bubbleText = document.getElementById('avatarBubbleText');
@@ -1017,9 +1015,32 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('avatarCloseBtn');
     const dockBtn = document.getElementById('avatarDockBtn');
 
-    if (!widget || !stage || !characterLayer) return;
+    if (!widget || !stage || !characterLayer || !fullImg) return;
 
-    // 1. SECTION STATES & AUTONOMOUS BEHAVIOR CONFIGURATION
+    // 0. Preload Image Assets in Memory for instant zero-latency swapping
+    const preloadedImages = {};
+    const assetList = [
+      './image/avatar_full.png',
+      './image/avatar_full_blink.png',
+      './image/avatar_full_happy.png',
+      './image/props/prop_book.png',
+      './image/props/prop_books.png',
+      './image/props/prop_dna.png',
+      './image/props/prop_laptop.png',
+      './image/props/prop_microscope.png',
+      './image/props/prop_clipboard.png',
+      './image/props/prop_cert.png',
+      './image/props/prop_skills.png',
+      './image/props/prop_trophy.png',
+      './image/props/prop_wave.png'
+    ];
+    assetList.forEach(src => {
+      const img = new Image();
+      img.src = src;
+      preloadedImages[src] = img;
+    });
+
+    // 1. Section Configurations
     const sectionConfigs = {
       'hero': {
         prop: null,
@@ -1032,7 +1053,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       'about': {
         prop: './image/props/prop_book.png',
-        baseYaw: 16,    // Looking right toward About Me content
+        baseYaw: 14,    // Looking right toward About Me content
         basePitch: 1,
         baseRoll: 2,
         isHappy: false,
@@ -1042,7 +1063,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'journey': {
         prop: './image/props/prop_books.png',
         baseYaw: 4,
-        basePitch: -11, // Looking up/forward with curiosity & academic growth
+        basePitch: -8, // Looking up/forward with curiosity & academic growth
         baseRoll: -1,
         isHappy: false,
         dialogue: "Academic evolution: From molecular foundations to advanced bioinformatics.",
@@ -1050,7 +1071,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       'skills': {
         prop: './image/props/prop_skills.png',
-        baseYaw: -15,   // Looking at floating skill icons
+        baseYaw: -14,   // Looking at floating skill icons
         basePitch: -4,
         baseRoll: -2,
         isHappy: false,
@@ -1069,7 +1090,7 @@ document.addEventListener('DOMContentLoaded', () => {
       'projects': {
         prop: './image/props/prop_microscope.png',
         baseYaw: -14,   // Looking into microscope eyepiece (hands-on research pose)
-        basePitch: 16,
+        basePitch: 14,
         baseRoll: -4,
         isHappy: false,
         dialogue: "Analyzing single-cell multi-omics & CIMA natural-cohort immune atlas!",
@@ -1095,10 +1116,10 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    // Scientific Biotech Facts Carousel
+    // Scientific Facts Carousel
     const biotechQuotes = [
-      { icon: '🧬', text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!" },
-      { icon: '🔬', text: "In silico biology turns billions of sequencing reads into targeted precision therapies." },
+      { icon: '🧬', text: "In silico biology turns billions of sequencing reads into targeted precision therapies." },
+      { icon: '🔬', text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!" },
       { icon: '💡', text: "Human DNA is 99.9% identical across all people; 0.1% holds our unique genetic variance." },
       { icon: '📊', text: "Single-cell RNA-seq resolves cell states that bulk sequencing could never distinguish." },
       { icon: '🧪', text: "CRISPR-Cas9 enables precise genome editing for therapeutic gene correction." },
@@ -1108,34 +1129,38 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentSectionKey = 'hero';
     let currentQuoteIdx = 0;
     let quoteTimer = null;
+    let isBlinking = false;
 
-    // 2. SMOOTH SECTION TRANSITIONS
+    // 2. Smooth In-Place State Transition (Single Persistent Instance)
     function setSectionState(sectionKey) {
       if (!sectionConfigs[sectionKey]) return;
-      if (currentSectionKey === sectionKey && propImg && propImg.getAttribute('src')) return;
+      if (currentSectionKey === sectionKey) return;
       currentSectionKey = sectionKey;
       const cfg = sectionConfigs[sectionKey];
 
-      // Smooth Prop Cross-Fade (400ms)
+      // Update Base Character Expression
+      if (!isBlinking) {
+        if (cfg.isHappy) {
+          fullImg.src = './image/avatar_full_happy.png';
+        } else {
+          fullImg.src = './image/avatar_full.png';
+        }
+      }
+
+      // Smooth Single-Prop Transition
       if (propImg) {
         propImg.classList.remove('prop-active');
         setTimeout(() => {
           if (cfg.prop) {
             propImg.src = cfg.prop;
+            propImg.style.display = 'block';
+            void propImg.offsetWidth;
             propImg.classList.add('prop-active');
           } else {
+            propImg.style.display = 'none';
             propImg.src = '';
           }
-        }, 220);
-      }
-
-      // Happy Eyes Toggle
-      if (happyImg) {
-        if (cfg.isHappy) {
-          happyImg.classList.add('happy-active');
-        } else {
-          happyImg.classList.remove('happy-active');
-        }
+        }, 180);
       }
 
       // Show Section Dialogue
@@ -1174,71 +1199,73 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // 3. INTERSECTION OBSERVER FOR SECTION DETECTION
-    const observerOptions = {
-      root: null,
-      rootMargin: '-15% 0px -25% 0px',
-      threshold: [0.15, 0.4, 0.7]
-    };
-
-    const sectionElements = [
+    // 3. Bidirectional Section Observer (Works both when scrolling UP and DOWN)
+    const trackedSections = [
       { id: 'hero', key: 'hero' },
       { id: 'about', key: 'about' },
+      { id: 'journey', key: 'journey' },
       { id: 'skills', key: 'skills' },
       { id: 'projects', key: 'projects' },
-      { id: 'journey', key: 'journey' },
       { id: 'achievements', key: 'achievements' }
     ];
 
     const certSection = document.querySelector('.skd-cert-section');
     const footerElement = document.querySelector('.main-footer');
 
-    const sectionObserver = new IntersectionObserver((entries) => {
-      let mostVisible = null;
-      let highestRatio = 0;
+    // Deterministic scroll position calculator to ensure perfect sync in both directions
+    function evaluateActiveSection() {
+      const viewportCenter = window.innerHeight * 0.45;
 
-      entries.forEach(entry => {
-        if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
-          highestRatio = entry.intersectionRatio;
-          mostVisible = entry.target;
-        }
-      });
-
-      if (mostVisible) {
-        const id = mostVisible.id;
-        if (id && sectionConfigs[id]) {
-          setSectionState(id);
-        } else if (mostVisible.classList.contains('skd-cert-section')) {
-          setSectionState('certifications');
-        } else if (mostVisible.classList.contains('main-footer')) {
+      if (footerElement) {
+        const fRect = footerElement.getBoundingClientRect();
+        if (fRect.top <= window.innerHeight * 0.8) {
           setSectionState('contact');
+          return;
         }
       }
-    }, observerOptions);
 
-    sectionElements.forEach(item => {
-      const el = document.getElementById(item.id);
-      if (el) sectionObserver.observe(el);
-    });
-
-    if (certSection) sectionObserver.observe(certSection);
-    if (footerElement) sectionObserver.observe(footerElement);
-
-    // Fallback scroll listener for responsive coverage
-    let scrollTimeout;
-    window.addEventListener('scroll', () => {
-      if (scrollTimeout) return;
-      scrollTimeout = setTimeout(() => {
-        scrollTimeout = null;
-        if (footerElement && footerElement.getBoundingClientRect().top < window.innerHeight * 0.75) {
-          setSectionState('contact');
-        } else if (certSection && certSection.getBoundingClientRect().top < window.innerHeight * 0.6 && certSection.getBoundingClientRect().bottom > window.innerHeight * 0.2) {
+      if (certSection) {
+        const cRect = certSection.getBoundingClientRect();
+        if (cRect.top <= viewportCenter && cRect.bottom >= viewportCenter) {
           setSectionState('certifications');
+          return;
         }
-      }, 120);
+      }
+
+      // Check standard section elements
+      for (let i = trackedSections.length - 1; i >= 0; i--) {
+        const item = trackedSections[i];
+        const el = document.getElementById(item.id);
+        if (el) {
+          const rect = el.getBoundingClientRect();
+          if (rect.top <= viewportCenter && rect.bottom >= viewportCenter) {
+            setSectionState(item.key);
+            return;
+          }
+        }
+      }
+
+      // Top of page default
+      if (window.scrollY < 200) {
+        setSectionState('hero');
+      }
+    }
+
+    let scrollTick = false;
+    window.addEventListener('scroll', () => {
+      if (!scrollTick) {
+        requestAnimationFrame(() => {
+          evaluateActiveSection();
+          scrollTick = false;
+        });
+        scrollTick = true;
+      }
     }, { passive: true });
 
-    // 4. AUTONOMOUS SELF-MOVEMENT & NATURAL PHYSICS ENGINE
+    // Initial evaluation
+    evaluateActiveSection();
+
+    // 4. Autonomous Motion & Gaze Physics Engine (Single Instance)
     let mouseX = window.innerWidth * 0.5;
     let mouseY = window.innerHeight * 0.4;
     let lastMouseMoveTime = performance.now();
@@ -1249,7 +1276,6 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentDx = 0;
     let currentDy = 0;
 
-    // Autonomous behavior parameters
     let autonomousTargetYaw = 0;
     let autonomousTargetPitch = 0;
     let nextLookShiftTime = performance.now() + 2000;
@@ -1267,7 +1293,6 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
 
-    // 60FPS Autonomous Animation Loop
     function renderAvatarFrame(now) {
       const timeSinceMove = now - lastMouseMoveTime;
       const cfg = sectionConfigs[currentSectionKey] || sectionConfigs['hero'];
@@ -1276,56 +1301,50 @@ document.addEventListener('DOMContentLoaded', () => {
       const avatarCenterX = rect.left + rect.width * 0.5;
       const avatarCenterY = rect.top + rect.height * 0.38;
 
-      // 4.1 Autonomous Gaze Shift Generator (Occurs naturally on its own)
+      // 4.1 Autonomous natural glance shift
       if (now > nextLookShiftTime) {
-        // Randomly choose an autonomous look-around intention
         const glanceOptions = [
-          { yaw: 0, pitch: 0 },                  // Frontal attentive look
-          { yaw: -8, pitch: -3 },                // Thoughtful glance left
-          { yaw: 10, pitch: 2 },                 // Welcoming glance right
-          { yaw: 2, pitch: -6 },                 // Looking up with inspiration
-          { yaw: -6, pitch: 8 },                 // Looking down at hands/prop
-          { yaw: cfg.baseYaw, pitch: cfg.basePitch } // Section focused look
+          { yaw: 0, pitch: 0 },
+          { yaw: -7, pitch: -2 },
+          { yaw: 8, pitch: 2 },
+          { yaw: 2, pitch: -5 },
+          { yaw: -5, pitch: 6 },
+          { yaw: cfg.baseYaw, pitch: cfg.basePitch }
         ];
         const chosen = glanceOptions[Math.floor(Math.random() * glanceOptions.length)];
         autonomousTargetYaw = chosen.yaw;
         autonomousTargetPitch = chosen.pitch;
-
-        // Schedule next natural glance shift in 3.2 - 6.0 seconds
         nextLookShiftTime = now + 3200 + Math.random() * 2800;
       }
 
-      // 4.2 Multi-Frequency Organic Micro-Breathing & Drift (Always moving naturally)
+      // 4.2 Multi-frequency organic breathing & drift
       const t = now * 0.0012;
-      const organicDriftYaw = Math.sin(t * 0.8) * 3.5 + Math.sin(t * 1.7) * 1.8;
-      const organicDriftPitch = Math.cos(t * 0.6) * 2.8 + Math.sin(t * 1.3) * 1.2;
-      const organicDriftRoll = organicDriftYaw * 0.15;
+      const organicDriftYaw = Math.sin(t * 0.8) * 3.0 + Math.sin(t * 1.6) * 1.5;
+      const organicDriftPitch = Math.cos(t * 0.6) * 2.4 + Math.sin(t * 1.2) * 1.0;
+      const organicDriftRoll = organicDriftYaw * 0.14;
 
       let targetYaw = cfg.baseYaw + autonomousTargetYaw + organicDriftYaw;
       let targetPitch = cfg.basePitch + autonomousTargetPitch + organicDriftPitch;
       let targetRoll = cfg.baseRoll + organicDriftRoll;
 
-      // 4.3 Seamless Pointer Interaction Blending (When user moves mouse)
+      // 4.3 Pointer interaction blending
       if (timeSinceMove < 2200) {
         const dx = mouseX - avatarCenterX;
         const dy = mouseY - avatarCenterY;
         const screenW = window.innerWidth || 1920;
         const screenH = window.innerHeight || 1080;
 
-        const cursorYawDelta = (dx / screenW) * 20;
-        const cursorPitchDelta = (dy / screenH) * 15;
+        const cursorYawDelta = (dx / screenW) * 18;
+        const cursorPitchDelta = (dy / screenH) * 14;
 
-        // Blend autonomous gaze with user cursor tracking
-        targetYaw = Math.max(-25, Math.min(25, cfg.baseYaw + cursorYawDelta + organicDriftYaw * 0.5));
-        targetPitch = Math.max(-20, Math.min(20, cfg.basePitch + cursorPitchDelta + organicDriftPitch * 0.5));
-        targetRoll = targetYaw * 0.18;
+        targetYaw = Math.max(-24, Math.min(24, cfg.baseYaw + cursorYawDelta + organicDriftYaw * 0.5));
+        targetPitch = Math.max(-18, Math.min(18, cfg.basePitch + cursorPitchDelta + organicDriftPitch * 0.5));
+        targetRoll = targetYaw * 0.16;
       }
 
-      // Natural translation offsets
-      const targetDx = (targetYaw / 25) * 4;
-      const targetDy = (targetPitch / 20) * 3;
+      const targetDx = (targetYaw / 25) * 3.5;
+      const targetDy = (targetPitch / 20) * 2.5;
 
-      // Smooth Physics Interpolation (Lerp factor: 0.055 for elegant, natural easing)
       const lerp = 0.055;
       currentYaw += (targetYaw - currentYaw) * lerp;
       currentPitch += (targetPitch - currentPitch) * lerp;
@@ -1333,7 +1352,7 @@ document.addEventListener('DOMContentLoaded', () => {
       currentDx += (targetDx - currentDx) * lerp;
       currentDy += (targetDy - currentDy) * lerp;
 
-      // Apply 3D Perspective Matrix to Character Layer
+      // Apply transform to the single character layer
       characterLayer.style.transform = `perspective(650px) rotateY(${currentYaw.toFixed(2)}deg) rotateX(${(-currentPitch).toFixed(2)}deg) rotateZ(${currentRoll.toFixed(2)}deg) translate3d(${currentDx.toFixed(2)}px, ${currentDy.toFixed(2)}px, 4px)`;
 
       requestAnimationFrame(renderAvatarFrame);
@@ -1341,37 +1360,46 @@ document.addEventListener('DOMContentLoaded', () => {
 
     requestAnimationFrame(renderAvatarFrame);
 
-    // 5. AUTONOMOUS EYE BLINKING ENGINE
+    // 5. In-Place Blinking Engine (Swaps image src on the single element)
     function triggerBlink() {
-      if (!blinkImg || currentSectionKey === 'achievements') return;
-      blinkImg.classList.add('blinking');
+      if (currentSectionKey === 'achievements') {
+        setTimeout(triggerBlink, 3000);
+        return;
+      }
+      isBlinking = true;
+      fullImg.src = './image/avatar_full_blink.png';
+
       setTimeout(() => {
-        blinkImg.classList.remove('blinking');
+        const cfg = sectionConfigs[currentSectionKey] || sectionConfigs['hero'];
+        fullImg.src = cfg.isHappy ? './image/avatar_full_happy.png' : './image/avatar_full.png';
+        isBlinking = false;
 
         // 22% chance of quick organic double-blink
         if (Math.random() < 0.22) {
           setTimeout(() => {
-            blinkImg.classList.add('blinking');
+            isBlinking = true;
+            fullImg.src = './image/avatar_full_blink.png';
             setTimeout(() => {
-              blinkImg.classList.remove('blinking');
+              const currentCfg = sectionConfigs[currentSectionKey] || sectionConfigs['hero'];
+              fullImg.src = currentCfg.isHappy ? './image/avatar_full_happy.png' : './image/avatar_full.png';
+              isBlinking = false;
             }, 100);
           }, 130);
         }
-      }, 120);
+      }, 110);
 
-      const nextBlink = 2600 + Math.random() * 3200;
+      const nextBlink = 2800 + Math.random() * 3200;
       setTimeout(triggerBlink, nextBlink);
     }
 
-    setTimeout(triggerBlink, 2000);
+    setTimeout(triggerBlink, 2200);
 
-    // 6. JOY BOUNCE & TACTILE REACTION
+    // 6. Click Interaction & Joy Bounce
     stage.addEventListener('click', () => {
       stage.classList.remove('joy-bounce');
       void stage.offsetWidth;
       stage.classList.add('joy-bounce');
 
-      // Cycle to next quote or section fact
       currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
       const q = biotechQuotes[currentQuoteIdx];
       showDialogue(q.icon, q.text);
@@ -1385,7 +1413,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 7. MINIMIZE & RESTORE DOCK CONTROLS
+    // 7. Minimize & Restore Controls
     function minimizeAvatar() {
       widget.classList.add('minimized');
       if (dockBtn) {
@@ -1424,8 +1452,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Initial State
-    setSectionState('hero');
     startFactAutoCycle();
 
     try {
