@@ -5396,17 +5396,6 @@ section[id]::after {
   transform: translateY(0) scale(1);
 }
 
-/* ── 3D WebGL Canvas Layer ── */
-.avatar-3d-canvas {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  pointer-events: none;
-  z-index: 4;
-}
-
 /* ── Ground Shadow & Ambient Pod ── */
 .avatar-shadow-pod {
   position: absolute;

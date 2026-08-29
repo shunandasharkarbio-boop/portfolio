@@ -1000,7 +1000,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initAboutParallaxAndStats();
 
   /* ==========================================================================
-     LIVING 2.5D SECTION-AWARE LAB AVATAR CONTROLLER (DYNAMIC HEAD & PROPS)
+     AUTONOMOUS LIVING SCIENTIST AVATAR (SELF-MOVING RIG & SECTION STATES)
      ========================================================================== */
   function initCornerAvatar() {
     const widget = document.getElementById('cornerAvatarWidget');
@@ -1018,7 +1018,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!widget || !stage || !headLayer) return;
 
-    // 1. SECTION STATES CONFIGURATION
+    // 1. SECTION STATES & AUTONOMOUS BEHAVIOR CONFIGURATION
     const sectionConfigs = {
       'hero': {
         prop: null,
@@ -1026,12 +1026,12 @@ document.addEventListener('DOMContentLoaded', () => {
         basePitch: 0,
         baseRoll: 0,
         isHappy: false,
-        dialogue: "Hi! Welcome to my bioinformatics & genomics portfolio!",
+        dialogue: "Hi! I'm Shunanda's lab assistant 🧬 Welcome to my portfolio!",
         icon: "🧬"
       },
       'about': {
         prop: './image/props/prop_book.png',
-        baseYaw: 15,    // Looking right toward About Me content
+        baseYaw: 16,    // Looking right toward About Me content
         basePitch: 1,
         baseRoll: 2,
         isHappy: false,
@@ -1049,7 +1049,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       'skills': {
         prop: './image/props/prop_skills.png',
-        baseYaw: -14,   // Looking at floating skill icons
+        baseYaw: -15,   // Looking at floating skill icons
         basePitch: -4,
         baseRoll: -2,
         isHappy: false,
@@ -1067,7 +1067,7 @@ document.addEventListener('DOMContentLoaded', () => {
       },
       'projects': {
         prop: './image/props/prop_microscope.png',
-        baseYaw: -14,   // Looking into microscope eyepiece (major hands-on research pose)
+        baseYaw: -14,   // Looking into microscope eyepiece (hands-on research pose)
         basePitch: 16,
         baseRoll: -4,
         isHappy: false,
@@ -1094,7 +1094,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
 
-    // Scientific Biotech Facts Carousel (for auto-cycle or ✨ next click)
+    // Scientific Biotech Facts Carousel
     const biotechQuotes = [
       { icon: '🧬', text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!" },
       { icon: '🔬', text: "In silico biology turns billions of sequencing reads into targeted precision therapies." },
@@ -1108,235 +1108,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentQuoteIdx = 0;
     let quoteTimer = null;
 
-    // 3D THREE.JS WEBGL AVATAR ENGINE
-    const canvas3D = document.getElementById('avatar3DCanvas');
-    let is3DActive = false;
-    let renderer3D, scene3D, camera3D, head3DGroup, body3DGroup, avatar3DRoot;
-    const prop3DObjects = {};
-
-    function init3DAvatarEngine() {
-      if (!window.THREE || !canvas3D) return false;
-
-      try {
-        const rect = stage.getBoundingClientRect();
-        const width = rect.width || 135;
-        const height = rect.height || 185;
-
-        renderer3D = new THREE.WebGLRenderer({
-          canvas: canvas3D,
-          alpha: true,
-          antialias: true,
-          powerPreference: "high-performance"
-        });
-        renderer3D.setSize(width, height);
-        renderer3D.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-        scene3D = new THREE.Scene();
-        camera3D = new THREE.PerspectiveCamera(38, width / height, 0.1, 100);
-        camera3D.position.set(0, 0, 5.8);
-
-        // Lighting
-        const ambLight = new THREE.AmbientLight(0xffffff, 0.95);
-        scene3D.add(ambLight);
-
-        const dirLight = new THREE.DirectionalLight(0xffffff, 0.65);
-        dirLight.position.set(2, 4, 4);
-        scene3D.add(dirLight);
-
-        const neonCyan = new THREE.PointLight(0x00d2c4, 1.4, 10);
-        neonCyan.position.set(2, -1, 3);
-        scene3D.add(neonCyan);
-
-        const neonEmerald = new THREE.PointLight(0x00f59b, 1.4, 10);
-        neonEmerald.position.set(-2, 1, 3);
-        scene3D.add(neonEmerald);
-
-        avatar3DRoot = new THREE.Group();
-        avatar3DRoot.position.set(0, -0.38, 0);
-        scene3D.add(avatar3DRoot);
-
-        // Materials
-        const skinMat = new THREE.MeshStandardMaterial({ color: 0xf2c0a0, roughness: 0.5 });
-        const coatMat = new THREE.MeshStandardMaterial({ color: 0xf8faff, roughness: 0.35 });
-        const navyMat = new THREE.MeshStandardMaterial({ color: 0x142236, roughness: 0.6 });
-        const hairMat = new THREE.MeshStandardMaterial({ color: 0x241816, roughness: 0.85 });
-        const goldMat = new THREE.MeshStandardMaterial({ color: 0xf5c518, metalness: 0.85, roughness: 0.2 });
-        const cyanMat = new THREE.MeshStandardMaterial({ color: 0x00d2c4, emissive: 0x007f76, emissiveIntensity: 0.6, roughness: 0.2 });
-        const emeraldMat = new THREE.MeshStandardMaterial({ color: 0x00f59b, emissive: 0x00995c, emissiveIntensity: 0.6, roughness: 0.2 });
-
-        // 1. 3D Body
-        body3DGroup = new THREE.Group();
-        avatar3DRoot.add(body3DGroup);
-
-        const coatGeo = new THREE.CylinderGeometry(0.65, 0.82, 1.4, 32);
-        const coatMesh = new THREE.Mesh(coatGeo, coatMat);
-        coatMesh.position.set(0, 0.1, 0);
-        body3DGroup.add(coatMesh);
-
-        const shirtGeo = new THREE.PlaneGeometry(0.4, 0.7);
-        const shirtMesh = new THREE.Mesh(shirtGeo, navyMat);
-        shirtMesh.position.set(0, 0.45, 0.66);
-        body3DGroup.add(shirtMesh);
-
-        const badgeGeo = new THREE.PlaneGeometry(0.26, 0.32);
-        const badgeMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
-        const badgeMesh = new THREE.Mesh(badgeGeo, badgeMat);
-        badgeMesh.position.set(0.32, 0.3, 0.68);
-        body3DGroup.add(badgeMesh);
-
-        const legGeo = new THREE.CylinderGeometry(0.18, 0.18, 0.85, 16);
-        const leftLeg = new THREE.Mesh(legGeo, navyMat);
-        leftLeg.position.set(-0.24, -0.85, 0);
-        body3DGroup.add(leftLeg);
-
-        const rightLeg = new THREE.Mesh(legGeo, navyMat);
-        rightLeg.position.set(0.24, -0.85, 0);
-        body3DGroup.add(rightLeg);
-
-        // 2. 3D Head Group
-        head3DGroup = new THREE.Group();
-        head3DGroup.position.set(0, 1.05, 0);
-        avatar3DRoot.add(head3DGroup);
-
-        const headGeo = new THREE.SphereGeometry(0.78, 32, 32);
-        const headMesh = new THREE.Mesh(headGeo, skinMat);
-        headMesh.scale.set(0.96, 1.0, 0.92);
-        head3DGroup.add(headMesh);
-
-        // 3D Curly Hair
-        for (let i = 0; i < 18; i++) {
-          const curlGeo = new THREE.SphereGeometry(0.28 + (i % 3) * 0.04, 16, 16);
-          const curlMesh = new THREE.Mesh(curlGeo, hairMat);
-          const angle = (i / 18) * Math.PI * 2;
-          const r = 0.72;
-          curlMesh.position.set(Math.cos(angle) * r, Math.sin(angle) * 0.5 + 0.3, Math.sin(angle) * 0.4 - 0.2);
-          head3DGroup.add(curlMesh);
-        }
-
-        // Texture Face Decal
-        const faceTex = new THREE.TextureLoader().load('./image/avatar_head_front.png');
-        const faceGeo = new THREE.PlaneGeometry(1.65, 1.65);
-        const facePlaneMat = new THREE.MeshBasicMaterial({ map: faceTex, transparent: true, opacity: 0.98 });
-        const facePlane = new THREE.Mesh(faceGeo, facePlaneMat);
-        facePlane.position.set(0, -0.05, 0.76);
-        head3DGroup.add(facePlane);
-
-        // 3. 3D Props
-        // 3.1 3D DNA Helix (Rotating Double Strand)
-        const dnaGroup = new THREE.Group();
-        dnaGroup.position.set(-0.9, 0.3, 0.3);
-        for (let i = 0; i < 20; i++) {
-          const t = i / 20;
-          const y = t * 1.4 - 0.7;
-          const ang = t * Math.PI * 4;
-          const x1 = Math.sin(ang) * 0.28;
-          const z1 = Math.cos(ang) * 0.28;
-          const x2 = -x1;
-          const z2 = -z1;
-
-          const rungGeo = new THREE.CylinderGeometry(0.02, 0.02, 0.56, 8);
-          const rungMesh = new THREE.Mesh(rungGeo, cyanMat);
-          rungMesh.position.set(0, y, 0);
-          rungMesh.rotation.z = Math.PI / 2;
-          rungMesh.rotation.y = -ang;
-          dnaGroup.add(rungMesh);
-
-          const n1Geo = new THREE.SphereGeometry(0.06, 12, 12);
-          const n1 = new THREE.Mesh(n1Geo, cyanMat);
-          n1.position.set(x1, y, z1);
-          dnaGroup.add(n1);
-
-          const n2 = new THREE.Mesh(n1Geo, emeraldMat);
-          n2.position.set(x2, y, z2);
-          dnaGroup.add(n2);
-        }
-        dnaGroup.scale.set(0, 0, 0);
-        avatar3DRoot.add(dnaGroup);
-        prop3DObjects['skills'] = dnaGroup;
-
-        // 3.2 3D Microscope
-        const microGroup = new THREE.Group();
-        microGroup.position.set(-0.7, -0.2, 0.4);
-        const baseMesh = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.1, 0.6), navyMat);
-        microGroup.add(baseMesh);
-        const pillar = new THREE.Mesh(new THREE.CylinderGeometry(0.06, 0.06, 0.8, 16), coatMat);
-        pillar.position.set(-0.15, 0.4, 0);
-        microGroup.add(pillar);
-        const tube = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 0.6, 16), navyMat);
-        tube.position.set(0.05, 0.65, 0);
-        tube.rotation.z = -0.4;
-        microGroup.add(tube);
-        const slide = new THREE.Mesh(new THREE.BoxGeometry(0.35, 0.03, 0.2), cyanMat);
-        slide.position.set(0.05, 0.35, 0);
-        microGroup.add(slide);
-        microGroup.scale.set(0, 0, 0);
-        avatar3DRoot.add(microGroup);
-        prop3DObjects['projects'] = microGroup;
-
-        // 3.3 3D Laptop
-        const lapGroup = new THREE.Group();
-        lapGroup.position.set(0, 0.05, 0.6);
-        const lapBase = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.04, 0.6), navyMat);
-        lapGroup.add(lapBase);
-        const lapScreen = new THREE.Mesh(new THREE.BoxGeometry(0.85, 0.55, 0.03), navyMat);
-        lapScreen.position.set(0, 0.28, -0.28);
-        lapScreen.rotation.x = 0.2;
-        lapGroup.add(lapScreen);
-        const lapDisplay = new THREE.Mesh(new THREE.PlaneGeometry(0.75, 0.45), cyanMat);
-        lapDisplay.position.set(0, 0.28, -0.26);
-        lapDisplay.rotation.x = 0.2;
-        lapGroup.add(lapDisplay);
-        lapGroup.scale.set(0, 0, 0);
-        avatar3DRoot.add(lapGroup);
-        prop3DObjects['journey'] = lapGroup;
-
-        // 3.4 3D Books
-        const bookGroup = new THREE.Group();
-        bookGroup.position.set(0.65, 0.1, 0.4);
-        for (let b = 0; b < 3; b++) {
-          const col = b === 0 ? 0x00d2c4 : b === 1 ? 0x00f59b : 0x24426b;
-          const bm = new THREE.Mesh(new THREE.BoxGeometry(0.6, 0.12, 0.45), new THREE.MeshStandardMaterial({ color: col }));
-          bm.position.set(0, b * 0.13 - 0.1, 0);
-          bm.rotation.y = (b - 1) * 0.1;
-          bookGroup.add(bm);
-        }
-        bookGroup.scale.set(0, 0, 0);
-        avatar3DRoot.add(bookGroup);
-        prop3DObjects['about'] = bookGroup;
-
-        // 3.5 3D Golden Trophy
-        const trophyGroup = new THREE.Group();
-        trophyGroup.position.set(0, 0.15, 0.55);
-        const cupMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.12, 0.45, 16), goldMat);
-        trophyGroup.add(cupMesh);
-        const stemMesh = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.2, 16), goldMat);
-        stemMesh.position.set(0, -0.3, 0);
-        trophyGroup.add(stemMesh);
-        const baseTrophy = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.24, 0.14, 16), navyMat);
-        baseTrophy.position.set(0, -0.42, 0);
-        trophyGroup.add(baseTrophy);
-        trophyGroup.scale.set(0, 0, 0);
-        avatar3DRoot.add(trophyGroup);
-        prop3DObjects['achievements'] = trophyGroup;
-
-        is3DActive = true;
-        return true;
-      } catch (e) {
-        console.warn("WebGL 3D fallback:", e);
-        return false;
-      }
-    }
-
-    init3DAvatarEngine();
-
-    // 2. SMOOTH SECTION STATE TRANSITION
+    // 2. SMOOTH SECTION TRANSITIONS
     function setSectionState(sectionKey) {
       if (!sectionConfigs[sectionKey]) return;
       if (currentSectionKey === sectionKey && propImg && propImg.getAttribute('src')) return;
       currentSectionKey = sectionKey;
       const cfg = sectionConfigs[sectionKey];
 
-      // Smooth 2.5D Prop Cross-Fade (400ms)
+      // Smooth Prop Cross-Fade (400ms)
       if (propImg) {
         propImg.classList.remove('prop-active');
         setTimeout(() => {
@@ -1347,17 +1126,6 @@ document.addEventListener('DOMContentLoaded', () => {
             propImg.src = '';
           }
         }, 220);
-      }
-
-      // Smooth 3D Prop Transitions
-      if (is3DActive && prop3DObjects) {
-        Object.keys(prop3DObjects).forEach(key => {
-          const obj = prop3DObjects[key];
-          if (obj) {
-            const targetScale = key === sectionKey ? 1 : 0;
-            obj.scale.set(targetScale, targetScale, targetScale);
-          }
-        });
       }
 
       // Happy Eyes Toggle
@@ -1469,7 +1237,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }, 120);
     }, { passive: true });
 
-    // 4. NATURAL 3D HEAD & EYE PHYSICS ENGINE
+    // 4. AUTONOMOUS SELF-MOVEMENT & NATURAL PHYSICS ENGINE
     let mouseX = window.innerWidth * 0.5;
     let mouseY = window.innerHeight * 0.4;
     let lastMouseMoveTime = performance.now();
@@ -1479,6 +1247,11 @@ document.addEventListener('DOMContentLoaded', () => {
     let currentRoll = 0;
     let currentDx = 0;
     let currentDy = 0;
+
+    // Autonomous behavior parameters
+    let autonomousTargetYaw = 0;
+    let autonomousTargetPitch = 0;
+    let nextLookShiftTime = performance.now() + 2000;
 
     function onPointerMove(x, y) {
       mouseX = x;
@@ -1493,7 +1266,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
 
-    // 60FPS Render Loop (Lerp + Section Baseline + Idle Micro-Breathing)
+    // 60FPS Autonomous Animation Loop
     function renderAvatarFrame(now) {
       const timeSinceMove = now - lastMouseMoveTime;
       const cfg = sectionConfigs[currentSectionKey] || sectionConfigs['hero'];
@@ -1502,83 +1275,80 @@ document.addEventListener('DOMContentLoaded', () => {
       const avatarCenterX = rect.left + rect.width * 0.5;
       const avatarCenterY = rect.top + rect.height * 0.38;
 
-      let targetYaw = cfg.baseYaw;
-      let targetPitch = cfg.basePitch;
-      let targetRoll = cfg.baseRoll;
+      // 4.1 Autonomous Gaze Shift Generator (Occurs naturally on its own)
+      if (now > nextLookShiftTime) {
+        // Randomly choose an autonomous look-around intention
+        const glanceOptions = [
+          { yaw: 0, pitch: 0 },                  // Frontal attentive look
+          { yaw: -8, pitch: -3 },                // Thoughtful glance left
+          { yaw: 10, pitch: 2 },                 // Welcoming glance right
+          { yaw: 2, pitch: -6 },                 // Looking up with inspiration
+          { yaw: -6, pitch: 8 },                 // Looking down at hands/prop
+          { yaw: cfg.baseYaw, pitch: cfg.basePitch } // Section focused look
+        ];
+        const chosen = glanceOptions[Math.floor(Math.random() * glanceOptions.length)];
+        autonomousTargetYaw = chosen.yaw;
+        autonomousTargetPitch = chosen.pitch;
 
-      if (timeSinceMove < 2600) {
-        // Active mouse tracking (adds subtle dynamic gaze on top of section baseline)
+        // Schedule next natural glance shift in 3.2 - 6.0 seconds
+        nextLookShiftTime = now + 3200 + Math.random() * 2800;
+      }
+
+      // 4.2 Multi-Frequency Organic Micro-Breathing & Drift (Always moving naturally)
+      const t = now * 0.0012;
+      const organicDriftYaw = Math.sin(t * 0.8) * 3.5 + Math.sin(t * 1.7) * 1.8;
+      const organicDriftPitch = Math.cos(t * 0.6) * 2.8 + Math.sin(t * 1.3) * 1.2;
+      const organicDriftRoll = organicDriftYaw * 0.15;
+
+      let targetYaw = cfg.baseYaw + autonomousTargetYaw + organicDriftYaw;
+      let targetPitch = cfg.basePitch + autonomousTargetPitch + organicDriftPitch;
+      let targetRoll = cfg.baseRoll + organicDriftRoll;
+
+      // 4.3 Seamless Pointer Interaction Blending (When user moves mouse)
+      if (timeSinceMove < 2200) {
         const dx = mouseX - avatarCenterX;
         const dy = mouseY - avatarCenterY;
         const screenW = window.innerWidth || 1920;
         const screenH = window.innerHeight || 1080;
 
-        const cursorYawDelta = (dx / screenW) * 24;
-        const cursorPitchDelta = (dy / screenH) * 18;
+        const cursorYawDelta = (dx / screenW) * 20;
+        const cursorPitchDelta = (dy / screenH) * 15;
 
-        targetYaw = Math.max(-25, Math.min(25, cfg.baseYaw + cursorYawDelta));
-        targetPitch = Math.max(-20, Math.min(20, cfg.basePitch + cursorPitchDelta));
+        // Blend autonomous gaze with user cursor tracking
+        targetYaw = Math.max(-25, Math.min(25, cfg.baseYaw + cursorYawDelta + organicDriftYaw * 0.5));
+        targetPitch = Math.max(-20, Math.min(20, cfg.basePitch + cursorPitchDelta + organicDriftPitch * 0.5));
         targetRoll = targetYaw * 0.18;
-      } else {
-        // Organic gentle idle micro-movement
-        const t = now * 0.001;
-        const idleWanderYaw = Math.sin(t * 0.7) * 3.5 + Math.sin(t * 1.5) * 1.5;
-        const idleWanderPitch = Math.cos(t * 0.5) * 2.5;
-        
-        targetYaw = cfg.baseYaw + idleWanderYaw;
-        targetPitch = cfg.basePitch + idleWanderPitch;
-        targetRoll = cfg.baseRoll + idleWanderYaw * 0.12;
       }
 
       // Natural translation offsets
       const targetDx = (targetYaw / 25) * 4;
       const targetDy = (targetPitch / 20) * 3;
 
-      // Smooth Lerp Damping (factor 0.065 for elegant easing)
-      const lerp = 0.065;
+      // Smooth Physics Interpolation (Lerp factor: 0.055 for elegant, natural easing)
+      const lerp = 0.055;
       currentYaw += (targetYaw - currentYaw) * lerp;
       currentPitch += (targetPitch - currentPitch) * lerp;
       currentRoll += (targetRoll - currentRoll) * lerp;
       currentDx += (targetDx - currentDx) * lerp;
       currentDy += (targetDy - currentDy) * lerp;
 
-      // Apply 3D Perspective Matrix to 2.5D Head Layer
+      // Apply 3D Perspective Matrix to Head Layer
       headLayer.style.transform = `perspective(650px) rotateY(${currentYaw.toFixed(2)}deg) rotateX(${(-currentPitch).toFixed(2)}deg) rotateZ(${currentRoll.toFixed(2)}deg) translate3d(${currentDx.toFixed(2)}px, ${currentDy.toFixed(2)}px, 4px)`;
-
-      // Apply to 3D Three.js Model
-      if (is3DActive && head3DGroup && renderer3D) {
-        head3DGroup.rotation.y = (currentYaw * Math.PI) / 180;
-        head3DGroup.rotation.x = (-currentPitch * Math.PI) / 180;
-        head3DGroup.rotation.z = (currentRoll * Math.PI) / 180;
-
-        // Continuous 3D Prop Rotations
-        if (prop3DObjects['skills']) {
-          prop3DObjects['skills'].rotation.y += 0.02;
-        }
-
-        // Breathing in 3D
-        if (body3DGroup) {
-          const t = now * 0.0018;
-          body3DGroup.scale.y = 1.0 + Math.sin(t) * 0.015;
-        }
-
-        renderer3D.render(scene3D, camera3D);
-      }
 
       requestAnimationFrame(renderAvatarFrame);
     }
 
     requestAnimationFrame(renderAvatarFrame);
 
-    // 5. LIFELIKE EYE BLINKING ENGINE
+    // 5. AUTONOMOUS EYE BLINKING ENGINE
     function triggerBlink() {
       if (!blinkImg || currentSectionKey === 'achievements') return;
       blinkImg.classList.add('blinking');
       setTimeout(() => {
         blinkImg.classList.remove('blinking');
 
-        // 20% chance of double blink
-        if (Math.random() < 0.20) {
+        // 22% chance of quick organic double-blink
+        if (Math.random() < 0.22) {
           setTimeout(() => {
             blinkImg.classList.add('blinking');
             setTimeout(() => {
@@ -1588,29 +1358,17 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       }, 120);
 
-      const nextBlink = 2800 + Math.random() * 3200;
+      const nextBlink = 2600 + Math.random() * 3200;
       setTimeout(triggerBlink, nextBlink);
     }
 
-    setTimeout(triggerBlink, 2200);
+    setTimeout(triggerBlink, 2000);
 
-    // 6. JOY BOUNCE & CLICK REACTION
+    // 6. JOY BOUNCE & TACTILE REACTION
     stage.addEventListener('click', () => {
       stage.classList.remove('joy-bounce');
       void stage.offsetWidth;
       stage.classList.add('joy-bounce');
-
-      if (is3DActive && avatar3DRoot) {
-        let hopCount = 0;
-        const hopInt = setInterval(() => {
-          hopCount += 0.2;
-          avatar3DRoot.position.y = -0.38 + Math.sin(hopCount * Math.PI) * 0.25;
-          if (hopCount >= 1) {
-            avatar3DRoot.position.y = -0.38;
-            clearInterval(hopInt);
-          }
-        }, 16);
-      }
 
       // Cycle to next quote or section fact
       currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
