@@ -1000,13 +1000,15 @@ document.addEventListener('DOMContentLoaded', () => {
   initAboutParallaxAndStats();
 
   /* ==========================================================================
-     LIVING 2.5D CORNER LAB AVATAR CONTROLLER (HEAD-TRACKING & MICRO-MOTION)
+     LIVING 2.5D SECTION-AWARE LAB AVATAR CONTROLLER (DYNAMIC HEAD & PROPS)
      ========================================================================== */
   function initCornerAvatar() {
     const widget = document.getElementById('cornerAvatarWidget');
     const stage = document.getElementById('avatarStage');
     const headLayer = document.getElementById('avatarHeadLayer');
     const blinkImg = document.getElementById('avatarBlinkImg');
+    const happyImg = document.getElementById('avatarHappyImg');
+    const propImg = document.getElementById('avatarPropImg');
     const speechBubble = document.getElementById('avatarSpeechBubble');
     const bubbleText = document.getElementById('avatarBubbleText');
     const bubbleIcon = document.getElementById('avatarBubbleIcon');
@@ -1016,63 +1018,229 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!widget || !stage || !headLayer) return;
 
-    // 1. Interactive Biotech Dialogues
-    const quotes = [
-      { icon: '🧬', text: "Hi! I'm Shunanda's lab avatar — welcome to my bioinformatics portfolio!" },
-      { icon: '🔬', text: "Exploring computational genomics, single-cell pipelines & genetic engineering." },
-      { icon: '💡', text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!" },
-      { icon: '📊', text: "Check out my single-cell RNA-seq pipeline & CIMA immune atlas above!" },
-      { icon: '🧪', text: "In silico genomics bridges big data with life-saving biological discoveries." },
-      { icon: '🎓', text: "Certified by NPTEL & IISc Bangalore in Evolutionary Biology & Genetic Engineering." },
-      { icon: '⚡', text: "Move your mouse around — I'll keep an eye on whatever you're reading!" },
-      { icon: '🚀', text: "Feel free to connect via LinkedIn or email to collaborate on biotech research!" }
+    // 1. SECTION STATES CONFIGURATION
+    const sectionConfigs = {
+      'hero': {
+        prop: null,
+        baseYaw: 0,
+        basePitch: 0,
+        baseRoll: 0,
+        isHappy: false,
+        dialogue: "Hi! Welcome to my bioinformatics & genomics portfolio!",
+        icon: "🧬"
+      },
+      'about': {
+        prop: './image/props/prop_book.png',
+        baseYaw: 15,    // Looking right toward About Me content
+        basePitch: 1,
+        baseRoll: 2,
+        isHappy: false,
+        dialogue: "Exploring molecular biology, genetic engineering & computational research.",
+        icon: "📖"
+      },
+      'journey': {
+        prop: './image/props/prop_books.png',
+        baseYaw: 4,
+        basePitch: -11, // Looking up/forward with curiosity & academic growth
+        baseRoll: -1,
+        isHappy: false,
+        dialogue: "Academic evolution: From molecular foundations to advanced bioinformatics.",
+        icon: "📚"
+      },
+      'skills': {
+        prop: './image/props/prop_skills.png',
+        baseYaw: -14,   // Looking at floating skill icons
+        basePitch: -4,
+        baseRoll: -2,
+        isHappy: false,
+        dialogue: "Specialized in Python, R, RNA-seq, BLAST, Nextflow & in silico modeling.",
+        icon: "⚡"
+      },
+      'certifications': {
+        prop: './image/props/prop_cert.png',
+        baseYaw: 0,     // Proud gentle smile looking forward
+        basePitch: -2,
+        baseRoll: 0,
+        isHappy: false,
+        dialogue: "Certified by NPTEL & IISc Bangalore in Evolutionary Biology & Genetic Engineering.",
+        icon: "🎓"
+      },
+      'projects': {
+        prop: './image/props/prop_microscope.png',
+        baseYaw: -14,   // Looking into microscope eyepiece (major hands-on research pose)
+        basePitch: 16,
+        baseRoll: -4,
+        isHappy: false,
+        dialogue: "Analyzing single-cell multi-omics & CIMA natural-cohort immune atlas!",
+        icon: "🔬"
+      },
+      'achievements': {
+        prop: './image/props/prop_trophy.png',
+        baseYaw: 0,
+        basePitch: 2,
+        baseRoll: -2,
+        isHappy: true,  // Happy smile ^_^
+        dialogue: "Celebrating university honors, athletic championships & centennial milestones!",
+        icon: "🏆"
+      },
+      'contact': {
+        prop: './image/props/prop_wave.png',
+        baseYaw: 0,     // Waving & facing viewer
+        basePitch: 0,
+        baseRoll: 0,
+        isHappy: false,
+        dialogue: "Let's connect! Always open to bioinformatics research & collaborations.",
+        icon: "👋"
+      }
+    };
+
+    // Scientific Biotech Facts Carousel (for auto-cycle or ✨ next click)
+    const biotechQuotes = [
+      { icon: '🧬', text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!" },
+      { icon: '🔬', text: "In silico biology turns billions of sequencing reads into targeted precision therapies." },
+      { icon: '💡', text: "Human DNA is 99.9% identical across all people; 0.1% holds our unique genetic variance." },
+      { icon: '📊', text: "Single-cell RNA-seq resolves cell states that bulk sequencing could never distinguish." },
+      { icon: '🧪', text: "CRISPR-Cas9 enables precise genome editing for therapeutic gene correction." },
+      { icon: '⚡', text: "Move your mouse around — I'll keep an eye on whatever you're exploring!" }
     ];
 
+    let currentSectionKey = 'hero';
     let currentQuoteIdx = 0;
     let quoteTimer = null;
 
-    function showQuote(index) {
-      if (!bubbleText || !bubbleIcon) return;
-      currentQuoteIdx = (index + quotes.length) % quotes.length;
-      const q = quotes[currentQuoteIdx];
+    // 2. SMOOTH SECTION STATE TRANSITION
+    function setSectionState(sectionKey) {
+      if (!sectionConfigs[sectionKey]) return;
+      if (currentSectionKey === sectionKey && propImg && propImg.getAttribute('src')) return;
+      currentSectionKey = sectionKey;
+      const cfg = sectionConfigs[sectionKey];
 
-      speechBubble.style.opacity = '0';
-      speechBubble.style.transform = 'translateY(6px) scale(0.95)';
+      // Smooth Prop Cross-Fade (400ms)
+      if (propImg) {
+        propImg.classList.remove('prop-active');
+        setTimeout(() => {
+          if (cfg.prop) {
+            propImg.src = cfg.prop;
+            propImg.classList.add('prop-active');
+          } else {
+            propImg.src = '';
+          }
+        }, 220);
+      }
 
-      setTimeout(() => {
-        bubbleIcon.textContent = q.icon;
-        bubbleText.textContent = q.text;
-        speechBubble.style.opacity = '1';
-        speechBubble.style.transform = 'translateY(0) scale(1)';
-      }, 150);
+      // Happy Eyes Toggle
+      if (happyImg) {
+        if (cfg.isHappy) {
+          happyImg.classList.add('happy-active');
+        } else {
+          happyImg.classList.remove('happy-active');
+        }
+      }
+
+      // Show Section Dialogue
+      showDialogue(cfg.icon, cfg.dialogue);
     }
 
-    function startQuoteAutoCycle() {
+    function showDialogue(icon, text) {
+      if (!bubbleText || !bubbleIcon || !speechBubble) return;
+      speechBubble.style.opacity = '0';
+      speechBubble.style.transform = 'translateY(6px) scale(0.96)';
+
+      setTimeout(() => {
+        bubbleIcon.textContent = icon;
+        bubbleText.textContent = text;
+        speechBubble.style.opacity = '1';
+        speechBubble.style.transform = 'translateY(0) scale(1)';
+      }, 160);
+    }
+
+    function startFactAutoCycle() {
       if (quoteTimer) clearInterval(quoteTimer);
       quoteTimer = setInterval(() => {
-        showQuote(currentQuoteIdx + 1);
-      }, 12000);
+        currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
+        const q = biotechQuotes[currentQuoteIdx];
+        showDialogue(q.icon, q.text);
+      }, 14000);
     }
 
     if (nextBtn) {
       nextBtn.addEventListener('click', (e) => {
         e.stopPropagation();
-        showQuote(currentQuoteIdx + 1);
-        startQuoteAutoCycle();
+        currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
+        const q = biotechQuotes[currentQuoteIdx];
+        showDialogue(q.icon, q.text);
+        startFactAutoCycle();
       });
     }
 
-    // 2. Physics & Motion Math Engine
-    let mouseX = window.innerWidth * 0.5;
-    let mouseY = window.innerHeight * 0.3;
-    let lastMouseMoveTime = performance.now();
-    let isMouseActive = false;
+    // 3. INTERSECTION OBSERVER FOR SECTION DETECTION
+    const observerOptions = {
+      root: null,
+      rootMargin: '-15% 0px -25% 0px',
+      threshold: [0.15, 0.4, 0.7]
+    };
 
-    let targetYaw = 0;
-    let targetPitch = 0;
-    let targetRoll = 0;
-    let targetDx = 0;
-    let targetDy = 0;
+    const sectionElements = [
+      { id: 'hero', key: 'hero' },
+      { id: 'about', key: 'about' },
+      { id: 'skills', key: 'skills' },
+      { id: 'projects', key: 'projects' },
+      { id: 'journey', key: 'journey' },
+      { id: 'achievements', key: 'achievements' }
+    ];
+
+    const certSection = document.querySelector('.skd-cert-section');
+    const footerElement = document.querySelector('.main-footer');
+
+    const sectionObserver = new IntersectionObserver((entries) => {
+      let mostVisible = null;
+      let highestRatio = 0;
+
+      entries.forEach(entry => {
+        if (entry.isIntersecting && entry.intersectionRatio > highestRatio) {
+          highestRatio = entry.intersectionRatio;
+          mostVisible = entry.target;
+        }
+      });
+
+      if (mostVisible) {
+        const id = mostVisible.id;
+        if (id && sectionConfigs[id]) {
+          setSectionState(id);
+        } else if (mostVisible.classList.contains('skd-cert-section')) {
+          setSectionState('certifications');
+        } else if (mostVisible.classList.contains('main-footer')) {
+          setSectionState('contact');
+        }
+      }
+    }, observerOptions);
+
+    sectionElements.forEach(item => {
+      const el = document.getElementById(item.id);
+      if (el) sectionObserver.observe(el);
+    });
+
+    if (certSection) sectionObserver.observe(certSection);
+    if (footerElement) sectionObserver.observe(footerElement);
+
+    // Fallback scroll listener for responsive coverage
+    let scrollTimeout;
+    window.addEventListener('scroll', () => {
+      if (scrollTimeout) return;
+      scrollTimeout = setTimeout(() => {
+        scrollTimeout = null;
+        if (footerElement && footerElement.getBoundingClientRect().top < window.innerHeight * 0.75) {
+          setSectionState('contact');
+        } else if (certSection && certSection.getBoundingClientRect().top < window.innerHeight * 0.6 && certSection.getBoundingClientRect().bottom > window.innerHeight * 0.2) {
+          setSectionState('certifications');
+        }
+      }, 120);
+    }, { passive: true });
+
+    // 4. NATURAL 3D HEAD & EYE PHYSICS ENGINE
+    let mouseX = window.innerWidth * 0.5;
+    let mouseY = window.innerHeight * 0.4;
+    let lastMouseMoveTime = performance.now();
 
     let currentYaw = 0;
     let currentPitch = 0;
@@ -1084,7 +1252,6 @@ document.addEventListener('DOMContentLoaded', () => {
       mouseX = x;
       mouseY = y;
       lastMouseMoveTime = performance.now();
-      isMouseActive = true;
     }
 
     window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY), { passive: true });
@@ -1094,91 +1261,98 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }, { passive: true });
 
-    // 3. Animation Frame Loop (Smooth 60FPS Lerp + Idle Wandering)
-    function animateAvatar() {
-      const now = performance.now();
+    // 60FPS Render Loop (Lerp + Section Baseline + Idle Micro-Breathing)
+    function renderAvatarFrame(now) {
       const timeSinceMove = now - lastMouseMoveTime;
+      const cfg = sectionConfigs[currentSectionKey] || sectionConfigs['hero'];
 
       const rect = stage.getBoundingClientRect();
       const avatarCenterX = rect.left + rect.width * 0.5;
       const avatarCenterY = rect.top + rect.height * 0.38;
 
-      if (timeSinceMove < 2500) {
-        // Active mouse tracking
+      let targetYaw = cfg.baseYaw;
+      let targetPitch = cfg.basePitch;
+      let targetRoll = cfg.baseRoll;
+
+      if (timeSinceMove < 2600) {
+        // Active mouse tracking (adds subtle dynamic gaze on top of section baseline)
         const dx = mouseX - avatarCenterX;
         const dy = mouseY - avatarCenterY;
         const screenW = window.innerWidth || 1920;
         const screenH = window.innerHeight || 1080;
 
-        // Angle scaling
-        const rawYaw = (dx / screenW) * 48;
-        const rawPitch = (dy / screenH) * 36;
+        const cursorYawDelta = (dx / screenW) * 24;
+        const cursorPitchDelta = (dy / screenH) * 18;
 
-        targetYaw = Math.max(-28, Math.min(28, rawYaw));
-        targetPitch = Math.max(-22, Math.min(20, rawPitch));
-        targetRoll = targetYaw * 0.22;
-        targetDx = Math.max(-8, Math.min(8, (dx / screenW) * 16));
-        targetDy = Math.max(-6, Math.min(6, (dy / screenH) * 12));
+        targetYaw = Math.max(-25, Math.min(25, cfg.baseYaw + cursorYawDelta));
+        targetPitch = Math.max(-20, Math.min(20, cfg.basePitch + cursorPitchDelta));
+        targetRoll = targetYaw * 0.18;
       } else {
-        // Organic idle wandering (subtle curiosity glance around)
-        const t = now * 0.0012;
-        targetYaw = Math.sin(t * 0.7) * 14 + Math.sin(t * 1.5) * 5;
-        targetPitch = Math.cos(t * 0.5) * 8 - 4;
-        targetRoll = targetYaw * 0.2;
-        targetDx = Math.sin(t * 0.7) * 3;
-        targetDy = Math.cos(t * 0.5) * 2;
+        // Organic gentle idle micro-movement
+        const t = now * 0.001;
+        const idleWanderYaw = Math.sin(t * 0.7) * 3.5 + Math.sin(t * 1.5) * 1.5;
+        const idleWanderPitch = Math.cos(t * 0.5) * 2.5;
+        
+        targetYaw = cfg.baseYaw + idleWanderYaw;
+        targetPitch = cfg.basePitch + idleWanderPitch;
+        targetRoll = cfg.baseRoll + idleWanderYaw * 0.12;
       }
 
-      // Smooth Lerp Damping
-      const lerpFactor = 0.085;
-      currentYaw += (targetYaw - currentYaw) * lerpFactor;
-      currentPitch += (targetPitch - currentPitch) * lerpFactor;
-      currentRoll += (targetRoll - currentRoll) * lerpFactor;
-      currentDx += (targetDx - currentDx) * lerpFactor;
-      currentDy += (targetDy - currentDy) * lerpFactor;
+      // Natural translation offsets
+      const targetDx = (targetYaw / 25) * 4;
+      const targetDy = (targetPitch / 20) * 3;
 
-      // Apply 3D matrix transform to Head Layer
-      headLayer.style.transform = `perspective(600px) rotateY(${currentYaw.toFixed(2)}deg) rotateX(${(-currentPitch).toFixed(2)}deg) rotateZ(${currentRoll.toFixed(2)}deg) translate3d(${currentDx.toFixed(2)}px, ${currentDy.toFixed(2)}px, 8px)`;
+      // Smooth Lerp Damping (factor 0.065 for elegant easing)
+      const lerp = 0.065;
+      currentYaw += (targetYaw - currentYaw) * lerp;
+      currentPitch += (targetPitch - currentPitch) * lerp;
+      currentRoll += (targetRoll - currentRoll) * lerp;
+      currentDx += (targetDx - currentDx) * lerp;
+      currentDy += (targetDy - currentDy) * lerp;
 
-      requestAnimationFrame(animateAvatar);
+      // Apply 3D Perspective Matrix to Head Layer
+      headLayer.style.transform = `perspective(650px) rotateY(${currentYaw.toFixed(2)}deg) rotateX(${(-currentPitch).toFixed(2)}deg) rotateZ(${currentRoll.toFixed(2)}deg) translate3d(${currentDx.toFixed(2)}px, ${currentDy.toFixed(2)}px, 4px)`;
+
+      requestAnimationFrame(renderAvatarFrame);
     }
 
-    requestAnimationFrame(animateAvatar);
+    requestAnimationFrame(renderAvatarFrame);
 
-    // 4. Lifelike Eye Blinking Engine
+    // 5. LIFELIKE EYE BLINKING ENGINE
     function triggerBlink() {
-      if (!blinkImg) return;
+      if (!blinkImg || currentSectionKey === 'achievements') return;
       blinkImg.classList.add('blinking');
       setTimeout(() => {
         blinkImg.classList.remove('blinking');
 
-        // 22% chance of quick double blink for organic feel
-        if (Math.random() < 0.22) {
+        // 20% chance of double blink
+        if (Math.random() < 0.20) {
           setTimeout(() => {
             blinkImg.classList.add('blinking');
             setTimeout(() => {
               blinkImg.classList.remove('blinking');
-            }, 110);
-          }, 140);
+            }, 100);
+          }, 130);
         }
       }, 120);
 
-      // Schedule next blink
-      const nextBlinkDelay = 2800 + Math.random() * 3400;
-      setTimeout(triggerBlink, nextBlinkDelay);
+      const nextBlink = 2800 + Math.random() * 3200;
+      setTimeout(triggerBlink, nextBlink);
     }
 
-    setTimeout(triggerBlink, 2000);
+    setTimeout(triggerBlink, 2200);
 
-    // 5. Interactive Joy Bounce & Click Feedback
+    // 6. JOY BOUNCE & CLICK REACTION
     stage.addEventListener('click', () => {
       stage.classList.remove('joy-bounce');
-      // Trigger reflow to restart animation
       void stage.offsetWidth;
       stage.classList.add('joy-bounce');
 
-      showQuote(currentQuoteIdx + 1);
-      startQuoteAutoCycle();
+      // Cycle to next quote or section fact
+      currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
+      const q = biotechQuotes[currentQuoteIdx];
+      showDialogue(q.icon, q.text);
+      startFactAutoCycle();
     });
 
     stage.addEventListener('keydown', (e) => {
@@ -1188,7 +1362,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
 
-    // 6. Minimize & Dock Controls
+    // 7. MINIMIZE & RESTORE DOCK CONTROLS
     function minimizeAvatar() {
       widget.classList.add('minimized');
       if (dockBtn) {
@@ -1211,7 +1385,7 @@ document.addEventListener('DOMContentLoaded', () => {
       try {
         sessionStorage.removeItem('shunanda_avatar_minimized');
       } catch (err) {}
-      startQuoteAutoCycle();
+      startFactAutoCycle();
     }
 
     if (closeBtn) {
@@ -1227,16 +1401,15 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     }
 
-    // Check stored state
+    // Initial State
+    setSectionState('hero');
+    startFactAutoCycle();
+
     try {
       if (sessionStorage.getItem('shunanda_avatar_minimized') === 'true') {
         minimizeAvatar();
-      } else {
-        startQuoteAutoCycle();
       }
-    } catch (err) {
-      startQuoteAutoCycle();
-    }
+    } catch (err) {}
   }
 
   // Initialize

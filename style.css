@@ -5361,10 +5361,39 @@ section[id]::after {
 .avatar-blink-img {
   opacity: 0;
   transition: opacity 0.05s ease;
+  pointer-events: none;
 }
 
 .avatar-blink-img.blinking {
   opacity: 1;
+}
+
+.avatar-happy-img {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+}
+
+.avatar-happy-img.happy-active {
+  opacity: 1;
+}
+
+/* ── Section Hand Prop Layer ── */
+.avatar-prop-layer {
+  z-index: 3;
+  pointer-events: none;
+}
+
+.avatar-prop-img {
+  opacity: 0;
+  transform: translateY(6px) scale(0.95);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
+}
+
+.avatar-prop-img.prop-active {
+  opacity: 1;
+  transform: translateY(0) scale(1);
 }
 
 /* ── Ground Shadow & Ambient Pod ── */
