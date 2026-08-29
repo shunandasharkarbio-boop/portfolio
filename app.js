@@ -1005,7 +1005,8 @@ document.addEventListener('DOMContentLoaded', () => {
   function initCornerAvatar() {
     const widget = document.getElementById('cornerAvatarWidget');
     const stage = document.getElementById('avatarStage');
-    const headLayer = document.getElementById('avatarHeadLayer');
+    const characterLayer = document.getElementById('avatarCharacterLayer') || document.getElementById('avatarHeadLayer');
+    const fullImg = document.getElementById('avatarFullImg');
     const blinkImg = document.getElementById('avatarBlinkImg');
     const happyImg = document.getElementById('avatarHappyImg');
     const propImg = document.getElementById('avatarPropImg');
@@ -1016,7 +1017,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const closeBtn = document.getElementById('avatarCloseBtn');
     const dockBtn = document.getElementById('avatarDockBtn');
 
-    if (!widget || !stage || !headLayer) return;
+    if (!widget || !stage || !characterLayer) return;
 
     // 1. SECTION STATES & AUTONOMOUS BEHAVIOR CONFIGURATION
     const sectionConfigs = {
@@ -1332,8 +1333,8 @@ document.addEventListener('DOMContentLoaded', () => {
       currentDx += (targetDx - currentDx) * lerp;
       currentDy += (targetDy - currentDy) * lerp;
 
-      // Apply 3D Perspective Matrix to Head Layer
-      headLayer.style.transform = `perspective(650px) rotateY(${currentYaw.toFixed(2)}deg) rotateX(${(-currentPitch).toFixed(2)}deg) rotateZ(${currentRoll.toFixed(2)}deg) translate3d(${currentDx.toFixed(2)}px, ${currentDy.toFixed(2)}px, 4px)`;
+      // Apply 3D Perspective Matrix to Character Layer
+      characterLayer.style.transform = `perspective(650px) rotateY(${currentYaw.toFixed(2)}deg) rotateX(${(-currentPitch).toFixed(2)}deg) rotateZ(${currentRoll.toFixed(2)}deg) translate3d(${currentDx.toFixed(2)}px, ${currentDy.toFixed(2)}px, 4px)`;
 
       requestAnimationFrame(renderAvatarFrame);
     }

@@ -27,7 +27,7 @@
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
-  <link rel="stylesheet" href="./style.css?v=10">
+  <link rel="stylesheet" href="./style.css?v=11">
 </head>
 
 <body>
@@ -1536,19 +1536,14 @@
         </svg>
       </button>
 
-      <!-- Body Layer (Breathes & Anchors) -->
-      <div class="avatar-layer avatar-body-layer">
-        <img src="./image/avatar_body.png" alt="Lab Researcher Body" class="avatar-img avatar-body-img" draggable="false" />
-      </div>
-      
-      <!-- Head Layer (Dynamically Turns & Tilts Smoothly) -->
-      <div id="avatarHeadLayer" class="avatar-layer avatar-head-layer">
-        <img id="avatarHeadImg" src="./image/avatar_head.png" alt="Shunanda Avatar Head" class="avatar-img avatar-head-img" draggable="false" />
-        <img id="avatarBlinkImg" src="./image/avatar_head_blink.png" alt="Avatar Blinking Eyes" class="avatar-img avatar-blink-img" draggable="false" />
-        <img id="avatarHappyImg" src="./image/avatar_head_happy.png" alt="Avatar Happy Eyes" class="avatar-img avatar-happy-img" draggable="false" />
+      <!-- Complete Single Intact Scientist Character -->
+      <div id="avatarCharacterLayer" class="avatar-layer avatar-character-layer">
+        <img id="avatarFullImg" src="./image/avatar_full.png" alt="Shunanda Biotechnology Researcher Avatar" class="avatar-img avatar-full-img" draggable="false" />
+        <img id="avatarBlinkImg" src="./image/avatar_full_blink.png" alt="Avatar Blinking" class="avatar-img avatar-blink-img" draggable="false" />
+        <img id="avatarHappyImg" src="./image/avatar_full_happy.png" alt="Avatar Happy" class="avatar-img avatar-happy-img" draggable="false" />
       </div>
 
-      <!-- Section Hand Prop Layer (Smoothly transitions between microscope, laptop, DNA, books, trophy, etc.) -->
+      <!-- Section Hand Prop Layer (Transitions smoothly per section) -->
       <div id="avatarPropLayer" class="avatar-layer avatar-prop-layer">
         <img id="avatarPropImg" src="" alt="Section Prop" class="avatar-img avatar-prop-img" draggable="false" style="opacity: 0;" />
       </div>
@@ -1566,7 +1561,7 @@
   </button>
 
   <!-- App Logic -->
-  <script src="./app.js?v=10"></script>
+  <script src="./app.js?v=11"></script>
 </body>
 
 </html>

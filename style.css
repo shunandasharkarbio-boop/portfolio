@@ -5337,18 +5337,14 @@ section[id]::after {
   pointer-events: none;
 }
 
-.avatar-body-layer {
+.avatar-character-layer {
   z-index: 1;
-}
-
-.avatar-head-layer {
-  z-index: 2;
-  transform-origin: 50.5% 43%;
+  transform-origin: 50% 36%;
   will-change: transform;
-  transition: transform 0.05s linear;
+  transition: transform 0.12s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.avatar-img {
+.avatar-full-img {
   position: absolute;
   inset: 0;
   width: 100%;
