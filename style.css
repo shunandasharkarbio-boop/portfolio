@@ -5189,3 +5189,366 @@ section[id]::after {
   background: linear-gradient(90deg, transparent 0%, rgba(0, 245, 155, 0.2) 50%, transparent 100%);
   pointer-events: none;
 }
+
+
+/* ==========================================================================
+   INTERACTIVE LIVING LAB AVATAR WIDGET (2.5D HEAD-TRACKING RIG)
+   ========================================================================== */
+
+.corner-avatar-widget {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  z-index: 99990;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  pointer-events: none;
+  font-family: var(--font-family-base, 'Inter', sans-serif);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.corner-avatar-widget.minimized {
+  opacity: 0;
+  transform: translateY(30px) scale(0.7);
+  pointer-events: none;
+}
+
+/* ── Interactive Speech Bubble ── */
+.avatar-speech-bubble {
+  position: relative;
+  max-width: 250px;
+  margin-bottom: 12px;
+  background: rgba(8, 20, 26, 0.92);
+  border: 1px solid rgba(0, 210, 196, 0.4);
+  border-radius: 16px;
+  padding: 10px 14px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.65), 0 0 18px rgba(0, 210, 196, 0.2);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  pointer-events: auto;
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.avatar-speech-bubble.bubble-hidden {
+  opacity: 0;
+  transform: translateY(10px) scale(0.9);
+  pointer-events: none;
+}
+
+.avatar-bubble-content {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.avatar-bubble-icon {
+  font-size: 1.15rem;
+  line-height: 1.2;
+  flex-shrink: 0;
+  animation: avatarIconGlow 2.5s ease-in-out infinite alternate;
+}
+
+.avatar-bubble-text {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: #e6fffa;
+  line-height: 1.4;
+  letter-spacing: 0.01em;
+}
+
+.avatar-bubble-actions {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.avatar-bubble-btn {
+  background: rgba(0, 210, 196, 0.12);
+  border: 1px solid rgba(0, 210, 196, 0.3);
+  color: #00f59b;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  font-size: 0.72rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.avatar-bubble-btn:hover {
+  background: #00d2c4;
+  color: #030a16;
+  transform: scale(1.15) rotate(15deg);
+  box-shadow: 0 0 10px rgba(0, 210, 196, 0.6);
+}
+
+.avatar-bubble-tail {
+  position: absolute;
+  bottom: -7px;
+  right: 50px;
+  width: 12px;
+  height: 12px;
+  background: rgba(8, 20, 26, 0.92);
+  border-right: 1px solid rgba(0, 210, 196, 0.4);
+  border-bottom: 1px solid rgba(0, 210, 196, 0.4);
+  transform: rotate(45deg);
+}
+
+/* ── Avatar Stage & Character Rig ── */
+.avatar-stage {
+  position: relative;
+  width: 135px;
+  height: 185px;
+  pointer-events: auto;
+  cursor: pointer;
+  transform-origin: center bottom;
+  perspective: 800px;
+  user-select: none;
+  -webkit-user-select: none;
+  animation: avatarTorsoBreathe 4.5s ease-in-out infinite;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avatar-stage:hover {
+  transform: translateY(-3px);
+}
+
+.avatar-stage:focus-visible {
+  outline: 2px solid #00f59b;
+  outline-offset: 4px;
+  border-radius: 12px;
+}
+
+/* ── Layers ── */
+.avatar-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.avatar-body-layer {
+  z-index: 1;
+}
+
+.avatar-head-layer {
+  z-index: 2;
+  transform-origin: 50.5% 43%;
+  will-change: transform;
+  transition: transform 0.05s linear;
+}
+
+.avatar-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.55));
+}
+
+.avatar-blink-img {
+  opacity: 0;
+  transition: opacity 0.05s ease;
+}
+
+.avatar-blink-img.blinking {
+  opacity: 1;
+}
+
+/* ── Ground Shadow & Ambient Pod ── */
+.avatar-shadow-pod {
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 75px;
+  height: 14px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(0, 245, 155, 0.45) 0%, rgba(0, 210, 196, 0.2) 45%, transparent 75%);
+  filter: blur(4px);
+  z-index: 0;
+  animation: avatarPodPulse 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* ── Close / Minimize Button (Lime Accent) ── */
+.avatar-ctrl-btn.avatar-close-btn {
+  position: absolute;
+  top: -4px;
+  right: 6px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #c6e644;
+  border: 2px solid #071912;
+  color: #122105;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5), 0 0 10px rgba(198, 230, 68, 0.35);
+  z-index: 10;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+}
+
+.avatar-ctrl-btn.avatar-close-btn:hover {
+  transform: scale(1.18) rotate(90deg);
+  background: #d8f75b;
+  box-shadow: 0 4px 16px rgba(198, 230, 68, 0.7);
+}
+
+/* ── Minimized Floating Dock Badge ── */
+.avatar-dock-btn {
+  position: fixed;
+  bottom: 22px;
+  right: 24px;
+  z-index: 99990;
+  background: rgba(8, 20, 26, 0.92);
+  border: 1px solid rgba(0, 245, 155, 0.45);
+  border-radius: 50px;
+  padding: 8px 16px 8px 12px;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 245, 155, 0.25);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  font-family: var(--font-family-base, 'Inter', sans-serif);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: avatarDockEntrance 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.avatar-dock-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  border-color: #00f59b;
+  background: rgba(12, 30, 38, 0.96);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 245, 155, 0.5);
+}
+
+.dock-badge-pulse {
+  position: absolute;
+  left: 10px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #00f59b;
+  box-shadow: 0 0 8px #00f59b;
+  animation: avatarPulseRing 1.8s infinite;
+}
+
+.dock-icon {
+  font-size: 1.15rem;
+  margin-left: 6px;
+}
+
+.dock-label {
+  color: #00f59b;
+  letter-spacing: 0.03em;
+}
+
+/* ── Joy Bounce Animation on Click ── */
+.avatar-stage.joy-bounce {
+  animation: avatarJoyBounce 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.275) !important;
+}
+
+@keyframes avatarJoyBounce {
+  0% { transform: translateY(0) scale(1, 1); }
+  25% { transform: translateY(8px) scale(1.08, 0.92); }
+  50% { transform: translateY(-16px) scale(0.95, 1.05); }
+  75% { transform: translateY(2px) scale(1.02, 0.98); }
+  100% { transform: translateY(0) scale(1, 1); }
+}
+
+@keyframes avatarTorsoBreathe {
+  0%, 100% {
+    transform: translateY(0px) scale(1);
+  }
+  50% {
+    transform: translateY(-3px) scale(1.008);
+  }
+}
+
+@keyframes avatarPodPulse {
+  0%, 100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateX(-50%) scale(1.12);
+    opacity: 1;
+  }
+}
+
+@keyframes avatarIconGlow {
+  0% { transform: scale(1) rotate(0deg); }
+  100% { transform: scale(1.15) rotate(12deg); }
+}
+
+@keyframes avatarPulseRing {
+  0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 245, 155, 0.7); }
+  70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(0, 245, 155, 0); }
+  100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 245, 155, 0); }
+}
+
+@keyframes avatarDockEntrance {
+  from { opacity: 0; transform: translateY(20px) scale(0.8); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Mobile Viewports ── */
+@media (max-width: 768px) {
+  .corner-avatar-widget {
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .avatar-stage {
+    width: 110px;
+    height: 155px;
+  }
+
+  .avatar-speech-bubble {
+    max-width: 210px;
+    font-size: 0.75rem;
+    padding: 8px 12px;
+  }
+
+  .avatar-bubble-tail {
+    right: 40px;
+  }
+
+  .avatar-dock-btn {
+    bottom: 16px;
+    right: 16px;
+    padding: 6px 12px 6px 10px;
+    font-size: 0.78rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .avatar-stage,
+  .avatar-head-layer,
+  .avatar-shadow-pod,
+  .dock-badge-pulse {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+

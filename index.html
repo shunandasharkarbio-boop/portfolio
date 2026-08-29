@@ -1512,8 +1512,55 @@
     </div>
   </div>
 
+  <!-- Interactive Living Lab Avatar Widget -->
+  <div id="cornerAvatarWidget" class="corner-avatar-widget" aria-label="Interactive Lab Assistant Avatar">
+    <!-- Speech / Dialogue Bubble -->
+    <div id="avatarSpeechBubble" class="avatar-speech-bubble" role="status" aria-live="polite">
+      <div class="avatar-bubble-content">
+        <span class="avatar-bubble-icon" id="avatarBubbleIcon">🧬</span>
+        <span id="avatarBubbleText" class="avatar-bubble-text">Hi! Welcome to my bioinformatics lab!</span>
+      </div>
+      <div class="avatar-bubble-actions">
+        <button id="avatarNextQuoteBtn" class="avatar-bubble-btn" title="Next tip / quote" aria-label="Next tip">✨</button>
+      </div>
+      <div class="avatar-bubble-tail"></div>
+    </div>
+
+    <!-- Avatar Stage (Interactive 2.5D Rig) -->
+    <div id="avatarStage" class="avatar-stage" tabindex="0" role="button" aria-label="Click to interact with Shunanda's lab avatar">
+      <!-- Close / Minimize Button -->
+      <button id="avatarCloseBtn" class="avatar-ctrl-btn avatar-close-btn" title="Minimize Avatar" aria-label="Minimize Avatar">
+        <svg viewBox="0 0 24 24" width="13" height="13" stroke="currentColor" stroke-width="2.6" fill="none">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+
+      <!-- Body Layer (Breathes & Anchors) -->
+      <div class="avatar-layer avatar-body-layer">
+        <img src="./image/avatar_body.png" alt="Lab Researcher Body" class="avatar-img avatar-body-img" draggable="false" />
+      </div>
+      
+      <!-- Head Layer (Dynamically Turns & Tilts with Mouse) -->
+      <div id="avatarHeadLayer" class="avatar-layer avatar-head-layer">
+        <img id="avatarHeadImg" src="./image/avatar_head.png" alt="Shunanda Avatar Head" class="avatar-img avatar-head-img" draggable="false" />
+        <img id="avatarBlinkImg" src="./image/avatar_head_blink.png" alt="Avatar Blinking Eyes" class="avatar-img avatar-blink-img" draggable="false" />
+      </div>
+
+      <!-- Ground Shadow / Ambient Lab Aura -->
+      <div class="avatar-shadow-pod"></div>
+    </div>
+  </div>
+
+  <!-- Minimized Floating Dock Badge -->
+  <button id="avatarDockBtn" class="avatar-dock-btn" title="Open Lab Assistant Avatar" aria-label="Open Lab Assistant Avatar" style="display: none;">
+    <span class="dock-badge-pulse"></span>
+    <span class="dock-icon">🧪</span>
+    <span class="dock-label">Shunanda</span>
+  </button>
+
   <!-- App Logic -->
-  <script src="./app.js?v=6"></script>
+  <script src="./app.js?v=7"></script>
 </body>
 
 </html>

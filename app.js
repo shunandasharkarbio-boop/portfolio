@@ -998,4 +998,248 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   initAboutParallaxAndStats();
+
+  /* ==========================================================================
+     LIVING 2.5D CORNER LAB AVATAR CONTROLLER (HEAD-TRACKING & MICRO-MOTION)
+     ========================================================================== */
+  function initCornerAvatar() {
+    const widget = document.getElementById('cornerAvatarWidget');
+    const stage = document.getElementById('avatarStage');
+    const headLayer = document.getElementById('avatarHeadLayer');
+    const blinkImg = document.getElementById('avatarBlinkImg');
+    const speechBubble = document.getElementById('avatarSpeechBubble');
+    const bubbleText = document.getElementById('avatarBubbleText');
+    const bubbleIcon = document.getElementById('avatarBubbleIcon');
+    const nextBtn = document.getElementById('avatarNextQuoteBtn');
+    const closeBtn = document.getElementById('avatarCloseBtn');
+    const dockBtn = document.getElementById('avatarDockBtn');
+
+    if (!widget || !stage || !headLayer) return;
+
+    // 1. Interactive Biotech Dialogues
+    const quotes = [
+      { icon: '🧬', text: "Hi! I'm Shunanda's lab avatar — welcome to my bioinformatics portfolio!" },
+      { icon: '🔬', text: "Exploring computational genomics, single-cell pipelines & genetic engineering." },
+      { icon: '💡', text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!" },
+      { icon: '📊', text: "Check out my single-cell RNA-seq pipeline & CIMA immune atlas above!" },
+      { icon: '🧪', text: "In silico genomics bridges big data with life-saving biological discoveries." },
+      { icon: '🎓', text: "Certified by NPTEL & IISc Bangalore in Evolutionary Biology & Genetic Engineering." },
+      { icon: '⚡', text: "Move your mouse around — I'll keep an eye on whatever you're reading!" },
+      { icon: '🚀', text: "Feel free to connect via LinkedIn or email to collaborate on biotech research!" }
+    ];
+
+    let currentQuoteIdx = 0;
+    let quoteTimer = null;
+
+    function showQuote(index) {
+      if (!bubbleText || !bubbleIcon) return;
+      currentQuoteIdx = (index + quotes.length) % quotes.length;
+      const q = quotes[currentQuoteIdx];
+
+      speechBubble.style.opacity = '0';
+      speechBubble.style.transform = 'translateY(6px) scale(0.95)';
+
+      setTimeout(() => {
+        bubbleIcon.textContent = q.icon;
+        bubbleText.textContent = q.text;
+        speechBubble.style.opacity = '1';
+        speechBubble.style.transform = 'translateY(0) scale(1)';
+      }, 150);
+    }
+
+    function startQuoteAutoCycle() {
+      if (quoteTimer) clearInterval(quoteTimer);
+      quoteTimer = setInterval(() => {
+        showQuote(currentQuoteIdx + 1);
+      }, 12000);
+    }
+
+    if (nextBtn) {
+      nextBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        showQuote(currentQuoteIdx + 1);
+        startQuoteAutoCycle();
+      });
+    }
+
+    // 2. Physics & Motion Math Engine
+    let mouseX = window.innerWidth * 0.5;
+    let mouseY = window.innerHeight * 0.3;
+    let lastMouseMoveTime = performance.now();
+    let isMouseActive = false;
+
+    let targetYaw = 0;
+    let targetPitch = 0;
+    let targetRoll = 0;
+    let targetDx = 0;
+    let targetDy = 0;
+
+    let currentYaw = 0;
+    let currentPitch = 0;
+    let currentRoll = 0;
+    let currentDx = 0;
+    let currentDy = 0;
+
+    function onPointerMove(x, y) {
+      mouseX = x;
+      mouseY = y;
+      lastMouseMoveTime = performance.now();
+      isMouseActive = true;
+    }
+
+    window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY), { passive: true });
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive: true });
+
+    // 3. Animation Frame Loop (Smooth 60FPS Lerp + Idle Wandering)
+    function animateAvatar() {
+      const now = performance.now();
+      const timeSinceMove = now - lastMouseMoveTime;
+
+      const rect = stage.getBoundingClientRect();
+      const avatarCenterX = rect.left + rect.width * 0.5;
+      const avatarCenterY = rect.top + rect.height * 0.38;
+
+      if (timeSinceMove < 2500) {
+        // Active mouse tracking
+        const dx = mouseX - avatarCenterX;
+        const dy = mouseY - avatarCenterY;
+        const screenW = window.innerWidth || 1920;
+        const screenH = window.innerHeight || 1080;
+
+        // Angle scaling
+        const rawYaw = (dx / screenW) * 48;
+        const rawPitch = (dy / screenH) * 36;
+
+        targetYaw = Math.max(-28, Math.min(28, rawYaw));
+        targetPitch = Math.max(-22, Math.min(20, rawPitch));
+        targetRoll = targetYaw * 0.22;
+        targetDx = Math.max(-8, Math.min(8, (dx / screenW) * 16));
+        targetDy = Math.max(-6, Math.min(6, (dy / screenH) * 12));
+      } else {
+        // Organic idle wandering (subtle curiosity glance around)
+        const t = now * 0.0012;
+        targetYaw = Math.sin(t * 0.7) * 14 + Math.sin(t * 1.5) * 5;
+        targetPitch = Math.cos(t * 0.5) * 8 - 4;
+        targetRoll = targetYaw * 0.2;
+        targetDx = Math.sin(t * 0.7) * 3;
+        targetDy = Math.cos(t * 0.5) * 2;
+      }
+
+      // Smooth Lerp Damping
+      const lerpFactor = 0.085;
+      currentYaw += (targetYaw - currentYaw) * lerpFactor;
+      currentPitch += (targetPitch - currentPitch) * lerpFactor;
+      currentRoll += (targetRoll - currentRoll) * lerpFactor;
+      currentDx += (targetDx - currentDx) * lerpFactor;
+      currentDy += (targetDy - currentDy) * lerpFactor;
+
+      // Apply 3D matrix transform to Head Layer
+      headLayer.style.transform = `perspective(600px) rotateY(${currentYaw.toFixed(2)}deg) rotateX(${(-currentPitch).toFixed(2)}deg) rotateZ(${currentRoll.toFixed(2)}deg) translate3d(${currentDx.toFixed(2)}px, ${currentDy.toFixed(2)}px, 8px)`;
+
+      requestAnimationFrame(animateAvatar);
+    }
+
+    requestAnimationFrame(animateAvatar);
+
+    // 4. Lifelike Eye Blinking Engine
+    function triggerBlink() {
+      if (!blinkImg) return;
+      blinkImg.classList.add('blinking');
+      setTimeout(() => {
+        blinkImg.classList.remove('blinking');
+
+        // 22% chance of quick double blink for organic feel
+        if (Math.random() < 0.22) {
+          setTimeout(() => {
+            blinkImg.classList.add('blinking');
+            setTimeout(() => {
+              blinkImg.classList.remove('blinking');
+            }, 110);
+          }, 140);
+        }
+      }, 120);
+
+      // Schedule next blink
+      const nextBlinkDelay = 2800 + Math.random() * 3400;
+      setTimeout(triggerBlink, nextBlinkDelay);
+    }
+
+    setTimeout(triggerBlink, 2000);
+
+    // 5. Interactive Joy Bounce & Click Feedback
+    stage.addEventListener('click', () => {
+      stage.classList.remove('joy-bounce');
+      // Trigger reflow to restart animation
+      void stage.offsetWidth;
+      stage.classList.add('joy-bounce');
+
+      showQuote(currentQuoteIdx + 1);
+      startQuoteAutoCycle();
+    });
+
+    stage.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        stage.click();
+      }
+    });
+
+    // 6. Minimize & Dock Controls
+    function minimizeAvatar() {
+      widget.classList.add('minimized');
+      if (dockBtn) {
+        dockBtn.style.display = 'inline-flex';
+        dockBtn.style.opacity = '0';
+        setTimeout(() => {
+          dockBtn.style.opacity = '1';
+        }, 50);
+      }
+      try {
+        sessionStorage.setItem('shunanda_avatar_minimized', 'true');
+      } catch (err) {}
+    }
+
+    function restoreAvatar() {
+      widget.classList.remove('minimized');
+      if (dockBtn) {
+        dockBtn.style.display = 'none';
+      }
+      try {
+        sessionStorage.removeItem('shunanda_avatar_minimized');
+      } catch (err) {}
+      startQuoteAutoCycle();
+    }
+
+    if (closeBtn) {
+      closeBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        minimizeAvatar();
+      });
+    }
+
+    if (dockBtn) {
+      dockBtn.addEventListener('click', () => {
+        restoreAvatar();
+      });
+    }
+
+    // Check stored state
+    try {
+      if (sessionStorage.getItem('shunanda_avatar_minimized') === 'true') {
+        minimizeAvatar();
+      } else {
+        startQuoteAutoCycle();
+      }
+    } catch (err) {
+      startQuoteAutoCycle();
+    }
+  }
+
+  // Initialize
+  initAboutParallaxAndStats();
+  initCornerAvatar();
 });
