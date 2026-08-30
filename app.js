@@ -19,6 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       menuToggleBtn.setAttribute('aria-expanded', !isExpanded);
       navMenu.classList.toggle('active');
       menuToggleBtn.classList.toggle('active');
+      document.body.classList.toggle('nav-active', navMenu.classList.contains('active'));
     });
 
     navLinks.forEach(link => {
@@ -26,6 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
         navMenu.classList.remove('active');
         menuToggleBtn.classList.remove('active');
         menuToggleBtn.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-active');
       });
     });
   }
@@ -259,12 +261,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         certModal.classList.add('active');
         certModal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('cert-modal-open');
       });
     });
 
     const closeModal = () => {
       certModal.classList.remove('active');
       certModal.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('cert-modal-open');
     };
 
     if (certModalClose) {
@@ -331,12 +335,14 @@ document.addEventListener('DOMContentLoaded', () => {
       updateLightboxContent();
       achievementLightbox.classList.add('active');
       achievementLightbox.setAttribute('aria-hidden', 'false');
+      document.body.classList.add('lightbox-open');
       document.body.style.overflow = 'hidden';
     }
 
     function closeAchievementLightbox() {
       achievementLightbox.classList.remove('active');
       achievementLightbox.setAttribute('aria-hidden', 'true');
+      document.body.classList.remove('lightbox-open');
       document.body.style.overflow = '';
     }
 
@@ -592,6 +598,7 @@ document.addEventListener('DOMContentLoaded', () => {
           if (academicLightbox) {
             academicLightbox.classList.add('active');
             academicLightbox.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('lightbox-open');
             document.body.style.overflow = 'hidden';
           }
         });
@@ -609,6 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (academicLightbox) {
         academicLightbox.classList.remove('active');
         academicLightbox.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('lightbox-open');
         document.body.style.overflow = '';
       }
     }
@@ -1265,10 +1273,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initial evaluation
     evaluateActiveSection();
 
-    // 4. Autonomous Motion & Gaze Physics Engine (Single Instance)
+    // 4. Autonomous Motion & Gaze Physics Engine (Single Instance with Mobile Touch Intelligence)
     let mouseX = window.innerWidth * 0.5;
     let mouseY = window.innerHeight * 0.4;
     let lastMouseMoveTime = performance.now();
+    let isTouchActive = false;
+    let scrollTimeout = null;
 
     let currentYaw = 0;
     let currentPitch = 0;
@@ -1280,16 +1290,43 @@ document.addEventListener('DOMContentLoaded', () => {
     let autonomousTargetPitch = 0;
     let nextLookShiftTime = performance.now() + 2000;
 
-    function onPointerMove(x, y) {
+    function onPointerMove(x, y, fromTouch = false) {
       mouseX = x;
       mouseY = y;
       lastMouseMoveTime = performance.now();
+      if (fromTouch) {
+        isTouchActive = true;
+      }
     }
 
-    window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY), { passive: true });
+    window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY, false), { passive: true });
+    window.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches[0]) {
+        onPointerMove(e.touches[0].clientX, e.touches[0].clientY, true);
+      }
+    }, { passive: true });
     window.addEventListener('touchmove', (e) => {
       if (e.touches && e.touches[0]) {
-        onPointerMove(e.touches[0].clientX, e.touches[0].clientY);
+        onPointerMove(e.touches[0].clientX, e.touches[0].clientY, true);
+      }
+    }, { passive: true });
+    window.addEventListener('touchend', () => {
+      isTouchActive = false;
+      lastMouseMoveTime = performance.now() - 1400;
+    }, { passive: true });
+    window.addEventListener('touchcancel', () => {
+      isTouchActive = false;
+      lastMouseMoveTime = performance.now() - 1400;
+    }, { passive: true });
+
+    // Smooth mobile scroll indicator & bubble dimming so reading content is never obstructed
+    window.addEventListener('scroll', () => {
+      if (window.innerWidth <= 768 && speechBubble && !widget.classList.contains('minimized')) {
+        speechBubble.classList.add('scrolling-dim');
+        clearTimeout(scrollTimeout);
+        scrollTimeout = setTimeout(() => {
+          speechBubble.classList.remove('scrolling-dim');
+        }, 450);
       }
     }, { passive: true });
 
@@ -1327,19 +1364,26 @@ document.addEventListener('DOMContentLoaded', () => {
       let targetPitch = cfg.basePitch + autonomousTargetPitch + organicDriftPitch;
       let targetRoll = cfg.baseRoll + organicDriftRoll;
 
+      const isMobile = window.innerWidth <= 768;
+      const isCompact = window.innerWidth <= 480;
+      const maxInteractDuration = isTouchActive ? 2200 : (isMobile ? 1200 : 2200);
+
       // 4.3 Pointer interaction blending
-      if (timeSinceMove < 2200) {
+      if (timeSinceMove < maxInteractDuration) {
         const dx = mouseX - avatarCenterX;
         const dy = mouseY - avatarCenterY;
         const screenW = window.innerWidth || 1920;
         const screenH = window.innerHeight || 1080;
 
-        const cursorYawDelta = (dx / screenW) * 18;
-        const cursorPitchDelta = (dy / screenH) * 14;
+        const maxYaw = isCompact ? 10 : (isMobile ? 14 : 18);
+        const maxPitch = isCompact ? 8 : (isMobile ? 11 : 14);
 
-        targetYaw = Math.max(-24, Math.min(24, cfg.baseYaw + cursorYawDelta + organicDriftYaw * 0.5));
-        targetPitch = Math.max(-18, Math.min(18, cfg.basePitch + cursorPitchDelta + organicDriftPitch * 0.5));
-        targetRoll = targetYaw * 0.16;
+        const cursorYawDelta = (dx / screenW) * maxYaw;
+        const cursorPitchDelta = (dy / screenH) * maxPitch;
+
+        targetYaw = Math.max(-20, Math.min(20, cfg.baseYaw + cursorYawDelta + organicDriftYaw * 0.4));
+        targetPitch = Math.max(-15, Math.min(15, cfg.basePitch + cursorPitchDelta + organicDriftPitch * 0.4));
+        targetRoll = targetYaw * 0.14;
       }
 
       const targetDx = (targetYaw / 25) * 3.5;
@@ -1394,8 +1438,30 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(triggerBlink, 2200);
 
-    // 6. Click Interaction & Joy Bounce
-    stage.addEventListener('click', () => {
+    // 6. Click Interaction & Joy Bounce (with Touch Swipe Discrimination)
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let isTouchDrag = false;
+
+    stage.addEventListener('touchstart', (e) => {
+      if (e.touches && e.touches[0]) {
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        isTouchDrag = false;
+      }
+    }, { passive: true });
+
+    stage.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches[0]) {
+        const diffX = Math.abs(e.touches[0].clientX - touchStartX);
+        const diffY = Math.abs(e.touches[0].clientY - touchStartY);
+        if (diffX > 10 || diffY > 10) {
+          isTouchDrag = true;
+        }
+      }
+    }, { passive: true });
+
+    function triggerAvatarJoy() {
       stage.classList.remove('joy-bounce');
       void stage.offsetWidth;
       stage.classList.add('joy-bounce');
@@ -1404,6 +1470,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const q = biotechQuotes[currentQuoteIdx];
       showDialogue(q.icon, q.text);
       startFactAutoCycle();
+    }
+
+    stage.addEventListener('click', () => {
+      if (isTouchDrag) {
+        isTouchDrag = false;
+        return;
+      }
+      triggerAvatarJoy();
     });
 
     stage.addEventListener('keydown', (e) => {

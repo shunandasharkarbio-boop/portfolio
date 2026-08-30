@@ -1,1 +1,4 @@
 Bio-Journey-Repo/
+scratch/
+**/build/
+.gradle/

@@ -5197,15 +5197,17 @@ section[id]::after {
 
 .corner-avatar-widget {
   position: fixed;
-  bottom: 22px;
-  right: 24px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  right: calc(24px + env(safe-area-inset-right, 0px));
   z-index: 99990;
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   pointer-events: none;
   font-family: var(--font-family-base, 'Inter', sans-serif);
-  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.35s ease, transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .corner-avatar-widget.minimized {
@@ -5214,10 +5216,22 @@ section[id]::after {
   pointer-events: none;
 }
 
+/* Hide avatar when mobile navigation or modals are active */
+body.nav-active .corner-avatar-widget,
+body.nav-active .avatar-dock-btn,
+body.lightbox-open .corner-avatar-widget,
+body.lightbox-open .avatar-dock-btn,
+body.cert-modal-open .corner-avatar-widget,
+body.cert-modal-open .avatar-dock-btn {
+  opacity: 0 !important;
+  pointer-events: none !important;
+  transform: translateY(20px) scale(0.8) !important;
+}
+
 /* ── Interactive Speech Bubble ── */
 .avatar-speech-bubble {
   position: relative;
-  max-width: 250px;
+  max-width: min(250px, calc(100vw - 48px));
   margin-bottom: 12px;
   background: rgba(8, 20, 26, 0.92);
   border: 1px solid rgba(0, 210, 196, 0.4);
@@ -5229,11 +5243,12 @@ section[id]::after {
   pointer-events: auto;
   opacity: 1;
   transform: translateY(0) scale(1);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 8px;
+  word-break: break-word;
 }
 
 .avatar-speech-bubble.bubble-hidden {
@@ -5246,6 +5261,8 @@ section[id]::after {
   display: flex;
   align-items: flex-start;
   gap: 8px;
+  flex: 1;
+  min-width: 0;
 }
 
 .avatar-bubble-icon {
@@ -5261,6 +5278,7 @@ section[id]::after {
   color: #e6fffa;
   line-height: 1.4;
   letter-spacing: 0.01em;
+  word-wrap: break-word;
 }
 
 .avatar-bubble-actions {
@@ -5270,11 +5288,12 @@ section[id]::after {
 }
 
 .avatar-bubble-btn {
+  position: relative;
   background: rgba(0, 210, 196, 0.12);
   border: 1px solid rgba(0, 210, 196, 0.3);
   color: #00f59b;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
   font-size: 0.72rem;
   cursor: pointer;
@@ -5282,6 +5301,19 @@ section[id]::after {
   align-items: center;
   justify-content: center;
   transition: all 0.2s ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Expanded touch hit area for mobile thumb tapping */
+.avatar-bubble-btn::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 50%;
 }
 
 .avatar-bubble-btn:hover {
@@ -5291,16 +5323,21 @@ section[id]::after {
   box-shadow: 0 0 10px rgba(0, 210, 196, 0.6);
 }
 
+.avatar-bubble-btn:active {
+  transform: scale(0.92);
+}
+
 .avatar-bubble-tail {
   position: absolute;
   bottom: -7px;
-  right: 50px;
+  right: 62px;
   width: 12px;
   height: 12px;
   background: rgba(8, 20, 26, 0.92);
   border-right: 1px solid rgba(0, 210, 196, 0.4);
   border-bottom: 1px solid rgba(0, 210, 196, 0.4);
   transform: rotate(45deg);
+  pointer-events: none;
 }
 
 /* ── Avatar Stage & Character Rig ── */
@@ -5316,10 +5353,16 @@ section[id]::after {
   -webkit-user-select: none;
   animation: avatarTorsoBreathe 4.5s ease-in-out infinite;
   transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .avatar-stage:hover {
   transform: translateY(-3px);
+}
+
+.avatar-stage:active {
+  transform: translateY(-1px) scale(0.98);
 }
 
 .avatar-stage:focus-visible {
@@ -5356,6 +5399,7 @@ section[id]::after {
   filter: drop-shadow(0 8px 20px rgba(0, 0, 0, 0.55));
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  pointer-events: none;
 }
 
 /* ── Section Hand Prop Layer ── */
@@ -5370,6 +5414,7 @@ section[id]::after {
   transform: translateY(6px) scale(0.95);
   transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
   filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.55));
+  pointer-events: none;
 }
 
 .avatar-prop-img.prop-active {
@@ -5398,9 +5443,9 @@ section[id]::after {
 .avatar-ctrl-btn.avatar-close-btn {
   position: absolute;
   top: -4px;
-  right: 6px;
-  width: 26px;
-  height: 26px;
+  right: 4px;
+  width: 28px;
+  height: 28px;
   border-radius: 50%;
   background: #c6e644;
   border: 2px solid #071912;
@@ -5413,6 +5458,19 @@ section[id]::after {
   z-index: 10;
   transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
   outline: none;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Accessible mobile touch hit target (minimum 44x44px target) */
+.avatar-ctrl-btn.avatar-close-btn::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+  border-radius: 50%;
 }
 
 .avatar-ctrl-btn.avatar-close-btn:hover {
@@ -5421,11 +5479,15 @@ section[id]::after {
   box-shadow: 0 4px 16px rgba(198, 230, 68, 0.7);
 }
 
+.avatar-ctrl-btn.avatar-close-btn:active {
+  transform: scale(0.92);
+}
+
 /* ── Minimized Floating Dock Badge ── */
 .avatar-dock-btn {
   position: fixed;
-  bottom: 22px;
-  right: 24px;
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  right: calc(24px + env(safe-area-inset-right, 0px));
   z-index: 99990;
   background: rgba(8, 20, 26, 0.92);
   border: 1px solid rgba(0, 245, 155, 0.45);
@@ -5444,6 +5506,8 @@ section[id]::after {
   font-weight: 600;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   animation: avatarDockEntrance 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .avatar-dock-btn:hover {
@@ -5451,6 +5515,10 @@ section[id]::after {
   border-color: #00f59b;
   background: rgba(12, 30, 38, 0.96);
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75), 0 0 25px rgba(0, 245, 155, 0.5);
+}
+
+.avatar-dock-btn:active {
+  transform: translateY(-1px) scale(0.96);
 }
 
 .dock-badge-pulse {
@@ -5523,39 +5591,256 @@ section[id]::after {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-/* ── Mobile Viewports ── */
-@media (max-width: 768px) {
+/* ==========================================================================
+   RESPONSIVE BREAKPOINTS FOR AVATAR
+   ========================================================================== */
+
+/* ── Tablet Viewports (769px - 1024px) ── */
+@media (max-width: 1024px) and (min-width: 769px) {
   .corner-avatar-widget {
-    bottom: 16px;
-    right: 16px;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    right: calc(20px + env(safe-area-inset-right, 0px));
   }
 
   .avatar-stage {
-    width: 110px;
-    height: 155px;
+    width: 118px;
+    height: 162px;
+  }
+
+  .avatar-shadow-pod {
+    width: 65px;
+    height: 12px;
   }
 
   .avatar-speech-bubble {
-    max-width: 210px;
-    font-size: 0.75rem;
-    padding: 8px 12px;
+    max-width: min(230px, calc(100vw - 40px));
+    font-size: 0.78rem;
+    padding: 9px 12px;
   }
 
   .avatar-bubble-tail {
-    right: 40px;
+    right: 54px;
   }
 
   .avatar-dock-btn {
-    bottom: 16px;
-    right: 16px;
-    padding: 6px 12px 6px 10px;
-    font-size: 0.78rem;
+    bottom: calc(18px + env(safe-area-inset-bottom, 0px));
+    right: calc(20px + env(safe-area-inset-right, 0px));
+  }
+}
+
+/* ── Standard Mobile Viewports (<= 768px) ── */
+@media (max-width: 768px) {
+  .corner-avatar-widget {
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    right: calc(14px + env(safe-area-inset-right, 0px));
+  }
+
+  .avatar-stage {
+    width: 92px;
+    height: 128px;
+  }
+
+  .avatar-shadow-pod {
+    width: 52px;
+    height: 10px;
+    filter: blur(3px);
+  }
+
+  .avatar-speech-bubble {
+    max-width: min(220px, calc(100vw - 28px));
+    font-size: 0.74rem;
+    padding: 7px 11px;
+    margin-bottom: 8px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.7), 0 0 14px rgba(0, 210, 196, 0.2);
+  }
+
+  .avatar-speech-bubble.scrolling-dim {
+    opacity: 0.25;
+    transform: translateY(4px) scale(0.96);
+    pointer-events: none;
+  }
+
+  .avatar-bubble-icon {
+    font-size: 1.05rem;
+  }
+
+  .avatar-bubble-text {
+    font-size: 0.73rem;
+    line-height: 1.35;
+  }
+
+  .avatar-bubble-tail {
+    right: 41px;
+    bottom: -6px;
+    width: 10px;
+    height: 10px;
+  }
+
+  .avatar-ctrl-btn.avatar-close-btn {
+    width: 24px;
+    height: 24px;
+    top: -4px;
+    right: 2px;
+  }
+
+  .avatar-dock-btn {
+    bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+    right: calc(14px + env(safe-area-inset-right, 0px));
+    padding: 7px 14px 7px 10px;
+    font-size: 0.8rem;
+  }
+}
+
+/* ── Compact Mobile Viewports (<= 480px) ── */
+@media (max-width: 480px) {
+  .corner-avatar-widget {
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    right: calc(10px + env(safe-area-inset-right, 0px));
+  }
+
+  .avatar-stage {
+    width: 80px;
+    height: 112px;
+  }
+
+  .avatar-shadow-pod {
+    width: 44px;
+    height: 8px;
+    filter: blur(2.5px);
+  }
+
+  .avatar-speech-bubble {
+    max-width: min(200px, calc(100vw - 20px));
+    font-size: 0.70rem;
+    padding: 6px 9px;
+    margin-bottom: 6px;
+    border-radius: 12px;
+    gap: 6px;
+  }
+
+  .avatar-bubble-icon {
+    font-size: 0.95rem;
+  }
+
+  .avatar-bubble-text {
+    font-size: 0.70rem;
+    line-height: 1.3;
+  }
+
+  .avatar-bubble-tail {
+    right: 35px;
+    bottom: -5px;
+    width: 9px;
+    height: 9px;
+  }
+
+  .avatar-bubble-btn {
+    width: 22px;
+    height: 22px;
+    font-size: 0.65rem;
+  }
+
+  .avatar-ctrl-btn.avatar-close-btn {
+    width: 22px;
+    height: 22px;
+    top: -3px;
+    right: 1px;
+  }
+
+  .avatar-dock-btn {
+    bottom: calc(10px + env(safe-area-inset-bottom, 0px));
+    right: calc(10px + env(safe-area-inset-right, 0px));
+    padding: 6px 12px 6px 8px;
+    font-size: 0.75rem;
+  }
+
+  .dock-icon {
+    font-size: 1rem;
+    margin-left: 4px;
+  }
+}
+
+/* ── Ultra-Compact / Fold Screen Viewports (<= 360px) ── */
+@media (max-width: 360px) {
+  .corner-avatar-widget {
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    right: calc(8px + env(safe-area-inset-right, 0px));
+  }
+
+  .avatar-stage {
+    width: 70px;
+    height: 98px;
+  }
+
+  .avatar-shadow-pod {
+    width: 38px;
+    height: 7px;
+  }
+
+  .avatar-speech-bubble {
+    max-width: calc(100vw - 16px);
+    font-size: 0.68rem;
+    padding: 5px 8px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+  }
+
+  .avatar-bubble-tail {
+    right: 30px;
+  }
+
+  .avatar-dock-btn {
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    right: calc(8px + env(safe-area-inset-right, 0px));
+    padding: 5px 10px 5px 7px;
+    font-size: 0.72rem;
+  }
+}
+
+/* ── Mobile Landscape Viewports (max-height: 520px) ── */
+@media (max-height: 520px) and (orientation: landscape) {
+  .corner-avatar-widget {
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    right: calc(12px + env(safe-area-inset-right, 0px));
+  }
+
+  .avatar-stage {
+    width: 65px;
+    height: 90px;
+  }
+
+  .avatar-shadow-pod {
+    width: 36px;
+    height: 6px;
+  }
+
+  .avatar-speech-bubble {
+    max-width: 190px;
+    font-size: 0.68rem;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    border-radius: 10px;
+  }
+
+  .avatar-bubble-tail {
+    right: 28px;
+    bottom: -5px;
+    width: 8px;
+    height: 8px;
+  }
+
+  .avatar-dock-btn {
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    right: calc(12px + env(safe-area-inset-right, 0px));
+    padding: 4px 10px 4px 7px;
+    font-size: 0.72rem;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .avatar-stage,
-  .avatar-head-layer,
+  .avatar-character-layer,
   .avatar-shadow-pod,
   .dock-badge-pulse {
     animation: none !important;
