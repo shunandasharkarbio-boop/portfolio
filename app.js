@@ -22,10 +22,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function applyTheme(theme) {
+      document.documentElement.classList.add('theme-transition');
       document.documentElement.setAttribute('data-theme', theme);
       try {
         localStorage.setItem('shunanda_portfolio_theme', theme);
       } catch (e) {}
+
+      setTimeout(() => {
+        document.documentElement.classList.remove('theme-transition');
+      }, 350);
 
       const isLight = theme === 'light';
       const label = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
