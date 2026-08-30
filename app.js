@@ -8,6 +8,75 @@
    ========================================================================== */
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 0. Dark & Light (White) Mode Theme Controller
+  function initThemeToggle() {
+    const themeToggleBtn = document.getElementById('theme-toggle-btn');
+    const mobileThemeToggleBtn = document.getElementById('mobile-theme-toggle-btn');
+
+    function getPreferredTheme() {
+      const savedTheme = localStorage.getItem('shunanda_portfolio_theme');
+      if (savedTheme === 'light' || savedTheme === 'dark') {
+        return savedTheme;
+      }
+      return 'dark'; // Default bioluminescent futuristic
+    }
+
+    function applyTheme(theme) {
+      document.documentElement.setAttribute('data-theme', theme);
+      try {
+        localStorage.setItem('shunanda_portfolio_theme', theme);
+      } catch (e) {}
+
+      const isLight = theme === 'light';
+      const label = isLight ? 'Switch to Dark Mode' : 'Switch to Light Mode';
+      if (themeToggleBtn) {
+        themeToggleBtn.setAttribute('aria-label', label);
+        themeToggleBtn.setAttribute('title', label);
+      }
+      if (mobileThemeToggleBtn) {
+        mobileThemeToggleBtn.setAttribute('aria-label', label);
+        mobileThemeToggleBtn.setAttribute('title', label);
+        const textEl = mobileThemeToggleBtn.querySelector('.theme-switch-label');
+        if (textEl) {
+          textEl.textContent = isLight ? 'Dark Mode' : 'Light Mode';
+        }
+      }
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+      const nextTheme = currentTheme === 'light' ? 'dark' : 'light';
+      applyTheme(nextTheme);
+    }
+
+    const currentTheme = getPreferredTheme();
+    applyTheme(currentTheme);
+
+    if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleTheme();
+      });
+    }
+
+    if (mobileThemeToggleBtn) {
+      mobileThemeToggleBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        toggleTheme();
+      });
+    }
+
+    if (window.matchMedia) {
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('shunanda_portfolio_theme')) {
+          applyTheme(e.matches ? 'dark' : 'light');
+        }
+      });
+    }
+  }
+
+  initThemeToggle();
+
   // 1. Mobile Menu Toggle
   const menuToggleBtn = document.getElementById('menu-toggle-btn');
   const navMenu = document.querySelector('.nav-menu');
@@ -35,12 +104,6 @@ document.addEventListener('DOMContentLoaded', () => {
   // 2. Scroll Animation Observer
   const animateElements = document.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card, .achievement-card');
 
-  // Immediately make all elements visible so content is never hidden
-  animateElements.forEach(el => {
-    el.classList.add('is-visible');
-    el.classList.add('visible');
-  });
-
   function revealVisibleElements() {
     const windowHeight = window.innerHeight || document.documentElement.clientHeight;
     animateElements.forEach(el => {
@@ -52,56 +115,54 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Force check target section on hash change / direct URL load
   function checkHashTarget() {
     if (window.location.hash) {
       try {
         const targetSec = document.querySelector(window.location.hash);
         if (targetSec) {
-          const animEls = targetSec.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card, .achievement-card');
-          animEls.forEach(el => {
+          const innerAnimates = targetSec.querySelectorAll('.animate-on-scroll, .timeline-item, .project-card, .achievement-card');
+          innerAnimates.forEach(el => {
             el.classList.add('is-visible');
             el.classList.add('visible');
           });
         }
-      } catch (e) {
-        // Ignore invalid selectors
-      }
+      } catch (err) {}
     }
   }
 
-  if ('IntersectionObserver' in window) {
-    const observerOptions = {
-      root: null,
-      rootMargin: '200px 0px 200px 0px',
-      threshold: 0.01
-    };
+  window.addEventListener('hashchange', checkHashTarget);
+  setTimeout(checkHashTarget, 200);
 
-    const scrollObserver = new IntersectionObserver((entries, observer) => {
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries, obs) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('is-visible');
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target);
+          obs.unobserve(entry.target);
         }
       });
-    }, observerOptions);
+    }, {
+      root: null,
+      threshold: 0.05,
+      rootMargin: '100px 0px 100px 0px'
+    });
 
-    animateElements.forEach(el => scrollObserver.observe(el));
+    animateElements.forEach(el => {
+      observer.observe(el);
+    });
+
+    window.addEventListener('scroll', revealVisibleElements, { passive: true });
+    window.addEventListener('load', revealVisibleElements);
+  } else {
+    animateElements.forEach(el => {
+      el.classList.add('is-visible');
+      el.classList.add('visible');
+    });
   }
 
-  // Initial immediate checks & event bindings
-  revealVisibleElements();
-  checkHashTarget();
-  window.addEventListener('load', () => {
-    revealVisibleElements();
-    checkHashTarget();
-  });
-  window.addEventListener('scroll', revealVisibleElements, { passive: true });
-  window.addEventListener('hashchange', () => {
-    revealVisibleElements();
-    checkHashTarget();
-    setTimeout(revealVisibleElements, 50);
+  document.querySelectorAll('.skd-cat-card, .skd-tab, .filter-chip, .coursework-card, .project-card, .achievement-card').forEach(item => {
+    item.style.pointerEvents = 'auto';
   });
 
   // 3. Bioluminescent DNA Canvas Particle & Helix Animation
@@ -121,16 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
     resizeCanvas();
     window.addEventListener('resize', resizeCanvas);
 
-    // Particle system for ambient bio-sparks
     const particleCount = 40;
     const particles = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
+        x: Math.random() * (canvas.width || 800),
+        y: Math.random() * (canvas.height || 600),
         radius: Math.random() * 2 + 0.5,
-        color: Math.random() > 0.4 ? '#00f59b' : '#00d2c4',
+        type: Math.random() > 0.4 ? 'primary' : 'secondary',
         alpha: Math.random() * 0.5 + 0.2,
         speedX: (Math.random() - 0.5) * 0.4,
         speedY: (Math.random() - 0.5) * 0.4,
@@ -144,6 +204,11 @@ document.addEventListener('DOMContentLoaded', () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       time += 0.015;
 
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light';
+      const colorPrimary = isLight ? '#059669' : '#00f59b';
+      const colorSecondary = isLight ? '#0d9488' : '#00d2c4';
+      const glowBlur = isLight ? 4 : 10;
+
       // Draw floating bioluminescent particles
       particles.forEach(p => {
         p.x += p.speedX;
@@ -155,11 +220,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (p.y < 0) p.y = canvas.height;
         if (p.y > canvas.height) p.y = 0;
 
+        const pColor = p.type === 'primary' ? colorPrimary : colorSecondary;
+
         ctx.save();
         ctx.globalAlpha = Math.max(0.1, Math.min(0.8, p.alpha));
-        ctx.fillStyle = p.color;
-        ctx.shadowColor = p.color;
-        ctx.shadowBlur = 10;
+        ctx.fillStyle = pColor;
+        ctx.shadowColor = pColor;
+        ctx.shadowBlur = glowBlur;
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
         ctx.fill();
@@ -191,8 +258,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Draw horizontal base pair rung connecting the two strands
         ctx.save();
-        ctx.globalAlpha = Math.min(alpha1, alpha2) * 0.35;
-        ctx.strokeStyle = '#00d2c4';
+        ctx.globalAlpha = Math.min(alpha1, alpha2) * (isLight ? 0.45 : 0.35);
+        ctx.strokeStyle = colorSecondary;
         ctx.lineWidth = 1;
         ctx.beginPath();
         ctx.moveTo(x1, y);
@@ -203,9 +270,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Draw Strand 1 Node
         ctx.save();
         ctx.globalAlpha = alpha1;
-        ctx.fillStyle = '#00f59b';
-        ctx.shadowColor = '#00f59b';
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = colorPrimary;
+        ctx.shadowColor = colorPrimary;
+        ctx.shadowBlur = glowBlur;
         ctx.beginPath();
         ctx.arc(x1, y, r1, 0, Math.PI * 2);
         ctx.fill();
@@ -214,9 +281,9 @@ document.addEventListener('DOMContentLoaded', () => {
         // Draw Strand 2 Node
         ctx.save();
         ctx.globalAlpha = alpha2;
-        ctx.fillStyle = '#00d2c4';
-        ctx.shadowColor = '#00d2c4';
-        ctx.shadowBlur = 8;
+        ctx.fillStyle = colorSecondary;
+        ctx.shadowColor = colorSecondary;
+        ctx.shadowBlur = glowBlur;
         ctx.beginPath();
         ctx.arc(x2, y, r2, 0, Math.PI * 2);
         ctx.fill();
