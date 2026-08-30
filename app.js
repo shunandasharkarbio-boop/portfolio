@@ -1168,8 +1168,8 @@ document.addEventListener('DOMContentLoaded', () => {
         basePitch: -2,
         baseRoll: 0,
         isHappy: false,
-        dialogue: "Certified by NPTEL & IISc Bangalore in Evolutionary Biology & Genetic Engineering.",
-        mobileDialogue: "NPTEL & IISc certified in Evolutionary Biology & Genetics 🎓",
+        dialogue: "Certified by NPTEL & IIT Bombay in Evolutionary Dynamics & Genetic Engineering.",
+        mobileDialogue: "NPTEL & IIT certified in Evolutionary Dynamics & Genetics 🎓",
         icon: "🎓"
       },
       'projects': {
