@@ -28,6 +28,9 @@
   --color-secondary: #00d2c4;
   --color-secondary-rgb: 0, 210, 196;
   --color-accent: #c6e644;
+  --color-accent-purple: #a855f7;
+  --color-accent-blue: #38bdf8;
+  --color-accent-amber: #f59e0b;
   
   /* Text & Foreground */
   --color-text-primary: #f3f4f6;
@@ -36,7 +39,7 @@
   --color-text-inverse: #050807;
 
   /* Borders & Dividers */
-  --color-border: rgba(0, 245, 155, 0.12);
+  --color-border: rgba(0, 245, 155, 0.14);
   --color-border-hover: rgba(0, 245, 155, 0.4);
   --color-border-subtle: rgba(255, 255, 255, 0.06);
 
@@ -110,6 +113,9 @@ html.theme-transition *::after {
   --color-secondary: #0d9488;
   --color-secondary-rgb: 13, 148, 136;
   --color-accent: #16a34a;
+  --color-accent-purple: #7c3aed;
+  --color-accent-blue: #0284c7;
+  --color-accent-amber: #d97706;
 
   /* Text & Foreground Colors */
   --color-text-primary: #0f172a;
@@ -1359,6 +1365,54 @@ img {
   box-shadow: var(--glow-shadow-green);
 }
 
+.interest-pill-card:nth-child(1) .pill-icon-container {
+  background-color: rgba(0, 245, 155, 0.08);
+  border-color: rgba(0, 245, 155, 0.25);
+  color: var(--color-primary);
+}
+
+.interest-pill-card:nth-child(2) .pill-icon-container {
+  background-color: rgba(0, 210, 196, 0.08);
+  border-color: rgba(0, 210, 196, 0.25);
+  color: var(--color-secondary);
+}
+
+.interest-pill-card:nth-child(3) .pill-icon-container {
+  background-color: rgba(198, 230, 68, 0.08);
+  border-color: rgba(198, 230, 68, 0.25);
+  color: var(--color-accent);
+}
+
+.interest-pill-card:nth-child(4) .pill-icon-container {
+  background-color: rgba(168, 85, 247, 0.08);
+  border-color: rgba(168, 85, 247, 0.25);
+  color: var(--color-accent-purple);
+}
+
+.interest-pill-card:nth-child(1):hover .pill-icon-container {
+  background-color: var(--color-primary);
+  color: #050807;
+  box-shadow: 0 0 12px rgba(0, 245, 155, 0.5);
+}
+
+.interest-pill-card:nth-child(2):hover .pill-icon-container {
+  background-color: var(--color-secondary);
+  color: #050807;
+  box-shadow: 0 0 12px rgba(0, 210, 196, 0.5);
+}
+
+.interest-pill-card:nth-child(3):hover .pill-icon-container {
+  background-color: var(--color-accent);
+  color: #050807;
+  box-shadow: 0 0 12px rgba(198, 230, 68, 0.5);
+}
+
+.interest-pill-card:nth-child(4):hover .pill-icon-container {
+  background-color: var(--color-accent-purple);
+  color: #050807;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.5);
+}
+
 .pill-icon {
   width: 1.25rem;
   height: 1.25rem;
@@ -1629,8 +1683,32 @@ img {
   padding: 0.3rem 0.7rem;
   border-radius: 4px;
   color: var(--color-primary);
-  background-color: rgba(0, 245, 155, 0.06);
-  border: 1px solid rgba(0, 245, 155, 0.15);
+  background-color: rgba(0, 245, 155, 0.08);
+  border: 1px solid rgba(0, 245, 155, 0.25);
+}
+
+.project-card:nth-child(1) .project-badge {
+  background: rgba(0, 245, 155, 0.1);
+  color: #00f59b;
+  border-color: rgba(0, 245, 155, 0.3);
+}
+
+.project-card:nth-child(2) .project-badge {
+  background: rgba(0, 210, 196, 0.1);
+  color: #00d2c4;
+  border-color: rgba(0, 210, 196, 0.3);
+}
+
+.project-card:nth-child(3) .project-badge {
+  background: rgba(245, 158, 11, 0.1);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.3);
+}
+
+.project-card:nth-child(4) .project-badge {
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border-color: rgba(56, 189, 248, 0.3);
 }
 
 .project-card-title {
@@ -1772,6 +1850,22 @@ img {
   font-weight: 700;
   color: var(--color-primary);
   text-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+}
+
+.timeline-item:nth-child(1) .timeline-year {
+  color: #00f59b;
+}
+
+.timeline-item:nth-child(2) .timeline-year {
+  color: #00d2c4;
+}
+
+.timeline-item:nth-child(3) .timeline-year {
+  color: #38bdf8;
+}
+
+.timeline-item:nth-child(4) .timeline-year {
+  color: #c084fc;
 }
 
 .timeline-item:nth-child(odd) .timeline-year {
@@ -4225,8 +4319,8 @@ section[id],
   top: 0.85rem;
   left: 0.85rem;
   z-index: 5;
-  background: rgba(0, 210, 196, 0.25);
-  border: 1px solid rgba(0, 210, 196, 0.45);
+  background: rgba(0, 245, 155, 0.2);
+  border: 1px solid rgba(0, 245, 155, 0.45);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   color: #ffffff;
@@ -4237,6 +4331,30 @@ section[id],
   padding: 0.3rem 0.8rem;
   border-radius: 50px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+[data-badge="Sports"] .card-badge-top {
+  background: rgba(0, 245, 155, 0.2);
+  border-color: rgba(0, 245, 155, 0.5);
+  color: #00f59b;
+}
+
+[data-badge="Martial Arts"] .card-badge-top {
+  background: rgba(245, 158, 11, 0.2);
+  border-color: rgba(245, 158, 11, 0.5);
+  color: #fbbf24;
+}
+
+[data-badge="International"] .card-badge-top {
+  background: rgba(0, 210, 196, 0.2);
+  border-color: rgba(0, 210, 196, 0.5);
+  color: #5eead4;
+}
+
+[data-badge="University"] .card-badge-top {
+  background: rgba(168, 85, 247, 0.2);
+  border-color: rgba(168, 85, 247, 0.5);
+  color: #c084fc;
 }
 
 /* Top Right Zoom Icon Button */
@@ -6468,6 +6586,36 @@ body.cert-modal-open .avatar-dock-btn {
   color: var(--color-primary);
 }
 
+[data-theme="light"] .interest-pill-card:nth-child(1) .pill-icon-container {
+  background: rgba(5, 150, 105, 0.1);
+  border: 1px solid rgba(5, 150, 105, 0.25);
+  color: #059669;
+}
+
+[data-theme="light"] .interest-pill-card:nth-child(2) .pill-icon-container {
+  background: rgba(13, 148, 136, 0.1);
+  border: 1px solid rgba(13, 148, 136, 0.25);
+  color: #0d9488;
+}
+
+[data-theme="light"] .interest-pill-card:nth-child(3) .pill-icon-container {
+  background: rgba(22, 163, 74, 0.1);
+  border: 1px solid rgba(22, 163, 74, 0.25);
+  color: #16a34a;
+}
+
+[data-theme="light"] .interest-pill-card:nth-child(4) .pill-icon-container {
+  background: rgba(124, 58, 237, 0.1);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  color: #7c3aed;
+}
+
+[data-theme="light"] .interest-pill-card:hover .pill-icon-container {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.3);
+}
+
 [data-theme="light"] .pill-info h4 {
   color: var(--color-text-primary);
 }
@@ -6649,6 +6797,30 @@ body.cert-modal-open .avatar-dock-btn {
   border: 1px solid rgba(5, 150, 105, 0.25);
 }
 
+[data-theme="light"] .project-card:nth-child(1) .project-badge {
+  background: rgba(5, 150, 105, 0.1);
+  color: #047857;
+  border-color: rgba(5, 150, 105, 0.25);
+}
+
+[data-theme="light"] .project-card:nth-child(2) .project-badge {
+  background: rgba(13, 148, 136, 0.1);
+  color: #0f766e;
+  border-color: rgba(13, 148, 136, 0.25);
+}
+
+[data-theme="light"] .project-card:nth-child(3) .project-badge {
+  background: rgba(217, 119, 6, 0.1);
+  color: #b45309;
+  border-color: rgba(217, 119, 6, 0.25);
+}
+
+[data-theme="light"] .project-card:nth-child(4) .project-badge {
+  background: rgba(2, 132, 199, 0.1);
+  color: #0369a1;
+  border-color: rgba(2, 132, 199, 0.25);
+}
+
 [data-theme="light"] .project-card-title {
   color: var(--color-text-primary) !important;
 }
@@ -6704,6 +6876,30 @@ body.cert-modal-open .avatar-dock-btn {
   background: rgba(5, 150, 105, 0.1);
   color: #047857;
   border: 1px solid rgba(5, 150, 105, 0.25);
+}
+
+[data-theme="light"] .timeline-item:nth-child(1) .timeline-year {
+  background: rgba(5, 150, 105, 0.1);
+  color: #047857;
+  border-color: rgba(5, 150, 105, 0.25);
+}
+
+[data-theme="light"] .timeline-item:nth-child(2) .timeline-year {
+  background: rgba(13, 148, 136, 0.1);
+  color: #0f766e;
+  border-color: rgba(13, 148, 136, 0.25);
+}
+
+[data-theme="light"] .timeline-item:nth-child(3) .timeline-year {
+  background: rgba(2, 132, 199, 0.1);
+  color: #0369a1;
+  border-color: rgba(2, 132, 199, 0.25);
+}
+
+[data-theme="light"] .timeline-item:nth-child(4) .timeline-year {
+  background: rgba(124, 58, 237, 0.1);
+  color: #6d28d9;
+  border-color: rgba(124, 58, 237, 0.25);
 }
 
 [data-theme="light"] .timeline-card {
@@ -6788,8 +6984,34 @@ body.cert-modal-open .avatar-dock-btn {
 }
 
 [data-theme="light"] .card-badge-top {
-  background: rgba(5, 150, 105, 0.9);
-  color: #ffffff;
+  background: rgba(5, 150, 105, 0.12);
+  border: 1px solid rgba(5, 150, 105, 0.3);
+  color: #047857;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+}
+
+[data-theme="light"] [data-badge="Sports"] .card-badge-top {
+  background: rgba(5, 150, 105, 0.12);
+  border-color: rgba(5, 150, 105, 0.3);
+  color: #047857;
+}
+
+[data-theme="light"] [data-badge="Martial Arts"] .card-badge-top {
+  background: rgba(217, 119, 6, 0.12);
+  border-color: rgba(217, 119, 6, 0.3);
+  color: #b45309;
+}
+
+[data-theme="light"] [data-badge="International"] .card-badge-top {
+  background: rgba(13, 148, 136, 0.12);
+  border-color: rgba(13, 148, 136, 0.3);
+  color: #0f766e;
+}
+
+[data-theme="light"] [data-badge="University"] .card-badge-top {
+  background: rgba(124, 58, 237, 0.12);
+  border-color: rgba(124, 58, 237, 0.3);
+  color: #6d28d9;
 }
 
 [data-theme="light"] .card-zoom-btn {
