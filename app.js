@@ -1048,7 +1048,7 @@ document.addEventListener('DOMContentLoaded', () => {
       preloadedImages[src] = img;
     });
 
-    // 1. Section Configurations
+    // 1. Section Configurations (with Responsive Desktop & Mobile Writing)
     const sectionConfigs = {
       'hero': {
         prop: null,
@@ -1057,6 +1057,7 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: 0,
         isHappy: false,
         dialogue: "Hi! I'm Shunanda's lab assistant 🧬 Welcome to my portfolio!",
+        mobileDialogue: "Hi! Welcome to Shunanda's lab 🧬",
         icon: "🧬"
       },
       'about': {
@@ -1066,6 +1067,7 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: 2,
         isHappy: false,
         dialogue: "Exploring molecular biology, genetic engineering & computational research.",
+        mobileDialogue: "Molecular biology, genetics & computational research 📖",
         icon: "📖"
       },
       'journey': {
@@ -1075,6 +1077,7 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: -1,
         isHappy: false,
         dialogue: "Academic evolution: From molecular foundations to advanced bioinformatics.",
+        mobileDialogue: "Academic evolution: Molecular foundations to bioinformatics 📚",
         icon: "📚"
       },
       'skills': {
@@ -1084,6 +1087,7 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: -2,
         isHappy: false,
         dialogue: "Specialized in Python, R, RNA-seq, BLAST, Nextflow & in silico modeling.",
+        mobileDialogue: "Python, R, RNA-seq, BLAST & in silico modeling ⚡",
         icon: "⚡"
       },
       'certifications': {
@@ -1093,6 +1097,7 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: 0,
         isHappy: false,
         dialogue: "Certified by NPTEL & IISc Bangalore in Evolutionary Biology & Genetic Engineering.",
+        mobileDialogue: "NPTEL & IISc certified in Evolutionary Biology & Genetics 🎓",
         icon: "🎓"
       },
       'projects': {
@@ -1102,6 +1107,7 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: -4,
         isHappy: false,
         dialogue: "Analyzing single-cell multi-omics & CIMA natural-cohort immune atlas!",
+        mobileDialogue: "Single-cell multi-omics & immune atlas research 🔬",
         icon: "🔬"
       },
       'achievements': {
@@ -1111,6 +1117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: -2,
         isHappy: true,  // Happy smile ^_^
         dialogue: "Celebrating university honors, athletic championships & centennial milestones!",
+        mobileDialogue: "University honors & athletic milestones 🏆",
         icon: "🏆"
       },
       'contact': {
@@ -1120,24 +1127,58 @@ document.addEventListener('DOMContentLoaded', () => {
         baseRoll: 0,
         isHappy: false,
         dialogue: "Let's connect! Always open to bioinformatics research & collaborations.",
+        mobileDialogue: "Let's connect! Open to research collaborations 👋",
         icon: "👋"
       }
     };
 
-    // Scientific Facts Carousel
+    // Scientific Facts Carousel (Responsive Writing)
     const biotechQuotes = [
-      { icon: '🧬', text: "In silico biology turns billions of sequencing reads into targeted precision therapies." },
-      { icon: '🔬', text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!" },
-      { icon: '💡', text: "Human DNA is 99.9% identical across all people; 0.1% holds our unique genetic variance." },
-      { icon: '📊', text: "Single-cell RNA-seq resolves cell states that bulk sequencing could never distinguish." },
-      { icon: '🧪', text: "CRISPR-Cas9 enables precise genome editing for therapeutic gene correction." },
-      { icon: '⚡', text: "Move your mouse around — I'll keep an eye on whatever you're exploring!" }
+      {
+        icon: '🧬',
+        text: "In silico biology turns billions of sequencing reads into targeted precision therapies.",
+        mobileText: "In silico biology turns raw sequencing reads into targeted therapies 🧬"
+      },
+      {
+        icon: '🔬',
+        text: "Did you know? ~2 meters of DNA is packed inside every microscopic human cell!",
+        mobileText: "~2 meters of DNA is packed inside every microscopic human cell! 🔬"
+      },
+      {
+        icon: '💡',
+        text: "Human DNA is 99.9% identical across all people; 0.1% holds our unique genetic variance.",
+        mobileText: "Human DNA is 99.9% identical; 0.1% holds all unique variance 💡"
+      },
+      {
+        icon: '📊',
+        text: "Single-cell RNA-seq resolves cell states that bulk sequencing could never distinguish.",
+        mobileText: "Single-cell RNA-seq reveals hidden cell states with precision 📊"
+      },
+      {
+        icon: '🧪',
+        text: "CRISPR-Cas9 enables precise genome editing for therapeutic gene correction.",
+        mobileText: "CRISPR-Cas9 enables targeted genome editing for precision therapies 🧪"
+      },
+      {
+        icon: '⚡',
+        text: "Move your mouse around — I'll keep an eye on whatever you're exploring!",
+        mobileText: "Tap or scroll around — I'll follow what you explore! ⚡"
+      }
     ];
 
     let currentSectionKey = 'hero';
     let currentQuoteIdx = 0;
     let quoteTimer = null;
     let isBlinking = false;
+    let currentActiveDialogue = { icon: '🧬', text: '', mobileText: '' };
+
+    function resolveAppropriateText(text, mobileText) {
+      const isMobileScreen = window.innerWidth <= 600;
+      if (isMobileScreen && mobileText) {
+        return mobileText;
+      }
+      return text;
+    }
 
     // 2. Smooth In-Place State Transition (Single Persistent Instance)
     function setSectionState(sectionKey) {
@@ -1171,29 +1212,47 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 180);
       }
 
-      // Show Section Dialogue
-      showDialogue(cfg.icon, cfg.dialogue);
+      // Show Section Dialogue (Responsive Writing)
+      showDialogue(cfg.icon, cfg.dialogue, cfg.mobileDialogue);
     }
 
-    function showDialogue(icon, text) {
+    function showDialogue(icon, text, mobileText = null) {
       if (!bubbleText || !bubbleIcon || !speechBubble) return;
+      currentActiveDialogue = { icon, text, mobileText: mobileText || text };
+
+      const displayText = resolveAppropriateText(text, mobileText);
+
       speechBubble.style.opacity = '0';
       speechBubble.style.transform = 'translateY(6px) scale(0.96)';
 
       setTimeout(() => {
         bubbleIcon.textContent = icon;
-        bubbleText.textContent = text;
+        bubbleText.textContent = displayText;
         speechBubble.style.opacity = '1';
         speechBubble.style.transform = 'translateY(0) scale(1)';
       }, 160);
     }
+
+    // Dynamic viewport resize listener to adapt speech text without flicker
+    let resizeTextTimer = null;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTextTimer);
+      resizeTextTimer = setTimeout(() => {
+        if (currentActiveDialogue.text && bubbleText) {
+          const newText = resolveAppropriateText(currentActiveDialogue.text, currentActiveDialogue.mobileText);
+          if (bubbleText.textContent !== newText) {
+            bubbleText.textContent = newText;
+          }
+        }
+      }, 200);
+    }, { passive: true });
 
     function startFactAutoCycle() {
       if (quoteTimer) clearInterval(quoteTimer);
       quoteTimer = setInterval(() => {
         currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
         const q = biotechQuotes[currentQuoteIdx];
-        showDialogue(q.icon, q.text);
+        showDialogue(q.icon, q.text, q.mobileText);
       }, 14000);
     }
 
@@ -1202,7 +1261,7 @@ document.addEventListener('DOMContentLoaded', () => {
         e.stopPropagation();
         currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
         const q = biotechQuotes[currentQuoteIdx];
-        showDialogue(q.icon, q.text);
+        showDialogue(q.icon, q.text, q.mobileText);
         startFactAutoCycle();
       });
     }
@@ -1468,7 +1527,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       currentQuoteIdx = (currentQuoteIdx + 1) % biotechQuotes.length;
       const q = biotechQuotes[currentQuoteIdx];
-      showDialogue(q.icon, q.text);
+      showDialogue(q.icon, q.text, q.mobileText);
       startFactAutoCycle();
     }
 
